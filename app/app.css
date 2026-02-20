@@ -35,7 +35,7 @@ body {
 /* Custom utilities */
 
 .hero-bg {
-  @apply bg-gradient-to-b from-sky-light via-sky-main to-sky-light;
+  @apply bg-[linear-gradient(180deg,rgba(202,247,255,1)_0%,rgba(110,216,245,1)_49%,rgba(0,134,215,1)_88%)];
   position: relative;
   overflow: hidden;
 }
@@ -45,6 +45,8 @@ body {
   @apply absolute inset-0 bg-cloud-white opacity-30;
   pointer-events: none;
 }
+
+
 
 
 
