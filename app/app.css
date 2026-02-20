@@ -1,15 +1,111 @@
 @import "tailwindcss";
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
 @theme {
+  --color-sky-light: #B3E5FC;
+  --color-sky-main: #81D4FA;
+  --color-sky-dark: #4FC3F7;
+  --color-sky-darker: #29B6F6;
+  --color-accent-yellow: #FDB927;
+  --color-accent-orange: #FF9800;
+  --color-accent-gold: #FFC107;
+  --color-navy-dark: #1A3A52;
+  --color-navy-main: #2C5282;
+  --color-navy-light: #4A90E2;
+  --color-cloud-white: #F8FBFF;
+  --color-cloud-light: #E3F2FD;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
-
+  @apply bg-cloud-white h-[2000px];
   @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+    color-scheme: light;
   }
+}
+
+@utility card-hover-lift {
+  @apply transition-transform duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Custom utilities */
+
+.hero-bg {
+  @apply bg-gradient-to-b from-sky-light via-sky-main to-sky-light;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg::before {
+  content: '';
+  @apply absolute inset-0 bg-cloud-white opacity-30;
+  pointer-events: none;
+}
+
+
+
+.btn-primary {
+  @apply px-8 py-3 rounded-lg bg-accent-orange text-white font-semibold hover:bg-accent-gold transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply px-8 py-3 rounded-lg bg-sky-dark text-white font-semibold hover:bg-sky-darker transition-colors duration-200;
+}
+
+.btn-outline {
+  @apply px-8 py-3 rounded-lg border border-neutral-300 text-slate-700 font-semibold hover:bg-slate-700 hover:text-white transition-colors duration-200 hover:cursor-pointer;
+}
+
+.section-title {
+  @apply text-4xl font-display font-bold text-navy-dark mb-6;
+}
+
+.section-subtitle {
+  @apply text-lg text-navy-main max-w-2xl mx-auto mb-12;
+}
+
+.card-base {
+  @apply bg-white rounded-2xl shadow-lg p-6 card-hover-lift;
+}
+
+.grid-cards {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6;
+}
+
+.grid-values {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+}
+
+.section-padding {
+  @apply py-16 md:py-24 px-4 md:px-8;
+}
+
+.container-max {
+  @apply max-w-7xl mx-auto;
+}
+
+.text-gradient {
+  @apply bg-gradient-to-r from-sky-dark to-accent-orange bg-clip-text text-transparent;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.underline-accent::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-full h-1 bg-accent-orange rounded-full;
+  width: 60%;
+}
+
+.price-tag {
+  @apply text-2xl font-bold text-accent-orange;
+}
+
+.badge-featured {
+  @apply inline-block px-4 py-1 bg-accent-gold text-navy-dark rounded-full text-sm font-semibold;
 }
