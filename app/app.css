@@ -1,41 +1,40 @@
-@import "tailwindcss";
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
+@import "tailwindcss";
+
 @theme {
-  --color-sky-light: #B3E5FC;
-  --color-sky-main: #81D4FA;
-  --color-sky-dark: #4FC3F7;
-  --color-sky-darker: #29B6F6;
-  --color-accent-yellow: #FDB927;
-  --color-accent-orange: #FF9800;
-  --color-accent-gold: #FFC107;
-  --color-navy-dark: #1A3A52;
-  --color-navy-main: #2C5282;
-  --color-navy-light: #4A90E2;
-  --color-cloud-white: #F8FBFF;
-  --color-cloud-light: #E3F2FD;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-sky-light: #C3EFF2;
+  --color-sky-main: #04AFBD;
+  --color-sky-dark: #038C99;
+  --color-sky-darker: #026A75;
+  --color-accent-yellow: #FFD480;
+  --color-accent-orange: #FFB42A;
+  --color-accent-gold: #E09A0A;
+  --color-navy-dark: #042D32;
+  --color-navy-main: #065A64;
+  --color-navy-light: #0A8A98;
+  --color-cloud-white: #F0FCFD;
+  --color-cloud-light: #CCF0F3;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 html,
 body {
-  @apply bg-cloud-white h-[2000px];
-  @media (prefers-color-scheme: dark) {
-    color-scheme: light;
-  }
+  @apply bg-cloud-white min-h-screen;
 }
 
-@utility card-hover-lift {
-  @apply transition-transform duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1;
+@layer utilities {
+  .card-hover-lift {
+    @apply transition-transform duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1;
+  }
 }
 
 /* Custom utilities */
 
 .hero-bg {
-  @apply bg-[linear-gradient(180deg,rgba(202,247,255,1)_0%,rgba(110,216,245,1)_49%,rgba(0,134,215,1)_88%)];
+  @apply bg-[linear-gradient(180deg,rgba(195,239,242,1)_0%,rgba(4,175,189,1)_55%,rgba(2,106,117,1)_100%)];
   position: relative;
   overflow: hidden;
 }
@@ -51,11 +50,11 @@ body {
 
 
 .btn-primary {
-  @apply px-8 py-3 rounded-lg bg-accent-orange text-white font-semibold hover:bg-accent-gold transition-colors duration-200;
+  @apply px-8 py-3 rounded-lg bg-sky-main text-white font-semibold hover:bg-sky-dark transition-colors duration-200;
 }
 
 .btn-secondary {
-  @apply px-8 py-3 rounded-lg bg-sky-dark text-white font-semibold hover:bg-sky-darker transition-colors duration-200;
+  @apply px-8 py-3 rounded-lg bg-accent-orange text-white font-semibold hover:bg-accent-gold transition-colors duration-200;
 }
 
 .btn-outline {
@@ -71,7 +70,7 @@ body {
 }
 
 .card-base {
-  @apply bg-white rounded-2xl shadow-lg p-6 card-hover-lift;
+  @apply bg-white rounded-2xl shadow-lg p-6 transition-transform duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1;
 }
 
 .grid-cards {
