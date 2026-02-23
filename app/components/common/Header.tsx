@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import headerLogo from "../../assets/header-logo.svg";
+import headerLogo from "../../assets/Header/header-logo.svg";
 
 const navLinks = [
   { label: "Section 1", href: "#section-1" },

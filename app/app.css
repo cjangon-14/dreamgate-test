@@ -1,7 +1,10 @@
+@import "tailwindcss";
+
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
-@import "tailwindcss";
+@import "./styles/satoshi.css";
+
 
 @theme {
   --color-sky-light: #C3EFF2;
@@ -16,8 +19,12 @@
   --color-navy-light: #0A8A98;
   --color-cloud-white: #F0FCFD;
   --color-cloud-light: #CCF0F3;
+  --color-primary: #047C88;
+  --color-secondary: #065A64;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+   --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+
 }
 
 html,
@@ -41,20 +48,21 @@ body {
 
 .hero-bg::before {
   content: '';
-  @apply absolute inset-0 bg-cloud-white opacity-30;
+  position: absolute;
+  inset: 0;
+  background: rgba(240, 252, 253, 0.3);
   pointer-events: none;
+  z-index: 0;
 }
 
-
-
-
-
 .btn-primary {
-  @apply px-8 py-3 rounded-lg bg-sky-main text-white font-semibold hover:bg-sky-dark transition-colors duration-200;
+  @apply px-8 py-3 rounded-lg bg-navy-main text-white font-semibold hover:bg-navy-dark transition-colors duration-200 hover:shadow-lg;
+  z-index: 1;
 }
 
 .btn-secondary {
-  @apply px-8 py-3 rounded-lg bg-accent-orange text-white font-semibold hover:bg-accent-gold transition-colors duration-200;
+  @apply px-8 py-3 rounded-lg bg-[#FFB52B] text-white font-semibold shadow-md hover:bg-accent-gold transition-colors duration-200 hover:shadow-lg;
+  z-index: 1;
 }
 
 .btn-outline {

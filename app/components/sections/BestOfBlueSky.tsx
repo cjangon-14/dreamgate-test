@@ -15,7 +15,7 @@ const categoryLabel: Record<Attraction['category'], string> = {
 };
 
 const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
-  <div className="card-base flex flex-col overflow-hidden !p-0 group">
+  <div className="card-base flex flex-col overflow-hidden !p-0 group ">
     {/* Image placeholder */}
     <div className="relative h-52 bg-gradient-to-br from-sky-light via-sky-main to-sky-dark flex items-center justify-center overflow-hidden">
       <span className="text-white/40 text-6xl font-display font-bold select-none group-hover:scale-110 transition-transform duration-500">
@@ -82,7 +82,7 @@ const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
 
 const BestOfBlueSky = () => {
   return (
-    <section className="section-padding bg-cloud-white">
+    <section className="section-padding bg-white">
       <div className="container-max">
         {/* Header */}
         <div className="text-center mb-12">
@@ -90,12 +90,11 @@ const BestOfBlueSky = () => {
             Highlights
           </p>
           <h2 className="section-title">
-            The Best of{' '}
-            <span className="text-gradient">Blue Sky</span>
+            The Best of <span className="text-gradient">Blue Sky</span>
           </h2>
           <p className="section-subtitle">
-            Discover world-class rides, immersive experiences, and unforgettable adventures
-            waiting for you inside Blue Sky Themed Park.
+            Discover world-class rides, immersive experiences, and unforgettable
+            adventures waiting for you inside Blue Sky Themed Park.
           </p>
           {/* Accent divider */}
           <div className="mx-auto w-16 h-1 rounded-full bg-accent-orange" />
@@ -110,9 +109,22 @@ const BestOfBlueSky = () => {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <a href="#attractions" className="btn-primary inline-flex items-center gap-2">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+          <a
+            href="#attractions"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
             View All Attractions
           </a>
