@@ -3,8 +3,12 @@ export interface Attraction {
   name: string;
   description: string;
   image: string;
+  gradient?: string;
+  badgeLabel?: string;
+  badgeColor?: string;
+  inclusions?: string[];
+  choices?: string[];
   price: number;
-  duration: string;
   category: 'ride' | 'show' | 'experience';
   ageRequirement?: number;
   maxHeight?: number;

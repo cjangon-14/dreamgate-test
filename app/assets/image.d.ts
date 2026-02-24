@@ -2,6 +2,10 @@ declare module "*.png" {
   const content: string;
   export default content;
 }
+declare module "*.png?format=webp&quality=80" {
+  const content: string;
+  export default content;
+}
 declare module "*.svg" {
   const content: string;
   export default content;

@@ -1,0 +1,7 @@
+/* Regular */
+@font-face {
+  font-family: 'Bitcrusher';
+  src: url('../assets/fonts/bitcrusher/bitcrusher-condensed-bd.otf') format('opentype');
+  font-weight: bold;
+  font-style: condensed;
+}

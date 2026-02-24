@@ -1,30 +1,57 @@
 @import "tailwindcss";
+@import "./styles/satoshi.css";
+@import "./styles/bitcrusher.css";
+@import "./styles/goteam.css";
 
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
 @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
-@import "./styles/satoshi.css";
-
-
 @theme {
-  --color-sky-light: #C3EFF2;
-  --color-sky-main: #04AFBD;
-  --color-sky-dark: #038C99;
-  --color-sky-darker: #026A75;
-  --color-accent-yellow: #FFD480;
-  --color-accent-orange: #FFB42A;
-  --color-accent-gold: #E09A0A;
-  --color-navy-dark: #042D32;
-  --color-navy-main: #065A64;
-  --color-navy-light: #0A8A98;
-  --color-cloud-white: #F0FCFD;
-  --color-cloud-light: #CCF0F3;
-  --color-primary: #047C88;
-  --color-secondary: #065A64;
+  --color-sky-light: #c3eff2;
+  --color-sky-main: #04afbd;
+  --color-sky-dark: #038c99;
+  --color-sky-darker: #026a75;
+  --color-accent-yellow: #ffd480;
+  --color-accent-orange: #ffb42a;
+  --color-accent-gold: #e09a0a;
+  --color-navy-dark: #042d32;
+  --color-navy-main: #065a64;
+  --color-navy-light: #0a8a98;
+  --color-cloud-white: #f0fcfd;
+  --color-cloud-light: #ccf0f3;
+  --color-primary: #047c88;
+  --color-secondary: #065a64;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
-   --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-bitcrusher: "Bitcrusher", ui-sans-serif, system-ui, sans-serif;
+  --font-goteam: "Goteam", ui-sans-serif, system-ui, sans-serif;
+  --animate-cloud-rise: cloud-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+/* yellow- FFB52B blue-06AEBD  */
 
+@keyframes cloud-rise {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cloud-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+
+@layer utilities {
+  .cloud-animated {
+    animation:
+      cloud-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both,
+      cloud-float 6s ease-in-out 1.5s infinite;
+  }
 }
 
 html,
@@ -41,28 +68,34 @@ body {
 /* Custom utilities */
 
 .hero-bg {
-  @apply bg-[linear-gradient(180deg,rgba(195,239,242,1)_0%,rgba(4,175,189,1)_55%,rgba(2,106,117,1)_100%)];
-  position: relative;
-  overflow: hidden;
+  @apply relative overflow-hidden min-h-screen bg-gradient-to-b 
+  from-[#caf7ff] from-0%
+  via-[#6ED8F5] via-40%
+  to-[#0086d7] to-88%;
 }
 
 .hero-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(240, 252, 253, 0.3);
-  pointer-events: none;
-  z-index: 0;
+  content: "";
+  /* @apply absolute inset-0 pointer-events-none bg-cloud-white/40 blur-lg; */
+}
+
+.logo-container::before {
+  content: "";
+  @apply absolute left-50 top-85 -translate-x-1/2 -translate-y-1/2 w-[1085px] h-[445px] bg-[#FFFDCD] blur-[200px] pointer-events-none -z-10;
+}
+
+.logo-container {
+  @apply relative;
 }
 
 .btn-primary {
-  @apply px-8 py-3 rounded-lg bg-navy-main text-white font-semibold hover:bg-navy-dark transition-colors duration-200 hover:shadow-lg;
-  z-index: 1;
+  @apply px-3 py-3 rounded-lg bg-navy-main text-white font-semibold hover:bg-navy-dark transition-colors duration-200 hover:shadow-lg;
+  z-index: 50;
 }
 
 .btn-secondary {
-  @apply px-8 py-3 rounded-lg bg-[#FFB52B] text-white font-semibold shadow-md hover:bg-accent-gold transition-colors duration-200 hover:shadow-lg;
-  z-index: 1;
+  @apply px-3 py-3 rounded-lg bg-accent-orange text-white font-semibold shadow-md hover:bg-accent-gold transition-colors duration-200 hover:shadow-lg;
+  z-index: 50;
 }
 
 .btn-outline {
@@ -70,7 +103,7 @@ body {
 }
 
 .section-title {
-  @apply text-4xl font-display font-bold text-navy-dark mb-6;
+  @apply font-bitcrusher text-4xl font-bold text-[#FFB52B] mb-6 sm:text-5xl md:text-6xl lg:text-7xl uppercase relative inline-block;
 }
 
 .section-subtitle {
@@ -78,7 +111,7 @@ body {
 }
 
 .card-base {
-  @apply bg-white rounded-2xl shadow-lg p-6 transition-transform duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1;
+  @apply flex flex-col items-end pt-0 pr-0 pb-6.5 pl-0 w-77 h-160 bg-white shadow-[0px_28px_32px_rgba(0,0,0,0.05)] rounded-[20px] flex-none order-0 self-stretch grow;
 }
 
 .grid-cards {
@@ -89,32 +122,42 @@ body {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
 }
 
-.section-padding {
-  @apply py-16 md:py-24 px-4 md:px-8;
+.bobs-bg {
+  @apply py-16 md:py-24 px-4 md:px-8 bg-linear-to-b from-white from-0% to-[#D2E5FF] to-100%;
 }
 
 .container-max {
   @apply max-w-7xl mx-auto;
 }
 
-.text-gradient {
-  @apply bg-gradient-to-r from-sky-dark to-accent-orange bg-clip-text text-transparent;
-}
+/* .text-gradient {
+  @apply bg-gradient-to-r text-transparent bg-clip-text;
+  background-image: linear-gradient(
+    to right,
+    var(--color-sky-dark),
+    var(--color-accent-orange)
+  );
+} */
 
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
 
 .underline-accent::after {
-  content: '';
-  @apply absolute bottom-0 left-0 w-full h-1 bg-accent-orange rounded-full;
+  content: "";
+  @apply absolute bottom-0 left-0 h-1 bg-accent-orange rounded-full;
   width: 60%;
 }
 
 .price-tag {
-  @apply text-2xl font-bold text-accent-orange;
+  @apply text-xl text-navy-dark font-goteam;
 }
 
 .badge-featured {
   @apply inline-block px-4 py-1 bg-accent-gold text-navy-dark rounded-full text-sm font-semibold;
 }
+
+
+/* Best of Blue Sky */
+
+

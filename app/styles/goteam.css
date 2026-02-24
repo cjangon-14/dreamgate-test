@@ -1,0 +1,7 @@
+/* Regular */
+@font-face {
+  font-family: 'Goteam';
+  src: url('../assets/fonts/goteam/goteam-otf.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
