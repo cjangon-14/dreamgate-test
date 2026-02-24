@@ -6,12 +6,19 @@ import {
   cloud2,
   cloudHero,
   textStar,
+  bgHero,
 } from "../../assets";
 
 const Hero = () => {
   return (
     <>
-      <div className="hero-bg min-h-screen">
+      <div className="hero-bg min-h-screen relative overflow-hidden">
+        {/* Background Graphics */}
+        {/* Ferris Wheel - Left side */}
+        <div className="absolute top-0 left-0 z-1 w-full h-auto">
+          <img src={bgHero} alt="bg" />
+        </div>
+
         <div className="container mx-auto px-4 text-center flex flex-col items-center justify-center min-h-screen pt-5 -mt-20">
           {/* Hero logo placeholder */}
           <div className="relative mb-6 flex flex-col items-center leading-none select-none">
@@ -39,10 +46,10 @@ const Hero = () => {
 
               {/* Themed Park | Events Center */}
               <div className="flex items-center justify-center gap-3 -mt-4">
-                <span className="text-sm font-black tracking-widest text-navy-dark uppercase font-satoshi">
-                  THEMED
+                <span className="text-xl text-end text-navy-dark font-black tracking-widest uppercase font-satoshi leading-[18px]">
+                  Themed
                   <br />
-                  PARK
+                  Park
                 </span>
                 <img
                   src={textStar}
@@ -50,24 +57,24 @@ const Hero = () => {
                   className="w-3 h-14 z-10"
                   draggable="false"
                 />
-                <span className="text-sm font-bold tracking-widest text-navy-dark uppercase">
-                  EVENTS
+                <span className="text-xl text-start text-navy-dark font-black tracking-widest  uppercase font-satoshi leading-[18px]">
+                  Events
                   <br />
-                  CENTER
+                  Center
                 </span>
               </div>
             </div>
           </div>
 
           {/* Tagline */}
-          <p className="max-w-md text-navy-dark/80 text-base mb-10 z-1">
+          <p className="max-w-md text-navy-dark/80 text-base mb-10 z-1 font-satoshi">
             Packed day full of excitement, laughter, and unforgettable memories
             in your life
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-4 z-10">
-            <button className=" fixed bottom-5 left-[45%] transform -translate-x-5/6 m-4 btn-secondary flex items-center gap-2">
+          <div className="flex items-center gap-4 z-100">
+            <button className=" fixed bottom-5 left-[47%] transform -translate-x-5/6 m-4 btn-secondary flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"
@@ -85,7 +92,7 @@ const Hero = () => {
               </svg>
               BOOK NOW
             </button>
-            <button className=" fixed bottom-5 right-[45%] transform translate-x-5/6 m-4 btn-primary flex items-center gap-2 ">
+            <button className=" fixed bottom-5 right-[47%] transform translate-x-5/6 m-4 btn-primary flex items-center gap-2 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"
@@ -105,11 +112,11 @@ const Hero = () => {
         </div>
       </div>
       {/* Bottom Clouds */}
-      <div className="absolute bottom-0 left-0 w-full">
+      <div className="absolute bottom-0 left-0 w-full z-1">
         <img
           src={cloudHero}
           alt="Cloud"
-          className="absolute w-full h-auto -bottom-30 left-0 z-0"
+          className="absolute w-full -bottom-30 left-0"
         />
       </div>
     </>
