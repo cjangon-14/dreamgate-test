@@ -7,6 +7,7 @@ const HeroBrand = () => (
         <img
           src={blueSkyLogoCropped}
           alt="BLUE SKY logo"
+          className="w-56 sm:w-72 md:w-80 lg:w-96"
           draggable="false"
           decoding="async"
         />

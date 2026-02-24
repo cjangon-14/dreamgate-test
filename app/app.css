@@ -72,12 +72,12 @@ body {
 
 /* Custom utilities */
 
-/* .hero-bg {
-  @apply relative overflow-hidden min-h-screen bg-gradient-to-b 
+.hero-bg {
+  @apply relative overflow-hidden min-h-screen bg-gradient-to-b
   from-[#caf7ff] from-0%
   via-[#6ED8F5] via-40%
   to-[#0086d7] to-88%;
-} */
+}
 
 .hero-bg::before {
   content: "";
@@ -111,7 +111,7 @@ body {
 }
 
 .card-base {
-  @apply flex flex-col items-end pt-0 pr-0 pb-6.5 pl-0 w-77 h-160 bg-white shadow-[0px_28px_32px_rgba(0,0,0,0.05)] rounded-[20px] flex-none order-0 self-stretch grow;
+  @apply flex flex-col pt-0 pr-0 pb-6.5 pl-0 w-full bg-white shadow-[0px_28px_32px_rgba(0,0,0,0.05)] rounded-[20px];
 }
 
 .grid-cards {
@@ -127,7 +127,7 @@ body {
 }
 
 .container-max {
-  @apply max-w-7xl mx-auto;
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
 /* .text-gradient {

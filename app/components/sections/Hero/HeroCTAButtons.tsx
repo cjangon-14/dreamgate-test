@@ -1,6 +1,6 @@
 const HeroCTAButtons = () => (
-  <div className="fixed bottom-5 left-1/2 -translate-x-1/2 flex flex-col sm:flex-row items-center gap-3 z-50 w-[calc(70%-2rem)] sm:w-auto">
-    <button className="cursor-pointer btn-secondary flex items-center justify-center gap-2 w-50 sm:w-auto">
+  <div className="flex flex-col sm:flex-row items-center gap-3 z-10 w-56 sm:w-auto">
+    <button className="cursor-pointer btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-4 w-4"
@@ -19,7 +19,7 @@ const HeroCTAButtons = () => (
       </svg>
       BOOK NOW
     </button>
-    <button className="cursor-pointer btn-primary flex items-center justify-center gap-2 w-50 sm:w-auto">
+    <button className="cursor-pointer btn-primary flex items-center justify-center gap-2 w-full sm:w-auto">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-4 w-4"

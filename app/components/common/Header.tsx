@@ -43,8 +43,8 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Action buttons */}
-        <div className="flex shrink-0 items-center gap-2">
+        {/* Action buttons — desktop */}
+        <div className="hidden md:flex shrink-0 items-center gap-2">
           <button className="flex items-center gap-1.5 rounded-md border border-navy-dark/30 bg-transparent px-4 py-1.5 text-xs font-semibold text-navy-dark backdrop-blur-sm transition-all duration-200 hover:bg-accent-orange hover:border-accent-orange hover:text-white hover:cursor-pointer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -79,6 +79,16 @@ const Header = () => {
             Help
           </button>
         </div>
+
+        {/* Hamburger — mobile */}
+        <button
+          className="md:hidden flex flex-col justify-center items-center gap-1.5 p-2 text-navy-dark hover:cursor-pointer"
+          aria-label="Open menu"
+        >
+          <span className="block w-6 h-0.5 bg-navy-dark rounded-full" />
+          <span className="block w-6 h-0.5 bg-navy-dark rounded-full" />
+          <span className="block w-6 h-0.5 bg-navy-dark rounded-full" />
+        </button>
       </div>
     </header>
   );
