@@ -1,5 +1,6 @@
 import {
   bgHero,
+  bgHeroFull,
   ferrisWheel,
   leftRollercoaster,
   swingRide,
@@ -9,16 +10,15 @@ import {
 const HeroBackground = () => (
   <>
     {/* Desktop full background (lg and up) */}
-    <div className="hidden lg:block absolute inset-0 z-10 pointer-events-none">
-      <img
-        src={bgHero}
-        alt=""
-        className="w-full h-full object-cover object-bottom"
-        fetchPriority="high"
-        loading="eager"
-        decoding="async"
-      />
-    </div>
+    <div
+      className="hidden lg:block absolute inset-0 z-0 pointer-events-none
+             bg-cover
+             bg-bottom
+             bg-no-repeat
+             bg-fixed
+             w-full h-full"
+      style={{ backgroundImage: `url(${bgHeroFull})` }}
+    />
 
     {/* Tablet & Mobile individual elements (below lg) */}
     <img

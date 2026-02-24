@@ -42,8 +42,13 @@
 }
 
 @keyframes cloud-float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-5px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 @layer utilities {
@@ -67,21 +72,16 @@ body {
 
 /* Custom utilities */
 
-.hero-bg {
+/* .hero-bg {
   @apply relative overflow-hidden min-h-screen bg-gradient-to-b 
   from-[#caf7ff] from-0%
   via-[#6ED8F5] via-40%
   to-[#0086d7] to-88%;
-}
+} */
 
 .hero-bg::before {
   content: "";
   /* @apply absolute inset-0 pointer-events-none bg-cloud-white/40 blur-lg; */
-}
-
-.logo-container::before {
-  content: "";
-  @apply absolute left-50 top-85 -translate-x-1/2 -translate-y-1/2 w-[1085px] h-[445px] bg-[#FFFDCD] blur-[200px] pointer-events-none -z-10;
 }
 
 .logo-container {
@@ -157,7 +157,4 @@ body {
   @apply inline-block px-4 py-1 bg-accent-gold text-navy-dark rounded-full text-sm font-semibold;
 }
 
-
 /* Best of Blue Sky */
-
-

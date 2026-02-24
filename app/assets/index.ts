@@ -5,10 +5,10 @@ export { default as cloud2 } from "./Hero/cld-3.png";
 export { default as textStar } from "./Hero/text-star.png";
 export { default as cloudHero } from "./Hero/bg-clouds_1-merged.png?format=webp&quality=80";
 export { default as bgHero } from "./Hero/Hero-BG.png?format=webp&quality=80";
+export { default as bgHeroFull } from "./Hero/hero-bg-full.png?format=webp&quality=80";
 export { default as ferrisWheel } from "./Hero/ferris-wheel.svg";
 export { default as swingRide } from "./Hero/swing-ride.svg";
 export { default as leftRollercoaster } from "./Hero/left-rollercoaster.svg";
 export { default as rightBuilding } from "./Hero/right-building.svg";
 export { default as cardImagePlaceholder } from "./BestOfBlueSky/card-image.png?format=webp&quality=80";
-
 export { default as bobsBg } from "./BestOfBlueSky/BOBS-bg.png?format=webp&quality=80";

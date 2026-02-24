@@ -1,22 +1,9 @@
-import { blueSkyLogoCropped, cloud1, cloud2, textStar } from "../../../assets";
+import { blueSkyLogoCropped, textStar } from "../../../assets";
 
 const HeroBrand = () => (
   <div className="relative mb-6 flex flex-col items-center leading-none select-none">
     <div className="logo-glow flex flex-col items-center">
-      <img
-        src={cloud2}
-        alt="Cloud 2"
-        className="absolute w-38 h-auto z-20 top-75 -left-13"
-        decoding="async"
-      />
-      <img
-        src={cloud1}
-        alt="Cloud 1"
-        className="absolute w-44 h-auto z-20 top-30 -right-25"
-        decoding="async"
-      />
-
-      <div className="logo-container z-0 relative">
+      <div className=" z-10 relative">
         <img
           src={blueSkyLogoCropped}
           alt="BLUE SKY logo"
