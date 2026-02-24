@@ -38,10 +38,10 @@ const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
 
     {/* Content */}
     <div className="flex flex-col flex-1 px-5 pt-5 pb-6">
-      <h3 className="font-display font-bold text-navy-dark text-lg leading-snug mb-1">
+      <h3 className="font-satoshi font-bold text-navy-dark text-lg leading-snug mb-1">
         {attraction.name}
       </h3>
-      <p className="text-navy-main/70 text-sm leading-relaxed mb-3">
+      <p className="font-satoshi text-navy-main/70 text-sm leading-relaxed mb-3">
         {attraction.description}
       </p>
 
@@ -49,7 +49,7 @@ const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
 
       {attraction.inclusions && attraction.inclusions.length > 0 && (
         <div className="mb-4">
-          <p className="font-bold text-navy-dark text-sm mb-2">Inclusions</p>
+          <p className="font-satoshi font-bold text-navy-dark text-sm mb-2">Inclusions</p>
           <ul className="space-y-2">
             {attraction.inclusions.map((item) => (
               <li
