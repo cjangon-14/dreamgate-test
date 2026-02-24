@@ -26,11 +26,12 @@ const HeroBottomClouds = () => {
         src={cloudHero}
         alt=""
         aria-hidden="true"
-        className="absolute w-full left-0 -bottom-4 sm:-bottom-8 md:-bottom-14 lg:-bottom-20 xl:-bottom-30 cloud-animated"
+        className="absolute w-full left-0 bottom-10 cloud-animated"
         fetchPriority="high"
         loading="eager"
         decoding="async"
       />
+      <div className="bg-white w-full h-[50px] absolute left-0 bottom-0 "/>
     </div>
   );
 };
