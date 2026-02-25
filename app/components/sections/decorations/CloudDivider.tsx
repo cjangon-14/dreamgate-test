@@ -4,7 +4,6 @@ import React from 'react'
 const CloudDivider = () => {
   return (
     <div className="relative z-30 -mt-20 -mb-20 pointer-events-none select-none">
-      {/* Left sun */}
       <img
         src={cloudDivider}
         alt=""

@@ -115,7 +115,7 @@ const FunThatLasts = () => {
     : "translateX(0%)";
 
   return (
-    <section className="relative overflow-hidden pt-20 md:pt-28 pb-48 z-20 bg-navy-dark min-h-screen">
+    <section className="relative overflow-hidden pt-20 md:pt-28 pb-64 z-20 bg-navy-dark min-h-screen">
 
       {/* Fun That Lasts - BG */}
       <div
