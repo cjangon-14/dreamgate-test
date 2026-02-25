@@ -20,7 +20,7 @@ const HeroBottomClouds = () => {
   }, []);
 
   return (
-    <div className="absolute bottom-0 left-0 w-full z-10 pointer-events-none">
+    <div className="absolute -bottom-30 left-0 w-full z-5 pointer-events-none">
       <img
         ref={imgRef}
         src={cloudHero}
@@ -31,7 +31,7 @@ const HeroBottomClouds = () => {
         loading="eager"
         decoding="async"
       />
-      <div className="bg-white w-full h-[50px] absolute left-0 bottom-0 "/>
+      <div className="bg-white w-full h-[50px] absolute left-0 bottom-0 z-4 opacity-30 "/>
     </div>
   );
 };

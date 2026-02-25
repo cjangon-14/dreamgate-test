@@ -13,9 +13,9 @@ const categoryLabel: Record<Attraction["category"], string> = {
 };
 
 const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
-  <div className="card-base flex flex-col overflow-hidden p-0! group">
+  <div className="card-base flex flex-col overflow-hidden p-0! group ">
     {/* Image */}
-    <div className="relative w-full h-60.5 overflow-hidden rounded-t-[20px] shrink-0 isolate">
+    <div className="relative w-full h-auto overflow-hidden rounded-t-[20px] shrink-0 isolate">
       <img
         src={attraction.image}
         alt={attraction.name}
@@ -49,7 +49,9 @@ const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
 
       {attraction.inclusions && attraction.inclusions.length > 0 && (
         <div className="mb-4">
-          <p className="font-satoshi font-bold text-navy-dark text-sm mb-2">Inclusions</p>
+          <p className="font-satoshi font-bold text-navy-dark text-sm mb-2">
+            Inclusions
+          </p>
           <ul className="space-y-2">
             {attraction.inclusions.map((item) => (
               <li
@@ -77,7 +79,13 @@ const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
               {attraction.choices.map((choice) => (
                 <span
                   key={choice}
-                  className="px-2.5 py-1 rounded-md border border-navy-main/25 text-navy-main text-xs font-semibold uppercase tracking-wide"
+                  className="px-2.5 py-1 rounded-md border-0 text-xs font-semibold uppercase tracking-wide"
+                  style={{
+                    color: attraction.color,
+                    backgroundColor: attraction.color
+                      ? `${attraction.color}14`
+                      : undefined,
+                  }}
                 >
                   {choice}
                 </span>
@@ -87,10 +95,10 @@ const AttractionCard = ({ attraction }: { attraction: Attraction }) => (
         </div>
       )}
 
-      <div className="mt-auto pt-4 border-t border-gray-100">
+      <div className="mt-auto border-t border-gray-100">
         <a
           href="#book"
-          className="w-full block text-center px-5 py-3 rounded-xl border-2 border-navy-dark/20 text-navy-dark text-sm font-bold uppercase tracking-widest hover:bg-navy-dark hover:text-white transition-colors duration-200"
+          className="w-full block text-center px-5 py-3 rounded-xl border-2 border-navy-dark/20 text-[#455873] text-sm font-bold uppercase tracking-widest hover:bg-navy-dark hover:text-white transition-colors duration-200"
         >
           Book Now
         </a>

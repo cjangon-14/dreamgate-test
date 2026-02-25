@@ -12,3 +12,7 @@ export { default as leftRollercoaster } from "./Hero/left-rollercoaster.svg";
 export { default as rightBuilding } from "./Hero/right-building.svg";
 export { default as cardImagePlaceholder } from "./BestOfBlueSky/card-image.png?format=webp&quality=80";
 export { default as bobsBg } from "./BestOfBlueSky/BOBS-bg.png?format=webp&quality=80";
+export { default as ftlBg } from "./FunThatLasts/ftl-bg.png?format=webp&quality=80";
+export { default as sectionDivider } from "./decorations/stars-moons-suns.png"
+export { default as aboutUsBg } from "./AboutUs/AU-bg.png?format=webp&quality=80";
+export { default as cloudDivider } from "./AboutUs/cloud-divider.png?format=webp&quality=80";

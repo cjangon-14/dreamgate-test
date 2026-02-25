@@ -8,6 +8,7 @@ export interface Attraction {
   badgeColor?: string;
   inclusions?: string[];
   choices?: string[];
+  color?: string;
   price: number;
   category: 'ride' | 'show' | 'experience';
   ageRequirement?: number;

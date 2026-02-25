@@ -14,6 +14,8 @@
  *   DELETE /attractions/:id      – delete (admin)
  */
 
+//----- http://192.168.122.80:8000/api/client/v1/packages----- //
+
 import { apiClient } from './client';
 import type { Attraction } from '../types';
 

@@ -1,11 +1,15 @@
 import { bobsBg } from "~/assets";
 
 const BobsBackground = () => (
-  <div className="hidden lg:block absolute inset-0 z-10 pointer-events-none">
+  <div className="hidden lg:block absolute inset-1 z-10 pointer-events-none">
     <img
       src={bobsBg}
       alt=""
-      className="w-full h-full object-cover object-bottom"
+      className="hidden lg:block absolute z-0 pointer-events-none
+             bg-cover
+             bg-bottom
+             bg-no-repeat
+             w-full h-full"
       fetchPriority="high"
       loading="eager"
       decoding="async"

@@ -3,8 +3,7 @@
 @import "./styles/bitcrusher.css";
 @import "./styles/goteam.css";
 
-@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
-@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+
 
 @theme {
   --color-sky-light: #c3eff2;
@@ -21,12 +20,11 @@
   --color-cloud-light: #ccf0f3;
   --color-primary: #047c88;
   --color-secondary: #065a64;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
   --font-bitcrusher: "Bitcrusher", ui-sans-serif, system-ui, sans-serif;
   --font-goteam: "Goteam", ui-sans-serif, system-ui, sans-serif;
   --animate-cloud-rise: cloud-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  --animate-marquee: marquee 30s linear infinite;
 }
 /* yellow- FFB52B blue-06AEBD  */
 
@@ -49,6 +47,11 @@
   50% {
     transform: translateY(-5px);
   }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @layer utilities {
@@ -127,7 +130,7 @@ body {
 }
 
 .container-max {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  @apply max-w-3/4 mx-auto px-4 sm:px-6 lg:px-8;
 }
 
 /* .text-gradient {
@@ -150,7 +153,7 @@ body {
 }
 
 .price-tag {
-  @apply text-xl text-navy-dark font-goteam;
+  @apply text-lg text-navy-dark font-goteam;
 }
 
 .badge-featured {

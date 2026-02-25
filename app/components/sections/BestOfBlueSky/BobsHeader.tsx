@@ -1,8 +1,5 @@
 const BobsHeader = () => (
   <div className="text-center mb-12">
-    <p className="text-sky-main font-semibold uppercase tracking-widest text-sm mb-2">
-      Highlights
-    </p>
     <h2 className="section-title">
       The Best <span className="text-[#06AEBD]"> of Blue Sky</span>
     </h2>

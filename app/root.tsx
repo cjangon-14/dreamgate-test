@@ -7,8 +7,11 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+
+import Lenis from "lenis";
 import type { Route } from "./+types/root";
 import "./app.css";
+import { useEffect } from "react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -24,6 +27,15 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }, []);
   return (
     <html lang="en">
       <head>
