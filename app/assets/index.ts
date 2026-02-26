@@ -16,3 +16,8 @@ export { default as ftlBg } from "./FunThatLasts/ftl-bg.png?format=webp&quality=
 export { default as sectionDivider } from "./decorations/stars-moons-suns.png"
 export { default as aboutUsBg } from "./AboutUs/AU-bg.png?format=webp&quality=80";
 export { default as cloudDivider } from "./AboutUs/cloud-divider.png?format=webp&quality=80";
+export { default as mascotImage } from "./AboutUs/mascot_1.png?format=webp&quality=80";
+export { default as missionIcon } from "./AboutUs/Capa_1.png?format=webp&quality=80";
+export { default as visionIcon } from "./AboutUs/Rocket.png?format=webp&quality=80";
+export { default as coreValuesBg } from "./CoreValues/core-bg_1.png?format=webp&quality=80";
+export { default as mascotWbs } from "./WhyBlueSky/mascot-wbs.png?format=webp&quality=80";

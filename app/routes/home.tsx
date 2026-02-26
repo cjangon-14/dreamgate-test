@@ -6,6 +6,10 @@ import FunThatLasts from "~/components/sections/FunThatLasts";
 import SectionDivider from "~/components/sections/decorations/SectionDivider";
 import AboutUs from "~/components/sections/AboutUs";
 import CloudDivider from "~/components/sections/decorations/CloudDivider";
+import CoreValues from "~/components/sections/CoreValues";
+import WhyBlueSky from "~/components/sections/WhyBlueSky";
+import JustHaveFun from "~/components/sections/JustHaveFun";
+import ContactUs from "~/components/sections/ContactUs";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -24,6 +28,10 @@ export default function Home() {
       <FunThatLasts />
       <CloudDivider />
       <AboutUs />
+      <CoreValues />
+      <WhyBlueSky />
+      <JustHaveFun />
+      <ContactUs />
     </>
   );
 }

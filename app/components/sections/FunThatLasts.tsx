@@ -124,7 +124,7 @@ const FunThatLasts = () => {
       />
 
       {/* Header */}
-      <div className="container-max text-center mb-12">
+      <div className="container-fun text-center">
         <h2 className="section-title">
           Fun That Lifts You{" "}
           <span className="text-sky-main">Above The Ordinary</span>
@@ -136,7 +136,7 @@ const FunThatLasts = () => {
       </div>
 
       {/* Carousel */}
-      <div className="container-max">
+      <div className="container-fun">
         {/* Viewport — clips the 200%-wide strip */}
         <div className="overflow-hidden">
           <div

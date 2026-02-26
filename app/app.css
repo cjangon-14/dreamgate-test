@@ -10,11 +10,11 @@
   --color-sky-main: #04afbd;
   --color-sky-dark: #038c99;
   --color-sky-darker: #026a75;
-  --color-accent-yellow: #ffd480;
+  --color-accent-yellow: #FFB52B;
   --color-accent-orange: #ffb42a;
   --color-accent-gold: #e09a0a;
-  --color-navy-dark: #042d32;
-  --color-navy-main: #065a64;
+  --color-navy-dark: #003154;
+  --color-navy-main: #06AEBD;
   --color-navy-light: #0a8a98;
   --color-cloud-white: #f0fcfd;
   --color-cloud-light: #ccf0f3;
@@ -26,7 +26,7 @@
   --animate-cloud-rise: cloud-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   --animate-marquee: marquee 30s linear infinite;
 }
-/* yellow- FFB52B blue-06AEBD  */
+/* yellow- FFB52B blue-06AEBD, 003154  */
 
 @keyframes cloud-rise {
   from {
@@ -45,7 +45,7 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
   }
 }
 
@@ -64,7 +64,7 @@
 
 html,
 body {
-  @apply bg-cloud-white min-h-screen;
+  @apply bg-cloud-white min-h-screen overflow-x-hidden;
 }
 
 @layer utilities {
@@ -130,9 +130,25 @@ body {
 }
 
 .container-max {
-  @apply max-w-3/4 mx-auto px-4 sm:px-6 lg:px-8;
+  @apply max-w-3/4 mx-auto px-4 mt-50 sm:px-6 lg:px-8;
 }
 
+.container-fun {
+  @apply max-w-3/4 mx-auto px-4 mt-10 mb-20 sm:px-6 lg:px-8;
+}
+
+
+.container-max2 {
+  @apply max-w-10/12 mx-auto ml-80 px-4 sm:px-6 lg:px-8;
+}
+
+.container-core {
+  @apply max-w-3/4 mx-auto px-4 mt-10  sm:px-6 lg:px-8;
+}
+
+.container-wbs {
+  @apply max-w-3/4 mx-auto px-4 mt-10  sm:px-6 lg:px-8;
+}
 /* .text-gradient {
   @apply bg-gradient-to-r text-transparent bg-clip-text;
   background-image: linear-gradient(
@@ -161,3 +177,20 @@ body {
 }
 
 /* Best of Blue Sky */
+
+/* Gradient border with transparent background */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 3rem;
+  padding: 4px;
+  background: linear-gradient(to right, #c78814 0%, #ffd993 32%, #ffb01d 72%, #d08800 99%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
