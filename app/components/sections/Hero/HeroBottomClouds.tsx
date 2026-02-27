@@ -31,7 +31,7 @@ const HeroBottomClouds = () => {
         loading="eager"
         decoding="async"
       />
-      <div className="bg-white w-full h-[50px] absolute left-0 bottom-0 z-4 opacity-30 "/>
+      <div className="bg-white w-full h-12.5 absolute left-0 bottom-0 z-4 opacity-30 "/>
     </div>
   );
 };

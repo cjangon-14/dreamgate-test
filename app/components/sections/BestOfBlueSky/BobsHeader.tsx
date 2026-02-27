@@ -1,7 +1,7 @@
 const BobsHeader = () => (
   <div className="text-center mb-12">
     <h2 className="section-title">
-      The Best <span className="text-[#06AEBD]"> of Blue Sky</span>
+      The Best <span className="text-navy-main"> of Blue Sky</span>
     </h2>
     <p className="section-subtitle">
       Discover world-class rides, immersive experiences, and unforgettable

@@ -1,7 +1,7 @@
 import { aboutUsBg } from "~/assets";
 
 const AboutUsTop = () => (
-  <div className="relative flex-[3] px-6 md:px-12 py-16 md:py-24 flex items-start md:items-center bg-linear-to-b from-[#CAF7FF] to-[#6ed8f5] overflow-hidden">
+  <div className="relative flex-3 px-6 md:px-12 py-16 md:py-24 flex items-start md:items-center bg-linear-to-b from-[#CAF7FF] to-[#6ed8f5] overflow-hidden">
     <div className="absolute -top-50 left-0 w-full pointer-events-none">
       <img src={aboutUsBg} alt="" className="w-full" />
     </div>

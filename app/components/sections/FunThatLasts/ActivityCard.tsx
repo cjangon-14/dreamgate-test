@@ -2,7 +2,7 @@ import { cardImagePlaceholder } from "~/assets";
 import type { FunActivity } from "~/types";
 
 const ActivityCard = ({ activity }: { activity: FunActivity }) => (
-  <div className="relative rounded-2xl overflow-hidden h-[300px] sm:h-[360px] md:h-[430px] cursor-pointer">
+  <div className="relative rounded-2xl overflow-hidden h-75 sm:h-90 md:h-107.5 cursor-pointer">
     <img
       src={cardImagePlaceholder}
       alt={activity.title}
