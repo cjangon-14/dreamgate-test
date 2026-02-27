@@ -16,27 +16,50 @@
 
 //----- http://192.168.122.80:8000/api/client/v1/packages----- //
 
-import { apiClient } from './client';
 import type { Attraction } from '../types';
+
+const API_PACKAGES_URL = import.meta.env.VITE_API_PACKAGES_URL;
+const API_ATTRACTIONS_URL = import.meta.env.VITE_API_PACKAGES_ATTRACTIONS_URL;
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const fetchList = (url: string): Promise<any[]> =>
+  fetch(url)
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((data) =>
+      Array.isArray(data)
+        ? data
+        : (data.data ?? data.results ?? data.packages ?? [])
+    );
 
 // ─── Queries ──────────────────────────────────────────────────────────────────
 
-/** Fetch all attractions, optionally filtered by category or featured flag. */
-export async function getAttractions(params?: {
-  category?: Attraction['category'];
-  featured?: boolean;
-}): Promise<Attraction[]> {
-  // TODO: remove fallback once API is live
-  // const query = new URLSearchParams(params as Record<string, string>).toString();
-  // const { data } = await apiClient.get<Attraction[]>(`/attractions?${query}`);
-  // return data;
+/** Fetch all packages merged with their nested attractions. */
+export async function getAttractions(): Promise<Attraction[]> {
+  const [packagesList, attractionsList] = await Promise.all([
+    fetchList(API_PACKAGES_URL),
+    API_ATTRACTIONS_URL
+      ? fetchList(API_ATTRACTIONS_URL)
+      : Promise.resolve([]),
+  ]);
 
-  // --- PLACEHOLDER: using local data until API is ready ---
-  const { attractions } = await import('../data/attractions');
-  let result = [...attractions];
-  if (params?.category) result = result.filter((a) => a.category === params.category);
-  if (params?.featured !== undefined) result = result.filter((a) => a.featured === params.featured);
-  return result;
+  // Map attractions data from attractionsList by package id
+  const attractionsMap = new Map<string, any[]>(
+    attractionsList.map((a: any) => [String(a.id), a.attractions])
+  );
+
+  const seenIds = new Set(packagesList.map((a: any) => String(a.id)));
+
+  return [
+    ...packagesList.map((item: Attraction) => ({
+      ...item,
+      attractions: attractionsMap.get(String(item.id)) ?? item.attractions,
+    })),
+    ...attractionsList.filter((a: any) => !seenIds.has(String(a.id))),
+  ] as Attraction[];
 }
 
 /** Fetch a single attraction by ID. */

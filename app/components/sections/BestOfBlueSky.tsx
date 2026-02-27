@@ -1,7 +1,6 @@
 import BobsBackground from "./BestOfBlueSky/BobsBackground";
 import BobsHeader from "./BestOfBlueSky/BobsHeader";
 import BobsGrid from "./BestOfBlueSky/BobsGrid";
-
 const BestOfBlueSky = () => (
   <section className="bobs-bg relative overflow-hidden min-h-screen">
     <BobsBackground />

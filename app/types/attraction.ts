@@ -1,20 +1,29 @@
 export interface Attraction {
   id: string;
   name: string;
+  label: string;
   description: string;
-  image: string;
+  image_path: string;
+  selectable_attractions: number;
+  attractions?: AttractionItem[];
+  start_date: string | null;
+  end_date: string | null;
+  status: number;
+  free_attractions: string[];
   gradient?: string;
-  badgeLabel?: string;
   badgeColor?: string;
   inclusions?: string[];
   choices?: string[];
   color?: string;
-  price: number;
-  category: 'ride' | 'show' | 'experience';
-  ageRequirement?: number;
-  maxHeight?: number;
+  base_amount: number;
+  category: "ride" | "show" | "experience";
   featured: boolean;
 }
+
+export type AttractionItem = {
+  id: number;
+  name: string;
+};
 
 export interface CoreValue {
   id: string;

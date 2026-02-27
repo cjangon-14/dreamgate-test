@@ -19,5 +19,9 @@ export { default as cloudDivider } from "./AboutUs/cloud-divider.png?format=webp
 export { default as mascotImage } from "./AboutUs/mascot_1.png?format=webp&quality=80";
 export { default as missionIcon } from "./AboutUs/Capa_1.png?format=webp&quality=80";
 export { default as visionIcon } from "./AboutUs/Rocket.png?format=webp&quality=80";
-export { default as coreValuesBg } from "./CoreValues/core-bg_1.png?format=webp&quality=80";
+export { default as coreValuesBg } from "./CoreValues/core-bg_2.png?format=webp&quality=80";
 export { default as mascotWbs } from "./WhyBlueSky/mascot-wbs.png?format=webp&quality=80";
+export { default as mobileBg } from "./mobile/mobile-bg.png?format=webp&quality=80";
+export { default as footerBSLogo } from "./Footer/BSlogo-3d_1.png";
+export { default as footerBYBLogo } from "./Footer/BYB-logo.png";
+export { default as footerGovLogo } from "./Footer/gov-logo.png";

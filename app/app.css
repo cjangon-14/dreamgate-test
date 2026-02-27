@@ -20,13 +20,14 @@
   --color-cloud-light: #ccf0f3;
   --color-primary: #047c88;
   --color-secondary: #065a64;
+  --color-regular: #455873;
   --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
   --font-bitcrusher: "Bitcrusher", ui-sans-serif, system-ui, sans-serif;
   --font-goteam: "Goteam", ui-sans-serif, system-ui, sans-serif;
   --animate-cloud-rise: cloud-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   --animate-marquee: marquee 30s linear infinite;
 }
-/* yellow- FFB52B blue-06AEBD, 003154  */
+/* yellow- FFB52B blue-06AEBD, 003154  455873*/
 
 @keyframes cloud-rise {
   from {
