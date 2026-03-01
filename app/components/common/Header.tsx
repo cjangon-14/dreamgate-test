@@ -11,14 +11,17 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      // Using document.documentElement.scrollTop for better compatibility with Lenis
+      setScrolled(document.documentElement.scrollTop > 50);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
-      className={`fixed top-0 z-100 w-full transition-all duration-300  ${
+      className={`fixed top-0 z-50 w-full transition-all duration-300  ${
         scrolled
           ? "bg-cloud-white/90 shadow-md backdrop-blur-md"
           : "bg-transparent"
