@@ -11,9 +11,11 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Booking() {
   return (
-    <div className="container mx-auto px-6 py-12 md:py-20">
+    <div className=" min-h-screen py-12 md:py-16">
       <BookingHeader />
-      <BookingGrid />
+      <div className="container mx-auto px-12 md:px-38 py-6 md:py-8">
+        <BookingGrid />
+      </div>
     </div>
   );
 }

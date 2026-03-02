@@ -50,7 +50,7 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t-4 border-sky-main mx-auto">
+    <footer className="bg-white border-t-4 border-sky-main">
       {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Left: Logo + Info */}

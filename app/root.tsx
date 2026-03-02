@@ -7,7 +7,6 @@ import {
   ScrollRestoration,
 } from "react-router";
 
-
 import Lenis from "lenis";
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -25,8 +24,16 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
-
 export function Layout({ children }: { children: React.ReactNode }) {
+ useEffect(() => {
+   // 1. Tell the browser NOT to remember the last scroll position
+   if ("scrollRestoration" in window.history) {
+     window.history.scrollRestoration = "manual";
+   }
+   // 2. Jump to top instantly (auto is the default for scrollTo)
+   window.scrollTo(0, 0);
+ }, []);
+
   useEffect(() => {
     const lenis = new Lenis();
     let rafId: number;
@@ -36,12 +43,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       rafId = requestAnimationFrame(raf);
     }
     rafId = requestAnimationFrame(raf);
+
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
-    }
+    };
   }, []);
-  
+
   return (
     <html lang="en">
       <head>

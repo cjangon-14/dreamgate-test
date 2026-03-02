@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import headerLogo from "../../assets/Header/header-logo.svg";
 
 const navLinks = [
-  { label: "Section 1", href: "#section-1" },
-  { label: "Section 2", href: "#section-2" },
-  { label: "Section 3", href: "#section-3" },
+  { label: "Home", href: "/" },
+  { label: "Attractions", href: "/attractions" },
+  { label: "Booking", href: "/booking" },
+  { label: "About", href: "/about" },
 ];
 
 const Header = () => {
@@ -21,7 +23,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300  ${
+      className={`fixed top-0 z-100 w-full transition-all duration-300  ${
         scrolled
           ? "bg-cloud-white/90 shadow-md backdrop-blur-md"
           : "bg-transparent"
@@ -29,9 +31,9 @@ const Header = () => {
     >
       <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10">
         {/* Logo */}
-        <div className="flex shrink-0 items-center">
+        <Link to="/" className="flex shrink-0 items-center">
           <img src={headerLogo} alt="Blue Sky logo" className="h-7 w-auto" />
-        </div>
+        </Link>
 
         {/* Nav Sections */}
         <nav className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-8 md:flex">
