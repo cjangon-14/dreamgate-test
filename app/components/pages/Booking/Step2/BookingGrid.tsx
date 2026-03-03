@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BookingStep1 from "../Step1/BookingStep1";
 import BookingStep2Local from "./BookingStep2Local";
+import BookingStep3 from "../BookingStep3";
+import BookingStep4 from "../BookingStep4";
 import BookingSummary from "./BookingSummary";
 import BookingStepHeader from "./BookingStepHeader";
 
@@ -35,6 +37,9 @@ export default function BookingGrid() {
   const [addOnsByPackage, setAddOnsByPackage] = useState<{
     [packageId: string]: AddOn[];
   }>({});
+  const [checkInDate, setCheckInDate] = useState<string>("");
+  const [checkOutDate, setCheckOutDate] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState<string>("");
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -82,13 +87,30 @@ export default function BookingGrid() {
           >
             {step === 1 ? (
               <BookingStep1 onNext={handleNext} />
-            ) : (
+            ) : step === 2 ? (
               <BookingStep2Local
                 onNext={handleNext}
                 onBack={handleBack}
                 selectedPackages={selectedPackages}
                 onPackagesChange={setSelectedPackages}
                 onAddOnsChange={setAddOnsByPackage}
+              />
+            ) : step === 3 ? (
+              <BookingStep3
+                onNext={handleNext}
+                onBack={handleBack}
+                checkInDate={checkInDate}
+                onCheckInDateChange={setCheckInDate}
+                checkOutDate={checkOutDate}
+                onCheckOutDateChange={setCheckOutDate}
+                selectedPackages={selectedPackages}
+                addOnsByPackage={addOnsByPackage}
+              />
+            ) : (
+              <BookingStep4
+                onBack={handleBack}
+                paymentMethod={paymentMethod}
+                onPaymentMethodChange={setPaymentMethod}
               />
             )}
           </motion.div>
