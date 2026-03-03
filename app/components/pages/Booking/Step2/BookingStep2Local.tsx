@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BookingPackageCard from "./Step2/BookingPackageCard";
+import BookingPackageCard from "./BookingPackageCard";
 import { attractions } from "~/data/attractions";
 
 interface Package {
@@ -15,6 +15,14 @@ interface Package {
   inclusions: string[];
   choices: string[];
   quantity: number;
+  color?: string;
+}
+
+interface AddOn {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
 }
 
 interface BookingStep2Props {
@@ -22,13 +30,15 @@ interface BookingStep2Props {
   onBack: () => void;
   selectedPackages: Package[];
   onPackagesChange: (packages: Package[]) => void;
+  onAddOnsChange?: (addOnsByPackage: { [packageId: string]: AddOn[] }) => void;
 }
 
-export default function BookingStep2({
+export default function BookingStep2Local({
   onNext,
   onBack,
   selectedPackages,
   onPackagesChange,
+  onAddOnsChange,
 }: BookingStep2Props) {
   const [packages, setPackages] = useState<Package[]>(
     attractions.map((attr) => ({
@@ -43,12 +53,23 @@ export default function BookingStep2({
       gradient: attr.gradient,
       inclusions: attr.inclusions ?? [],
       choices: attr.choices ?? [],
-      color: attr.color,
       quantity: 0,
+      color: attr.color,
     })),
   );
+  const [addOnsByPackage, setAddOnsByPackage] = useState<{
+    [packageId: string]: AddOn[];
+  }>({});
 
   const handleQuantityChange = (id: string, delta: number) => {
+    const totalTickets = packages.reduce((sum, pkg) => sum + pkg.quantity, 0);
+    const MAX_TICKETS = 5;
+
+    // Only allow increment if total won't exceed limit
+    if (delta > 0 && totalTickets >= MAX_TICKETS) {
+      return;
+    }
+
     const updated = packages.map((pkg) =>
       pkg.id === id
         ? { ...pkg, quantity: Math.max(0, pkg.quantity + delta) }
@@ -56,6 +77,17 @@ export default function BookingStep2({
     );
     setPackages(updated);
     onPackagesChange(updated.filter(p => p.quantity > 0));
+  };
+
+  const totalTickets = packages.reduce((sum, pkg) => sum + pkg.quantity, 0);
+  const canAddMore = totalTickets < 5;
+
+  const handleAddOnsChange = (packageId: string, addOns: AddOn[]) => {
+    const updated = { ...addOnsByPackage, [packageId]: addOns };
+    setAddOnsByPackage(updated);
+    if (onAddOnsChange) {
+      onAddOnsChange(updated);
+    }
   };
 
   return (
@@ -78,6 +110,8 @@ export default function BookingStep2({
             key={pkg.id}
             pkg={pkg}
             onQuantityChange={handleQuantityChange}
+            onAddOnsChange={handleAddOnsChange}
+            canAddMore={canAddMore}
           />
         ))}
       </div>

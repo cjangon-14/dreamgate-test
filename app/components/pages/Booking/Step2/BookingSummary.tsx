@@ -12,17 +12,35 @@ interface Package {
   quantity: number;
 }
 
+interface AddOn {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 interface BookingSummaryProps {
   selectedPackages: Package[];
+  addOnsByPackage?: { [packageId: string]: AddOn[] };
 }
 
 export default function BookingSummary({
   selectedPackages,
+  addOnsByPackage = {},
 }: BookingSummaryProps) {
-  const total = selectedPackages.reduce(
+  const packageTotal = selectedPackages.reduce(
     (sum, pkg) => sum + pkg.price * pkg.quantity,
     0,
   );
+
+  const addOnsTotal = Object.values(addOnsByPackage).reduce(
+    (sum, addOns) =>
+      sum +
+      addOns.reduce((addOnSum, addOn) => addOnSum + addOn.price * addOn.quantity, 0),
+    0,
+  );
+
+  const total = packageTotal + addOnsTotal;
 
   return (
     <div className="border border-gray-200 rounded-xl overflow-hidden">
@@ -134,17 +152,12 @@ export default function BookingSummary({
           <div className="p-2">
             {selectedPackages.map((pkg, index) => (
               <div key={pkg.id}>
-                <div className="grid grid-cols-[1fr_auto_0.5fr] items-center gap-4 py-4">
+                <div className="grid grid-cols-[1fr_auto_0.5fr] items-center gap-4 ">
                   {/* LEFT: Package Info */}
                   <div>
                     <div className="font-satoshi font-medium text-navy-dark text-sm">
                       {pkg.label}
                     </div>
-                    {pkg.badge && (
-                      <div className="text-xs font-satoshi text-[#047C88] uppercase">
-                        (WITH ADD-ONS)
-                      </div>
-                    )}
                   </div>
 
                   {/* MIDDLE: Quantity */}
@@ -159,37 +172,37 @@ export default function BookingSummary({
                       <path
                         d="M8.25 8.16667L17.0667 3.95C17.1666 3.90216 17.2751 3.87474 17.3858 3.86933C17.4964 3.86393 17.6071 3.88064 17.7112 3.91851C17.8154 3.95638 17.9109 4.01463 17.9922 4.08987C18.0736 4.1651 18.1391 4.2558 18.185 4.35667L19.9167 8.16667"
                         stroke="#455873"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M9.5 9.83333V8.16667"
                         stroke="#455873"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M9.5 13.1667V14"
                         stroke="#455873"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M9.5 17.3333V19"
                         stroke="#455873"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M21.1665 8.16667H7.83317C6.9127 8.16667 6.1665 8.91286 6.1665 9.83333V17.3333C6.1665 18.2538 6.9127 19 7.83317 19H21.1665C22.087 19 22.8332 18.2538 22.8332 17.3333V9.83333C22.8332 8.91286 22.087 8.16667 21.1665 8.16667Z"
                         stroke="#455873"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
 
@@ -205,6 +218,16 @@ export default function BookingSummary({
                     </span>
                   </div>
                 </div>
+
+                {/* Add-Ons for this Package */}
+                {addOnsByPackage[pkg.id] &&
+                  addOnsByPackage[pkg.id].length > 0 && (
+                    <div className=" pb-3">
+                      <div className="text-sm font-satoshi font-medium text-[#047C88] ">
+                        (WITH ADD-ONS)
+                      </div>
+                    </div>
+                  )}
 
                 {index < selectedPackages.length - 1 && (
                   <div className="border-b border-gray-200" />

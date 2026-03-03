@@ -1,6 +1,6 @@
 import type { Route } from "./+types/booking";
 import BookingHeader from "~/components/pages/Booking/BookingHeader";
-import BookingGrid from "~/components/pages/Booking/BookingGrid";
+import BookingGrid from "~/components/pages/Booking/Step2/BookingGrid";
 
 export function meta({}: Route.MetaArgs) {
   return [
