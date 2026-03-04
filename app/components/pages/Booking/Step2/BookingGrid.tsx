@@ -5,7 +5,7 @@ import BookingStep2Local from "./BookingStep2Local";
 import BookingStep3 from "../BookingStep3";
 import BookingStep4 from "../BookingStep4";
 import BookingSummary from "./BookingSummary";
-import BookingStepHeader from "./BookingStepHeader";
+import BookingStepHeader from "../BookingStepHeader";
 
 interface Package {
   id: string;
@@ -101,8 +101,6 @@ export default function BookingGrid() {
                 onBack={handleBack}
                 checkInDate={checkInDate}
                 onCheckInDateChange={setCheckInDate}
-                checkOutDate={checkOutDate}
-                onCheckOutDateChange={setCheckOutDate}
                 selectedPackages={selectedPackages}
                 addOnsByPackage={addOnsByPackage}
               />

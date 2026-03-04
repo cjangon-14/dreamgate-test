@@ -41,21 +41,24 @@ export default function BookingStep2Local({
   onAddOnsChange,
 }: BookingStep2Props) {
   const [packages, setPackages] = useState<Package[]>(
-    attractions.map((attr) => ({
-      id: attr.id,
-      name: attr.name,
-      label: attr.label,
-      price: attr.base_amount,
-      description: attr.description,
-      image: attr.image_path,
-      badge: attr.name,
-      badgeColor: attr.badgeColor,
-      gradient: attr.gradient,
-      inclusions: attr.inclusions ?? [],
-      choices: attr.choices ?? [],
-      quantity: 0,
-      color: attr.color,
-    })),
+    attractions.map((attr) => {
+      const existing = selectedPackages.find((p) => p.id === attr.id);
+      return {
+        id: attr.id,
+        name: attr.name,
+        label: attr.label,
+        price: attr.base_amount,
+        description: attr.description,
+        image: attr.image_path,
+        badge: attr.name,
+        badgeColor: attr.badgeColor,
+        gradient: attr.gradient,
+        inclusions: attr.inclusions ?? [],
+        choices: attr.choices ?? [],
+        quantity: existing?.quantity ?? 0,
+        color: attr.color,
+      };
+    }),
   );
   const [addOnsByPackage, setAddOnsByPackage] = useState<{
     [packageId: string]: AddOn[];

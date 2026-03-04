@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import BookingPackageExpandedDetails from "./BookingPackageExpandedDetails";
 
 interface Package {
