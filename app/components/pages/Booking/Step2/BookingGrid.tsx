@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BookingStep1 from "../Step1/BookingStep1";
 import BookingStep2Local from "./BookingStep2Local";
-import BookingStep3 from "../BookingStep3";
+import BookingStep3 from "../Step3/BookingStep3";
 import BookingStep4 from "../BookingStep4";
 import BookingSummary from "./BookingSummary";
 import BookingStepHeader from "../BookingStepHeader";
@@ -58,7 +58,7 @@ export default function BookingGrid() {
   });
   const [checkInDate, setCheckInDate] = useState<string>("");
   const [checkOutDate, setCheckOutDate] = useState<string>("");
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
+
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -78,6 +78,7 @@ export default function BookingGrid() {
   };
 
   const handleNext = () => {
+    if (step === 2 && selectedPackages.length === 0) return;
     setDirection(1);
     setStep(step + 1);
   };
@@ -133,8 +134,6 @@ export default function BookingGrid() {
             ) : (
               <BookingStep4
                 onBack={handleBack}
-                paymentMethod={paymentMethod}
-                onPaymentMethodChange={setPaymentMethod}
               />
             )}
           </motion.div>

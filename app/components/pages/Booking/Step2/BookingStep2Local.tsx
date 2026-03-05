@@ -162,19 +162,27 @@ export default function BookingStep2Local({
       <hr className="border-gray-200 mb-6" />
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <button
           onClick={onBack}
           className="border border-navy-dark/20 text-navy-dark font-satoshi font-bold px-8 py-2.5 rounded-lg hover:bg-gray-50 transition cursor-pointer"
         >
           Back
         </button>
-        <button
-          onClick={onNext}
-          className="bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-pointer"
-        >
-          Next
-        </button>
+        <div className="flex flex-col items-end gap-1">
+          {totalTickets === 0 && (
+            <p className="text-xs text-red-500 font-satoshi">
+              Please select at least one package to continue.
+            </p>
+          )}
+          <button
+            onClick={() => { if (totalTickets > 0) onNext(); }}
+            disabled={totalTickets === 0}
+            className="bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition disabled:bg-gray-light disabled:text-gray-main disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );
