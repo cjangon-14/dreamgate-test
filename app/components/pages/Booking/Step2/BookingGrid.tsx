@@ -30,13 +30,32 @@ interface AddOn {
   quantity: number;
 }
 
+interface TicketAddOns {
+  [ticketNumber: number]: AddOn[];
+}
+
 export default function BookingGrid() {
   const [step, setStep] = useState(1);
-  const [direction, setDirection] = useState(1); // 1 for forward, -1 for back
+  const [direction, setDirection] = useState(1);
   const [selectedPackages, setSelectedPackages] = useState<Package[]>([]);
   const [addOnsByPackage, setAddOnsByPackage] = useState<{
     [packageId: string]: AddOn[];
   }>({});
+  const [ticketAddOnsByPackage, setTicketAddOnsByPackage] = useState<{
+    [packageId: string]: TicketAddOns;
+  }>({});
+  const [ticketChoicesByPackage, setTicketChoicesByPackage] = useState<{
+    [packageId: string]: { [ticketNumber: number]: string[] };
+  }>({});
+  const [step1FormData, setStep1FormData] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    suffix: "",
+    address: "",
+    age: "",
+    gender: "",
+  });
   const [checkInDate, setCheckInDate] = useState<string>("");
   const [checkOutDate, setCheckOutDate] = useState<string>("");
   const [paymentMethod, setPaymentMethod] = useState<string>("");
@@ -86,7 +105,7 @@ export default function BookingGrid() {
             className="w-full"
           >
             {step === 1 ? (
-              <BookingStep1 onNext={handleNext} />
+              <BookingStep1 onNext={handleNext} formData={step1FormData} onFormDataChange={setStep1FormData} />
             ) : step === 2 ? (
               <BookingStep2Local
                 onNext={handleNext}
@@ -94,6 +113,11 @@ export default function BookingGrid() {
                 selectedPackages={selectedPackages}
                 onPackagesChange={setSelectedPackages}
                 onAddOnsChange={setAddOnsByPackage}
+                addOnsByPackage={addOnsByPackage}
+                ticketAddOnsByPackage={ticketAddOnsByPackage}
+                onTicketAddOnsChange={setTicketAddOnsByPackage}
+                ticketChoicesByPackage={ticketChoicesByPackage}
+                onTicketChoicesChange={setTicketChoicesByPackage}
               />
             ) : step === 3 ? (
               <BookingStep3
@@ -103,6 +127,8 @@ export default function BookingGrid() {
                 onCheckInDateChange={setCheckInDate}
                 selectedPackages={selectedPackages}
                 addOnsByPackage={addOnsByPackage}
+                ticketAddOnsByPackage={ticketAddOnsByPackage}
+                ticketChoicesByPackage={ticketChoicesByPackage}
               />
             ) : (
               <BookingStep4

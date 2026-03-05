@@ -19,6 +19,7 @@ const localStyleMap = Object.fromEntries(
       color: a.color,
       image_path: a.image_path,
       inclusions: a.inclusions,
+      choices: a.choices,
       _order: i,
     },
   ]),
@@ -26,7 +27,7 @@ const localStyleMap = Object.fromEntries(
 
 const localNameOrder = localAttractions.map((a) => normName(a.name));
 
-const BobsGrid = () => {
+const BobsGridAPI = () => {
   const [attractions, setAttractions] = useState<Attraction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +45,7 @@ const BobsGrid = () => {
               color: local.color ?? item.color,
               image_path: local.image_path || item.image_path,
               inclusions: local.inclusions ?? item.inclusions,
+              choices: local.choices ?? item.choices,
             };
           })
           .sort((a, b) => {
@@ -85,4 +87,4 @@ const BobsGrid = () => {
   );
 };
 
-export default BobsGrid;
+export default BobsGridAPI;

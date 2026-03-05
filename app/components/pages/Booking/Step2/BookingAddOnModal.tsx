@@ -57,7 +57,7 @@ export default function BookingAddOnModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-3xl p-8 w-full max-w-2xl max-h-[80vh] overflow-y-auto">
+      <div className="bg-white rounded-3xl p-8 w-full max-w-2xl max-h-[85vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <div>
@@ -138,13 +138,13 @@ export default function BookingAddOnModal({
         <div className="flex gap-3 pt-6 border-t border-gray-200">
           <button
             onClick={onClose}
-            className="flex-1 border border-gray-300 text-navy-dark font-satoshi font-bold py-3 rounded-xl hover:bg-gray-50 transition"
+            className="flex-1 border border-gray-300 text-navy-dark font-satoshi font-bold py-3 rounded-xl hover:bg-gray-50 transition hover:cursor-pointer"
           >
             Back
           </button>
           <button
             onClick={() => onConfirm(addOns)}
-            className="flex-1 bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold py-3 rounded-xl transition"
+            className="flex-1 bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold py-3 rounded-xl transition hover:cursor-pointer"
           >
             Done
           </button>

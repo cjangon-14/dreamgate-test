@@ -97,7 +97,7 @@ const AttractionCardLocal = ({ attraction }: { attraction: Attraction }) => (
 
       <div className="mt-auto border-t border-gray-100">
         <a
-          href="#book"
+          href="/booking"
           className="w-full block text-center px-5 py-3 rounded-xl border-2 border-navy-dark/20 text-regular text-sm font-bold uppercase tracking-widest hover:bg-navy-dark hover:text-white transition-colors duration-200"
         >
           Book Now

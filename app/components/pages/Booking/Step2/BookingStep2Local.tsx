@@ -25,12 +25,25 @@ interface AddOn {
   quantity: number;
 }
 
+interface TicketAddOns {
+  [ticketNumber: number]: AddOn[];
+}
+
+interface TicketChoices {
+  [ticketNumber: number]: string[];
+}
+
 interface BookingStep2Props {
   onNext: () => void;
   onBack: () => void;
   selectedPackages: Package[];
   onPackagesChange: (packages: Package[]) => void;
   onAddOnsChange?: (addOnsByPackage: { [packageId: string]: AddOn[] }) => void;
+  addOnsByPackage?: { [packageId: string]: AddOn[] };
+  ticketAddOnsByPackage?: { [packageId: string]: TicketAddOns };
+  onTicketAddOnsChange?: (ticketAddOnsByPackage: { [packageId: string]: TicketAddOns }) => void;
+  ticketChoicesByPackage?: { [packageId: string]: TicketChoices };
+  onTicketChoicesChange?: (ticketChoicesByPackage: { [packageId: string]: TicketChoices }) => void;
 }
 
 export default function BookingStep2Local({
@@ -39,6 +52,11 @@ export default function BookingStep2Local({
   selectedPackages,
   onPackagesChange,
   onAddOnsChange,
+  addOnsByPackage: initialAddOns = {},
+  ticketAddOnsByPackage: initialTicketAddOns = {},
+  onTicketAddOnsChange,
+  ticketChoicesByPackage: initialTicketChoices = {},
+  onTicketChoicesChange,
 }: BookingStep2Props) {
   const [packages, setPackages] = useState<Package[]>(
     attractions.map((attr) => {
@@ -62,7 +80,13 @@ export default function BookingStep2Local({
   );
   const [addOnsByPackage, setAddOnsByPackage] = useState<{
     [packageId: string]: AddOn[];
-  }>({});
+  }>(initialAddOns);
+  const [ticketAddOnsByPackage, setTicketAddOnsByPackage] = useState<{
+    [packageId: string]: TicketAddOns;
+  }>(initialTicketAddOns);
+  const [ticketChoicesByPackage, setTicketChoicesByPackage] = useState<{
+    [packageId: string]: TicketChoices;
+  }>(initialTicketChoices);
 
   const handleQuantityChange = (id: string, delta: number) => {
     const totalTickets = packages.reduce((sum, pkg) => sum + pkg.quantity, 0);
@@ -85,11 +109,24 @@ export default function BookingStep2Local({
   const totalTickets = packages.reduce((sum, pkg) => sum + pkg.quantity, 0);
   const canAddMore = totalTickets < 5;
 
-  const handleAddOnsChange = (packageId: string, addOns: AddOn[]) => {
-    const updated = { ...addOnsByPackage, [packageId]: addOns };
-    setAddOnsByPackage(updated);
+  const handleAddOnsChange = (packageId: string, addOns: AddOn[], ticketAddOns: TicketAddOns) => {
+    const updatedFlat = { ...addOnsByPackage, [packageId]: addOns };
+    setAddOnsByPackage(updatedFlat);
     if (onAddOnsChange) {
-      onAddOnsChange(updated);
+      onAddOnsChange(updatedFlat);
+    }
+    const updatedTickets = { ...ticketAddOnsByPackage, [packageId]: ticketAddOns };
+    setTicketAddOnsByPackage(updatedTickets);
+    if (onTicketAddOnsChange) {
+      onTicketAddOnsChange(updatedTickets);
+    }
+  };
+
+  const handleChoicesChange = (packageId: string, ticketChoices: TicketChoices) => {
+    const updated = { ...ticketChoicesByPackage, [packageId]: ticketChoices };
+    setTicketChoicesByPackage(updated);
+    if (onTicketChoicesChange) {
+      onTicketChoicesChange(updated);
     }
   };
 
@@ -114,7 +151,10 @@ export default function BookingStep2Local({
             pkg={pkg}
             onQuantityChange={handleQuantityChange}
             onAddOnsChange={handleAddOnsChange}
+            onChoicesChange={handleChoicesChange}
             canAddMore={canAddMore}
+            initialTicketAddOns={ticketAddOnsByPackage[pkg.id] ?? {}}
+            initialTicketChoices={ticketChoicesByPackage[pkg.id] ?? {}}
           />
         ))}
       </div>

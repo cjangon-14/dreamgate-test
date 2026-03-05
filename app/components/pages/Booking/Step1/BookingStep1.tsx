@@ -1,10 +1,91 @@
+import { useState } from "react";
 import BookingInput from "./BookingInput";
 
-export default function BookingStep1({ onNext }: { onNext: () => void }) {
+interface FormData {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  suffix: string;
+  address: string;
+  age: string;
+  gender: string;
+}
+
+interface BookingStep1Props {
+  onNext: () => void;
+  formData: FormData;
+  onFormDataChange: (data: FormData) => void;
+}
+
+const nameRegex = /^[a-zA-ZÀ-ÿ\s'\-]+$/;
+
+function getErrors(formData: FormData) {
+  const errors: Partial<Record<keyof FormData, string>> = {};
+
+  if (!formData.firstName.trim()) {
+    errors.firstName = "First name is required.";
+  } else if (!nameRegex.test(formData.firstName)) {
+    errors.firstName = "First name must not contain numbers or symbols.";
+  }
+
+  if (formData.middleName && !nameRegex.test(formData.middleName)) {
+    errors.middleName = "Middle name must not contain numbers or symbols.";
+  }
+
+  if (!formData.lastName.trim()) {
+    errors.lastName = "Last name is required.";
+  } else if (!nameRegex.test(formData.lastName)) {
+    errors.lastName = "Last name must not contain numbers or symbols.";
+  }
+
+  if (!formData.address.trim()) {
+    errors.address = "Address is required.";
+  }
+
+  if (!formData.age.trim()) {
+    errors.age = "Age is required.";
+  } else {
+    const ageNum = Number(formData.age);
+    if (!Number.isInteger(ageNum) || ageNum < 18 || ageNum > 120) {
+      errors.age = "Enter a valid age (18 - 120).";
+    }
+  }
+
+  if (!formData.gender) {
+    errors.gender = "Please select a gender.";
+  }
+
+  return errors;
+}
+
+export default function BookingStep1({ onNext, formData, onFormDataChange }: BookingStep1Props) {
+  const [touched, setTouched] = useState<Partial<Record<keyof FormData, boolean>>>({});
+
+  const errors = getErrors(formData);
+  const isFormValid = Object.keys(errors).length === 0;
+
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    onFormDataChange({ ...formData, [field]: value });
+  };
+
+  const handleBlur = (field: keyof FormData) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+  };
+
+  const handleNext = () => {
+    if (isFormValid) {
+      onNext();
+    } else {
+      // Mark all fields as touched to show all errors at once
+      setTouched({
+        firstName: true, middleName: true, lastName: true,
+        suffix: true, address: true, age: true, gender: true,
+      });
+    }
+  };
+
   return (
     <>
-      
-
       <hr className="border-gray-200 mb-6" />
 
       {/* Required Fields Notice */}
@@ -45,10 +126,48 @@ export default function BookingStep1({ onNext }: { onNext: () => void }) {
             Full Name
           </label>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <BookingInput placeholder="First Name" />
-            <BookingInput placeholder="Middle Name" required={false} />
-            <BookingInput placeholder="Last Name" />
-            <BookingInput placeholder="Suffix" required={false} />
+            <div>
+              <BookingInput
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={(e) => handleInputChange("firstName", e.target.value)}
+                onBlur={() => handleBlur("firstName")}
+              />
+              {touched.firstName && errors.firstName && (
+                <p className="text-xs text-red-500 mt-1">{errors.firstName}</p>
+              )}
+            </div>
+            <div>
+              <BookingInput
+                placeholder="Middle Name"
+                required={false}
+                value={formData.middleName}
+                onChange={(e) => handleInputChange("middleName", e.target.value)}
+                onBlur={() => handleBlur("middleName")}
+              />
+              {touched.middleName && errors.middleName && (
+                <p className="text-xs text-red-500 mt-1">{errors.middleName}</p>
+              )}
+            </div>
+            <div>
+              <BookingInput
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={(e) => handleInputChange("lastName", e.target.value)}
+                onBlur={() => handleBlur("lastName")}
+              />
+              {touched.lastName && errors.lastName && (
+                <p className="text-xs text-red-500 mt-1">{errors.lastName}</p>
+              )}
+            </div>
+            <div>
+              <BookingInput
+                placeholder="Suffix"
+                required={false}
+                value={formData.suffix}
+                onChange={(e) => handleInputChange("suffix", e.target.value)}
+              />
+            </div>
           </div>
         </div>
 
@@ -58,13 +177,30 @@ export default function BookingStep1({ onNext }: { onNext: () => void }) {
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
               Address
             </label>
-            <BookingInput placeholder="Enter Address" />
+            <BookingInput
+              placeholder="Enter Address"
+              value={formData.address}
+              onChange={(e) => handleInputChange("address", e.target.value)}
+              onBlur={() => handleBlur("address")}
+            />
+            {touched.address && errors.address && (
+              <p className="text-xs text-red-500 mt-1">{errors.address}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
               Age
             </label>
-            <BookingInput type="number" placeholder="0" />
+            <BookingInput 
+              type="number" 
+              placeholder="0" 
+              value={formData.age}
+              onChange={(e) => handleInputChange("age", e.target.value)}
+              onBlur={() => handleBlur("age")}
+            />
+            {touched.age && errors.age && (
+              <p className="text-xs text-red-500 mt-1">{errors.age}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
@@ -78,15 +214,34 @@ export default function BookingStep1({ onNext }: { onNext: () => void }) {
                 border-b-[16px] border-b-transparent 
                 z-10"
                 />
-                <button className="w-full py-2 text-sm font-satoshi text-black/40 hover:bg-sky-main/10 transition">
-                  Male
-                </button>
+              <button 
+                type="button"
+                onClick={() => { handleInputChange("gender", "Male"); handleBlur("gender"); }}
+                className={`w-full py-2 text-sm font-satoshi transition ${
+                  formData.gender === "Male" 
+                    ? "bg-sky-main text-white" 
+                    : "text-black/40 hover:bg-sky-main/10"
+                }`}
+              >
+                Male
+              </button>
               </div>
               <div className="w-px bg-gray-200" />
-              <button className="flex-1 py-2 text-sm font-satoshi text-black/40 hover:bg-sky-main/10 transition">
+              <button 
+                type="button"
+                onClick={() => { handleInputChange("gender", "Female"); handleBlur("gender"); }}
+                className={`flex-1 py-2 text-sm font-satoshi transition ${
+                  formData.gender === "Female" 
+                    ? "bg-sky-main text-white" 
+                    : "text-black/40 hover:bg-sky-main/10"
+                }`}
+              >
                 Female
               </button>
             </div>
+            {touched.gender && errors.gender && (
+              <p className="text-xs text-red-500 mt-1">{errors.gender}</p>
+            )}
           </div>
         </div>
 
@@ -108,7 +263,15 @@ export default function BookingStep1({ onNext }: { onNext: () => void }) {
 
         {/* Next Button */}
         <div className="flex justify-end">
-          <button onClick={onNext} className="bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-pointer">
+          <button
+            onClick={handleNext}
+            disabled={!isFormValid && Object.keys(touched).length > 0 && false}
+            className={`text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-pointer ${
+              isFormValid
+                ? "bg-sky-main hover:bg-sky-dark"
+                : "bg-gray-300"
+            }`}
+          >
             Next
           </button>
         </div>

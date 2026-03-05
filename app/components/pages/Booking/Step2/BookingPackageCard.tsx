@@ -30,68 +30,91 @@ interface TicketAddOns {
   [ticketNumber: number]: AddOn[];
 }
 
+interface TicketChoices {
+  [ticketNumber: number]: string[];
+}
+
 interface BookingPackageCardProps {
   pkg: Package;
   onQuantityChange: (id: string, delta: number) => void;
-  onAddOnsChange?: (packageId: string, addOns: AddOn[]) => void;
+  onAddOnsChange?: (packageId: string, addOns: AddOn[], ticketAddOns: TicketAddOns) => void;
+  onChoicesChange?: (packageId: string, ticketChoices: TicketChoices) => void;
   canAddMore?: boolean;
+  initialTicketAddOns?: TicketAddOns;
+  initialTicketChoices?: TicketChoices;
 }
 
 export default function BookingPackageCard({
   pkg,
   onQuantityChange,
   onAddOnsChange,
+  onChoicesChange,
   canAddMore = true,
+  initialTicketAddOns = {},
+  initialTicketChoices = {},
 }: BookingPackageCardProps) {
-  const [ticketAddOns, setTicketAddOns] = useState<TicketAddOns>({});
+  const [ticketAddOns, setTicketAddOns] = useState<TicketAddOns>(initialTicketAddOns);
+  const [ticketChoices, setTicketChoices] = useState<TicketChoices>(initialTicketChoices);
 
   const handleAddOnsChange = (ticketNumber: number, addOns: AddOn[]) => {
     const updated = { ...ticketAddOns, [ticketNumber]: addOns };
     setTicketAddOns(updated);
-    // Combine all add-ons from all tickets for the summary
     const allAddOns = Object.values(updated).flat();
     if (onAddOnsChange) {
-      onAddOnsChange(pkg.id, allAddOns);
+      onAddOnsChange(pkg.id, allAddOns, updated);
+    }
+  };
+
+  const handleChoicesChange = (ticketNumber: number, choices: string[]) => {
+    const updated = { ...ticketChoices, [ticketNumber]: choices };
+    setTicketChoices(updated);
+    if (onChoicesChange) {
+      onChoicesChange(pkg.id, updated);
     }
   };
 
 const handleRemovePackage = (ticketNumber: number) => {
-  // Create a new object with remaining add-ons, renumbered sequentially
   const updatedAddOns: TicketAddOns = {};
+  const updatedChoices: TicketChoices = {};
   let newTicketNumber = 1;
   
   for (let i = 1; i <= pkg.quantity; i++) {
-    if (i !== ticketNumber && ticketAddOns[i]) {
-      updatedAddOns[newTicketNumber] = ticketAddOns[i];
+    if (i !== ticketNumber) {
+      if (ticketAddOns[i]) updatedAddOns[newTicketNumber] = ticketAddOns[i];
+      if (ticketChoices[i]) updatedChoices[newTicketNumber] = ticketChoices[i];
       newTicketNumber++;
     }
   }
   
   setTicketAddOns(updatedAddOns);
+  setTicketChoices(updatedChoices);
   
-  // Report remaining add-ons to parent
   const allAddOns = Object.values(updatedAddOns).flat();
   if (onAddOnsChange) {
-    onAddOnsChange(pkg.id, allAddOns);
+    onAddOnsChange(pkg.id, allAddOns, updatedAddOns);
+  }
+  if (onChoicesChange) {
+    onChoicesChange(pkg.id, updatedChoices);
   }
   
-  // Decrement quantity
   onQuantityChange(pkg.id, -1);
 };
 
-  const handleAddSamePackage = (currentAddOns: AddOn[]) => {
-    // Add a new ticket and copy the add-ons from the current ticket
+  const handleAddSamePackage = (currentAddOns: AddOn[], currentChoices: string[]) => {
     const newTicketNumber = pkg.quantity + 1;
-    const updated = { ...ticketAddOns, [newTicketNumber]: currentAddOns };
-    setTicketAddOns(updated);
+    const updatedAddOns = { ...ticketAddOns, [newTicketNumber]: currentAddOns };
+    const updatedChoices = { ...ticketChoices, [newTicketNumber]: currentChoices };
+    setTicketAddOns(updatedAddOns);
+    setTicketChoices(updatedChoices);
     
-    // Report all add-ons including the new ticket to parent
-    const allAddOns = Object.values(updated).flat();
+    const allAddOns = Object.values(updatedAddOns).flat();
     if (onAddOnsChange) {
-      onAddOnsChange(pkg.id, allAddOns);
+      onAddOnsChange(pkg.id, allAddOns, updatedAddOns);
+    }
+    if (onChoicesChange) {
+      onChoicesChange(pkg.id, updatedChoices);
     }
     
-    // Increment quantity
     onQuantityChange(pkg.id, 1);
   };
   return (
@@ -202,7 +225,6 @@ const handleRemovePackage = (ticketNumber: number) => {
       </div>
 
       {/* Expanded Details Sections - One for each ticket */}
-      {/* <AnimatePresence mode="wait">
         {Array.from({ length: pkg.quantity }).map((_, index) => {
           const ticketNumber = index + 1;
           return (
@@ -216,31 +238,12 @@ const handleRemovePackage = (ticketNumber: number) => {
               comboSelectCount={pkg.comboSelectCount}
               ticketNumber={ticketNumber}
               selectedAddOns={ticketAddOns[ticketNumber] || []}
+              selectedChoices={ticketChoices[ticketNumber] ?? pkg.choices.slice(0, pkg.comboSelectCount ?? 2)}
               onAddOnsChange={(addOns) =>
                 handleAddOnsChange(ticketNumber, addOns)
               }
-              onRemovePackage={() => handleRemovePackage(ticketNumber)}
-              onAddSamePackage={handleAddSamePackage}
-              canAddMore={canAddMore}
-            />
-          );
-        })}
-      </AnimatePresence> */}
-        {Array.from({ length: pkg.quantity }).map((_, index) => {
-          const ticketNumber = index + 1;
-          return (
-            <BookingPackageExpandedDetails
-              key={`${pkg.id}-ticket-${ticketNumber}`}
-              label={pkg.label}
-              price={pkg.price}
-              inclusions={pkg.inclusions}
-              choices={pkg.choices}
-              color={pkg.color}
-              comboSelectCount={pkg.comboSelectCount}
-              ticketNumber={ticketNumber}
-              selectedAddOns={ticketAddOns[ticketNumber] || []}
-              onAddOnsChange={(addOns) =>
-                handleAddOnsChange(ticketNumber, addOns)
+              onChoicesChange={(choices) =>
+                handleChoicesChange(ticketNumber, choices)
               }
               onRemovePackage={() => handleRemovePackage(ticketNumber)}
               onAddSamePackage={handleAddSamePackage}

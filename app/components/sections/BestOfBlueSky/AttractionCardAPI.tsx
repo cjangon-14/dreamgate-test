@@ -16,7 +16,7 @@ const categoryLabel: Record<Attraction["category"], string> = {
 const AttractionCardAPI = ({ attraction }: { attraction: Attraction }) => (
   <div className="card-base flex flex-col overflow-hidden p-0! group ">
     {/* Image */}
-    <div className="relative w-full h-60 overflow-hidden rounded-t-[20px] shrink-0 isolate">
+    <div className="relative w-full h-48 overflow-hidden rounded-t-[20px] shrink-0 isolate">
       <img
         src={attraction.image_path || cardImagePlaceholder}
         alt={attraction.label}
@@ -25,11 +25,11 @@ const AttractionCardAPI = ({ attraction }: { attraction: Attraction }) => (
       {attraction.gradient && (
         <div
           className="absolute inset-0"
-          style={{ background: attraction.gradient, opacity: 0.8 }}
+          style={{ background: attraction.gradient, opacity: 0.75 }}
         />
       )}
       <span
-        className={`absolute top-0 -left-1 px-10 py-3 rounded-br-4xl text-md font-bold uppercase tracking-wide ${
+        className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
           attraction.badgeColor ?? categoryColors[attraction.category]
         }`}
       >
@@ -68,16 +68,19 @@ const AttractionCardAPI = ({ attraction }: { attraction: Attraction }) => (
                 </p>
               </li>
               <div className="flex flex-wrap gap-2">
-                {attraction.attractions?.map((att: any) => (
+                {(attraction.attractions && attraction.attractions.length > 0
+                  ? attraction.attractions.map((att: any) => att.name)
+                  : attraction.choices ?? []
+                ).map((name: string) => (
                   <span
-                    key={att.id}
-                    className="px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wide"
+                    key={name}
+                    className="px-2.5 py-1 rounded-md border-0 text-xs font-semibold uppercase tracking-wide"
                     style={{
-                      backgroundColor: attraction.color ? `${attraction.color}20` : "#088fe320",
-                      color: attraction.color ? attraction.color : "#088fe3",
+                      color: attraction.color ?? "#088fe3",
+                      backgroundColor: attraction.color ? `${attraction.color}14` : "#088fe314",
                     }}
                   >
-                    {att.name}
+                    {name}
                   </span>
                 ))}
               </div>

@@ -150,7 +150,13 @@ export default function BookingSummary({
           </div>
         ) : (
           <div className="p-2">
-            {selectedPackages.map((pkg, index) => (
+            {selectedPackages.map((pkg, index) => {
+              const pkgAddOnsTotal = (addOnsByPackage[pkg.id] ?? []).reduce(
+                (sum, addOn) => sum + addOn.price * addOn.quantity,
+                0,
+              );
+              const pkgRowTotal = pkg.price * pkg.quantity + pkgAddOnsTotal;
+              return (
               <div key={pkg.id}>
                 <div className="grid grid-cols-[1fr_auto_0.5fr] items-center gap-4 ">
                   {/* LEFT: Package Info */}
@@ -214,7 +220,7 @@ export default function BookingSummary({
                   {/* RIGHT: Price */}
                   <div className="text-right min-w-max">
                     <span className="font-goteam text-navy-dark text-lg">
-                      {(pkg.price * pkg.quantity).toFixed(2)}
+                      {pkgRowTotal.toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -233,7 +239,8 @@ export default function BookingSummary({
                   <div className="border-b border-gray-200" />
                 )}
               </div>
-            ))}
+              );
+            })}
 
             {/* Discount Row */}
             <div className="border-t border-gray-200 border-dashed py-4 flex items-center justify-between">
