@@ -20,8 +20,6 @@ interface BookingStep3Props {
 const BookingStep3: React.FC<BookingStep3Props> = ({
   onNext,
   onBack,
-  checkInDate,
-  onCheckInDateChange,
   selectedPackages,
   addOnsByPackage,
   ticketAddOnsByPackage = {},
@@ -39,16 +37,6 @@ const BookingStep3: React.FC<BookingStep3Props> = ({
 
       {/* Booking Confirmation Section */}
       <div className="mb-8">
-        <h3 className="text-xl rounded-2xl font-bold text-navy-dark mb-2">
-          Booking Confirmation
-        </h3>
-        <p className="text-gray-main text-sm text-regular mb-4">
-          Please review the details of your booking before proceeding to payment
-        </p>
-
-        {/* Date Selection */}
-        <BookingDatePicker onCheckInDateChange={onCheckInDateChange} />
-
         {/* Package Breakdown */}
         <BookingPackageBreakdown
           selectedPackages={selectedPackages}
@@ -67,7 +55,6 @@ const BookingStep3: React.FC<BookingStep3Props> = ({
         </button>
         <button
           onClick={onNext}
-          disabled={!checkInDate}
           className="bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-pointer disabled:bg-gray-light disabled:text-gray-main cursor-disabled"
         >
           Proceed Payment

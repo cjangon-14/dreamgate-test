@@ -1,5 +1,12 @@
+"use client";
+
+import * as React from "react";
 import { useState } from "react";
 import BookingInput from "./BookingInput";
+import { Calendar } from "~/components/ui/calendar";
+import { Card, CardContent } from "~/components/ui/card";
+import { addDays, format } from "date-fns";
+import { type DateRange } from "react-day-picker";
 
 interface FormData {
   firstName: string;
@@ -58,8 +65,14 @@ function getErrors(formData: FormData) {
   return errors;
 }
 
-export default function BookingStep1({ onNext, formData, onFormDataChange }: BookingStep1Props) {
-  const [touched, setTouched] = useState<Partial<Record<keyof FormData, boolean>>>({});
+export default function BookingStep1({
+  onNext,
+  formData,
+  onFormDataChange,
+}: BookingStep1Props) {
+  const [touched, setTouched] = useState<
+    Partial<Record<keyof FormData, boolean>>
+  >({});
 
   const errors = getErrors(formData);
   const isFormValid = Object.keys(errors).length === 0;
@@ -78,11 +91,20 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
     } else {
       // Mark all fields as touched to show all errors at once
       setTouched({
-        firstName: true, middleName: true, lastName: true,
-        suffix: true, address: true, age: true, gender: true,
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        suffix: true,
+        address: true,
+        age: true,
+        gender: true,
       });
     }
   };
+
+  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
+    undefined,
+  );
 
   return (
     <>
@@ -222,7 +244,7 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
                     handleInputChange("gender", "Male");
                     handleBlur("gender");
                   }}
-                  className={`w-full py-2 text-sm font-satoshi transition ${
+                  className={`w-full py-2 text-sm font-satoshi transition hover:cursor-pointer ${
                     formData.gender === "Male"
                       ? "bg-sky-main text-white"
                       : "text-black/40 hover:bg-sky-main/10"
@@ -238,7 +260,7 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
                   handleInputChange("gender", "Female");
                   handleBlur("gender");
                 }}
-                className={`flex-1 py-2 text-sm font-satoshi transition ${
+                className={`flex-1 py-2 text-sm font-satoshi transition hover:cursor-pointer ${
                   formData.gender === "Female"
                     ? "bg-sky-main text-white"
                     : "text-black/40 hover:bg-sky-main/10"
@@ -265,6 +287,34 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
             Choose your preferred booking date to secure your spot at the park
             and ensure a fun-filled day of exciting rides!
           </p>
+
+          <div className="border border-[#BAD2E5] rounded-2xl bg-white mb-6">
+            <div className="relative">
+              {/* Red corner triangle (only shown when required) */}
+              <div className="absolute top-0 left-0 w-0 h-0 border-l-16 border-l-red-500 border-b-16 border-b-transparent rounded-tl-lg z-10" />
+
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                numberOfMonths={2}
+                disabled={[{ before: new Date() }, { dayOfWeek: [1, 2, 3, 4] }]}
+                className="bg-transparent w-full justify-center "
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Selected Date */}
+        <div className="border-2 border-[#BAD2E5] rounded-xl p-4 mb-6">
+          <p className="font-satoshi flex justify-between">
+            <span className="text-gray-600">Booking date:</span>
+            <span className="text-navy-dark font-bold text-lg">
+              {selectedDate
+                ? format(selectedDate, "EEE MMM d yyyy")
+                : "No date selected"}
+            </span>
+          </p>
         </div>
 
         <hr className="border-gray-200 mb-6" />
@@ -274,9 +324,9 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
           <button
             onClick={handleNext}
             disabled={!isFormValid && Object.keys(touched).length > 0 && false}
-            className={`text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-not-allowed ${
+            className={`text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition hover:cursor-not-allowed ${
               isFormValid
-                ? "bg-sky-main hover:bg-sky-dark"
+                ? "bg-sky-main hover:bg-sky-dark hover:cursor-pointer"
                 : "bg-sky-main/50 text-white/50"
             }`}
           >

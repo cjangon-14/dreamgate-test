@@ -3,6 +3,8 @@ import AttractionCardAPI from "./AttractionCardAPI";
 import type { Attraction } from "~/types";
 import { attractions as localAttractions } from "~/data/attractions";
 import { getAttractions } from "~/api/attractions";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import { Skeleton } from "~/components/ui/skeleton";
 
 const ThreeDots = lazy(() =>
   import("react-loader-spinner").then((m) => ({ default: m.ThreeDots })),
@@ -61,20 +63,23 @@ const BobsGridAPI = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center py-12">
-        <Suspense fallback={null}>
-          <ThreeDots
-            height="80"
-            width="80"
-            color="#4fa94d"
-            ariaLabel="audio-loading"
-            wrapperStyle={{}}
-            wrapperClass="wrapper-class"
-            visible={true}
-          />
-        </Suspense>
+      <div className="space-y-4 flex gap-10 justify-center">
+        {[1, 2, 3, 4].map((i) => (
+          <div className="flex w-full max-w-xs flex-col gap-7">
+            <div className="flex flex-col gap-3">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-8 w-full" />
+            </div>
+            <div className="flex flex-col gap-3">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-8 w-full" />
+            </div>
+            <Skeleton className="h-8 w-24" />
+          </div>
+        ))}
       </div>
     );
+
   if (error)
     return <p className="text-center text-red-500 py-12">Error: {error}</p>;
 
