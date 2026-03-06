@@ -55,7 +55,9 @@ const BookingStep4: React.FC<BookingStep4Props> = ({ onBack }) => {
     <div>
       {/* Process Payment Section */}
       <div className="mb-8">
-        <h3 className="text-xl font-bold text-dark-main mb-2">Process Payment</h3>
+        <h3 className="text-xl font-bold text-dark-main mb-2">
+          Process Payment
+        </h3>
         <p className="text-gray-main text-sm mb-6">How do you want to Pay?</p>
 
         {/* Payment Options */}
@@ -68,11 +70,15 @@ const BookingStep4: React.FC<BookingStep4Props> = ({ onBack }) => {
               rel="noopener noreferrer"
               className="w-full flex items-center p-4 border-2 border-gray-200 bg-white rounded-xl cursor-pointer transition hover:border-sky-main hover:bg-sky-main/5 hover:shadow-sm group"
             >
+              <span className="text-2xl mr-4 group-hover:scale-110 transition-transform">
+                {option.icon}
+              </span>
               <div className="flex-1">
-                <h4 className="font-semibold text-dark-main text-sm mb-0.5">{option.title}</h4>
+                <h4 className="font-semibold text-dark-main text-sm mb-0.5">
+                  {option.title}
+                </h4>
                 <p className="text-sky-main text-xs">{option.description}</p>
               </div>
-              <span className="text-2xl ml-4 group-hover:scale-110 transition-transform">{option.icon}</span>
             </a>
           ))}
         </div>

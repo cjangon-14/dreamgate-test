@@ -24,7 +24,7 @@ const defaultAddOns: AddOn[] = [
   { id: '7', name: 'BYB Express', price: 50, quantity: 0 },
 ];
 
-export default function BookingAddOnModal({ 
+export default function BookingAddOnModalLocal({ 
   isOpen = true, 
   onClose = () => {}, 
   onConfirm = () => {},

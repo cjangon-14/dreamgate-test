@@ -17,7 +17,7 @@ export const attractions: Attraction[] = [
     gradient: "linear-gradient(to top, #008287 0%, transparent 50%)",
     badgeColor: "bg-[linear-gradient(to_right,#006A74,#229EAA)] text-white",
     inclusions: [""],
-    choices: ["Projection Mapping", "Interactive Elements", "Mini Air Spinner"],
+    choices: ["Projection Mapping", "Interactive Elements"],
     color: "#06AEBD",
     base_amount: 100.0,
     category: "ride",

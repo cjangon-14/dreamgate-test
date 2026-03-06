@@ -8,8 +8,8 @@ const BestOfBlueSky = () => (
 
     <div className="container-max relative z-50">
       <BobsHeader />
-      {/* <BobsGridAPI /> */}
-      <BobsGridLocal />
+      <BobsGridAPI />
+      {/* <BobsGridLocal /> */}
     </div>
   </section>
 );

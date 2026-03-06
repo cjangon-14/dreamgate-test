@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import BookingStep1 from "../Step1/BookingStep1";
 import BookingStep2Local from "./BookingStep2Local";
+import BookingStep2API from "./BookingStep2API";
 import BookingStep3 from "../Step3/BookingStep3";
 import BookingStep4 from "../BookingStep4";
 import BookingSummary from "./BookingSummary";
@@ -108,7 +109,7 @@ export default function BookingGrid() {
             {step === 1 ? (
               <BookingStep1 onNext={handleNext} formData={step1FormData} onFormDataChange={setStep1FormData} />
             ) : step === 2 ? (
-              <BookingStep2Local
+              <BookingStep2API
                 onNext={handleNext}
                 onBack={handleBack}
                 selectedPackages={selectedPackages}

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 interface Package {
   id: string;
   name: string;
@@ -33,6 +35,17 @@ export default function BookingSummary({
     0,
   );
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = (e: Event) => {
+      setScrolled(document.documentElement.scrollTop > 120);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+
   const addOnsTotal = Object.values(addOnsByPackage).reduce(
     (sum, addOns) =>
       sum +
@@ -43,7 +56,13 @@ export default function BookingSummary({
   const total = packageTotal + addOnsTotal;
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden">
+    <div className={`border border-gray-200 rounded-xl overflow-hidden w-110 ${
+      scrolled 
+      ? "fixed top-18 w-110 " 
+      : "relative"
+      
+      }`}>
+
       <div className="p-6">
         <div className="flex items-start justify-between mb-1">
           <h3 className="text-lg font-satoshi font-bold text-navy-dark">

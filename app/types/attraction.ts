@@ -23,6 +23,10 @@ export interface Attraction {
 export type AttractionItem = {
   id: number;
   name: string;
+  base_amount: number;
+  image_path?: string;
+  description?: string;
+  status?: number;
 };
 
 export interface CoreValue {

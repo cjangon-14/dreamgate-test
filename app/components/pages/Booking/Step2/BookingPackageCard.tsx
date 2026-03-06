@@ -120,6 +120,8 @@ const handleRemovePackage = (ticketNumber: number) => {
   return (
     <div className="border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition bg-white">
       {/* Card Top */}
+      
+      
       <div className="flex items-stretch flex-row min-h-52">
         {/* Package Image — flush left */}
         <div className="shrink-0 relative">

@@ -142,7 +142,9 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
                 placeholder="Middle Name"
                 required={false}
                 value={formData.middleName}
-                onChange={(e) => handleInputChange("middleName", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("middleName", e.target.value)
+                }
                 onBlur={() => handleBlur("middleName")}
               />
               {touched.middleName && errors.middleName && (
@@ -191,9 +193,9 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
               Age
             </label>
-            <BookingInput 
-              type="number" 
-              placeholder="0" 
+            <BookingInput
+              type="number"
+              placeholder="0"
               value={formData.age}
               onChange={(e) => handleInputChange("age", e.target.value)}
               onBlur={() => handleBlur("age")}
@@ -214,25 +216,31 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
                 border-b-[16px] border-b-transparent 
                 z-10"
                 />
-              <button 
-                type="button"
-                onClick={() => { handleInputChange("gender", "Male"); handleBlur("gender"); }}
-                className={`w-full py-2 text-sm font-satoshi transition ${
-                  formData.gender === "Male" 
-                    ? "bg-sky-main text-white" 
-                    : "text-black/40 hover:bg-sky-main/10"
-                }`}
-              >
-                Male
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleInputChange("gender", "Male");
+                    handleBlur("gender");
+                  }}
+                  className={`w-full py-2 text-sm font-satoshi transition ${
+                    formData.gender === "Male"
+                      ? "bg-sky-main text-white"
+                      : "text-black/40 hover:bg-sky-main/10"
+                  }`}
+                >
+                  Male
+                </button>
               </div>
               <div className="w-px bg-gray-200" />
-              <button 
+              <button
                 type="button"
-                onClick={() => { handleInputChange("gender", "Female"); handleBlur("gender"); }}
+                onClick={() => {
+                  handleInputChange("gender", "Female");
+                  handleBlur("gender");
+                }}
                 className={`flex-1 py-2 text-sm font-satoshi transition ${
-                  formData.gender === "Female" 
-                    ? "bg-sky-main text-white" 
+                  formData.gender === "Female"
+                    ? "bg-sky-main text-white"
                     : "text-black/40 hover:bg-sky-main/10"
                 }`}
               >
@@ -266,10 +274,10 @@ export default function BookingStep1({ onNext, formData, onFormDataChange }: Boo
           <button
             onClick={handleNext}
             disabled={!isFormValid && Object.keys(touched).length > 0 && false}
-            className={`text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-pointer ${
+            className={`text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-not-allowed ${
               isFormValid
                 ? "bg-sky-main hover:bg-sky-dark"
-                : "bg-gray-300"
+                : "bg-sky-main/50 text-white/50"
             }`}
           >
             Next

@@ -37,6 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const lenis = new Lenis();
+    (window as any).__lenis = lenis;
     let rafId: number;
 
     function raf(time: number) {
@@ -48,6 +49,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
+      (window as any).__lenis = null;
     };
   }, []);
 

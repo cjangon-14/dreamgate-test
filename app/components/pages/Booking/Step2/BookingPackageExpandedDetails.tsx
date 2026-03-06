@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import BookingAddOnModal from "./BookingAddOnModal";
+import BookingAddOnModalLocal from "./BookingAddOnModalLocal";
+import BookingAddOnModalAPI from "./BookingAddOnModalAPI";
 
 interface AddOn {
   id: string;
@@ -46,9 +47,7 @@ export default function BookingPackageExpandedDetails({
 
   const handleChoiceToggle = (choice: string) => {
     const isSelected = selectedChoices.includes(choice);
-    if (isSelected) {
-      onChoicesChange(selectedChoices.filter((c) => c !== choice));
-    } else {
+    if (!isSelected) {
       if (selectedChoices.length >= comboSelectCount) {
         onChoicesChange([...selectedChoices.slice(1), choice]);
       } else {
@@ -273,7 +272,7 @@ export default function BookingPackageExpandedDetails({
           </button>
         </div>
       </div>
-      <BookingAddOnModal
+      <BookingAddOnModalAPI
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleAddOnsConfirm}
