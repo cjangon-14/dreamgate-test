@@ -13,9 +13,10 @@ interface FormData {
   middleName: string;
   lastName: string;
   suffix: string;
-  address: string;
+  email: string;
   age: string;
   gender: string;
+  mobile: string;
 }
 
 interface BookingStep1Props {
@@ -29,27 +30,29 @@ const nameRegex = /^[a-zA-ZÀ-ÿ\s'\-]+$/;
 function getErrors(formData: FormData) {
   const errors: Partial<Record<keyof FormData, string>> = {};
 
-  if (!formData.firstName.trim()) {
+  if (!formData?.firstName?.trim()) {
     errors.firstName = "First name is required.";
   } else if (!nameRegex.test(formData.firstName)) {
     errors.firstName = "First name must not contain numbers or symbols.";
   }
 
-  if (formData.middleName && !nameRegex.test(formData.middleName)) {
+  if (formData?.middleName && !nameRegex.test(formData.middleName)) {
     errors.middleName = "Middle name must not contain numbers or symbols.";
   }
 
-  if (!formData.lastName.trim()) {
+  if (!formData?.lastName?.trim()) {
     errors.lastName = "Last name is required.";
   } else if (!nameRegex.test(formData.lastName)) {
     errors.lastName = "Last name must not contain numbers or symbols.";
   }
 
-  if (!formData.address.trim()) {
-    errors.address = "Address is required.";
+  if (!formData?.email?.trim()) {
+    errors.email = "Email is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    errors.email = "Please enter a valid email address.";
   }
 
-  if (!formData.age.trim()) {
+  if (!formData?.age?.trim()) {
     errors.age = "Age is required.";
   } else {
     const ageNum = Number(formData.age);
@@ -58,8 +61,12 @@ function getErrors(formData: FormData) {
     }
   }
 
-  if (!formData.gender) {
+  if (!formData?.gender) {
     errors.gender = "Please select a gender.";
+  }
+
+  if (!formData?.mobile?.trim()) {
+    errors.mobile = "Mobile number is required.";
   }
 
   return errors;
@@ -95,7 +102,7 @@ export default function BookingStep1({
         middleName: true,
         lastName: true,
         suffix: true,
-        address: true,
+        email: true,
         age: true,
         gender: true,
       });
@@ -195,22 +202,8 @@ export default function BookingStep1({
           </div>
         </div>
 
-        {/* Address / Age / Gender */}
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_10%_1.5fr] gap-3 mb-8">
-          <div>
-            <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
-              Address
-            </label>
-            <BookingInput
-              placeholder="Enter Address"
-              value={formData.address}
-              onChange={(e) => handleInputChange("address", e.target.value)}
-              onBlur={() => handleBlur("address")}
-            />
-            {touched.address && errors.address && (
-              <p className="text-xs text-red-500 mt-1">{errors.address}</p>
-            )}
-          </div>
+        {/* Age / Gender */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-3 mb-8">
           <div>
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
               Age
@@ -271,6 +264,42 @@ export default function BookingStep1({
             </div>
             {touched.gender && errors.gender && (
               <p className="text-xs text-red-500 mt-1">{errors.gender}</p>
+            )}
+          </div>
+        </div>
+
+        {/* Email / Number */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-3 mb-8">
+          <div>
+            <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
+              Email Address
+            </label>
+            <BookingInput
+              type="email"
+              placeholder="Enter Email Address"
+              value={formData.email}
+              onChange={(e) => handleInputChange("email", e.target.value)}
+              onBlur={() => handleBlur("email")}
+            />
+            {touched.email && errors.email && (
+              <p className="text-xs text-red-500 mt-1">{errors.email}</p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
+              Mobile No.
+            </label>
+            <BookingInput
+              type="tel"
+              placeholder="0###-###-####"
+              pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}"
+              value={formData.mobile}
+              onChange={(e) => handleInputChange("mobile", e.target.value)}
+              onBlur={() => handleBlur("mobile")}
+              
+            />
+            {touched.mobile && errors.mobile && (
+              <p className="text-xs text-red-500 mt-1">{errors.mobile}</p>
             )}
           </div>
         </div>
