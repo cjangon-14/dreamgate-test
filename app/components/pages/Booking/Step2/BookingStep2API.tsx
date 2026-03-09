@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import BookingPackageCard from "./BookingPackageCard";
+import { BookingDiscountPicker } from "./BookingDiscountPicker";
 import { getAttractions } from "~/api/attractions";
 import { cardImagePlaceholder } from "~/assets";
 import { attractions as localAttractions } from "~/data/attractions";
@@ -21,6 +22,7 @@ interface Package {
   comboSelectCount?: number;
   quantity: number;
   color?: string;
+  attractionItems: { id: number; name: string }[];
 }
 
 interface AddOn {
@@ -53,6 +55,7 @@ interface BookingStep2Props {
   onTicketChoicesChange?: (ticketChoicesByPackage: {
     [packageId: string]: TicketChoices;
   }) => void;
+  onDiscountChange?: (packageId: string, discount: { id: number; name: string }) => void;
 }
 
 export default function BookingStep2API({
@@ -66,6 +69,7 @@ export default function BookingStep2API({
   onTicketAddOnsChange,
   ticketChoicesByPackage: initialTicketChoices = {},
   onTicketChoicesChange,
+  onDiscountChange,
 }: BookingStep2Props) {
   const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
@@ -141,6 +145,7 @@ export default function BookingStep2API({
                 : undefined,
               quantity: existing?.quantity ?? 0,
               color: attr.color ?? local?.color,
+              attractionItems: attr.attractions?.map((a) => ({ id: a.id, name: a.name })) ?? [],
             };
           })
           .sort((a, b) => {
@@ -246,6 +251,7 @@ export default function BookingStep2API({
             onQuantityChange={handleQuantityChange}
             onAddOnsChange={handleAddOnsChange}
             onChoicesChange={handleChoicesChange}
+            onDiscountChange={onDiscountChange}
             canAddMore={canAddMore}
             initialTicketAddOns={ticketAddOnsByPackage[pkg.id] ?? {}}
             initialTicketChoices={ticketChoicesByPackage[pkg.id] ?? {}}

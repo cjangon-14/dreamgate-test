@@ -4,8 +4,8 @@ import headerLogo from "../../assets/Header/header-logo.svg";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Attractions", href: "/attractions" },
-  { label: "Booking", href: "/booking" },
+  { label: "Placeholder", href: "#" },
+  { label: "Placeholder", href: "#" },
   { label: "About", href: "/about" },
 ];
 

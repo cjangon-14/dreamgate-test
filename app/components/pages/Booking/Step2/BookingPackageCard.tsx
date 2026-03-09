@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import BookingPackageExpandedDetails from "./BookingPackageExpandedDetails";
 
 interface Package {
@@ -39,6 +39,7 @@ interface BookingPackageCardProps {
   onQuantityChange: (id: string, delta: number) => void;
   onAddOnsChange?: (packageId: string, addOns: AddOn[], ticketAddOns: TicketAddOns) => void;
   onChoicesChange?: (packageId: string, ticketChoices: TicketChoices) => void;
+  onDiscountChange?: (packageId: string, discount: { id: number; name: string }) => void;
   canAddMore?: boolean;
   initialTicketAddOns?: TicketAddOns;
   initialTicketChoices?: TicketChoices;
@@ -49,12 +50,38 @@ export default function BookingPackageCard({
   onQuantityChange,
   onAddOnsChange,
   onChoicesChange,
+  onDiscountChange,
   canAddMore = true,
   initialTicketAddOns = {},
   initialTicketChoices = {},
 }: BookingPackageCardProps) {
   const [ticketAddOns, setTicketAddOns] = useState<TicketAddOns>(initialTicketAddOns);
-  const [ticketChoices, setTicketChoices] = useState<TicketChoices>(initialTicketChoices);
+
+  // Initialize choices: if no saved choices for a ticket, pre-populate with the first N choices
+  const getDefaultChoices = (ticketNumber: number): string[] => {
+    if (initialTicketChoices[ticketNumber]) return initialTicketChoices[ticketNumber];
+    if (pkg.comboSelectCount && pkg.choices.length > 0) {
+      return pkg.choices.slice(0, pkg.comboSelectCount);
+    }
+    return [];
+  };
+
+  const buildInitialChoices = (): TicketChoices => {
+    const result: TicketChoices = { ...initialTicketChoices };
+    for (let i = 1; i <= pkg.quantity; i++) {
+      if (!result[i]) result[i] = getDefaultChoices(i);
+    }
+    return result;
+  };
+
+  const [ticketChoices, setTicketChoices] = useState<TicketChoices>(buildInitialChoices);
+
+  // Notify parent of pre-populated choices on mount
+  React.useEffect(() => {
+    if (onChoicesChange) {
+      onChoicesChange(pkg.id, ticketChoices);
+    }
+  }, []);
 
   const handleAddOnsChange = (ticketNumber: number, addOns: AddOn[]) => {
     const updated = { ...ticketAddOns, [ticketNumber]: addOns };
@@ -249,6 +276,7 @@ const handleRemovePackage = (ticketNumber: number) => {
               }
               onRemovePackage={() => handleRemovePackage(ticketNumber)}
               onAddSamePackage={handleAddSamePackage}
+              onDiscountChange={(discount) => onDiscountChange?.(pkg.id, discount)}
               canAddMore={canAddMore}
             />
           );

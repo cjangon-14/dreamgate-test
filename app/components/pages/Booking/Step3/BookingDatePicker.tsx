@@ -29,15 +29,23 @@ function isValidDate(date: Date | undefined) {
 
 interface BookingDatePickerProps {
   onCheckInDateChange: (date: string) => void;
+  initialDate?: string;
 }
 
 const BookingDatePicker: React.FC<BookingDatePickerProps> = ({
   onCheckInDateChange,
+  initialDate,
 }) => {
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
-  const [month, setMonth] = useState<Date | undefined>(undefined);
-  const [value, setValue] = useState("");
+  const [date, setDate] = useState<Date | undefined>(
+    initialDate ? new Date(initialDate) : undefined
+  );
+  const [month, setMonth] = useState<Date | undefined>(
+    initialDate ? new Date(initialDate) : undefined
+  );
+  const [value, setValue] = useState(
+    initialDate ? formatDate(new Date(initialDate)) : ""
+  );
 
   const handleDateSelect = (selected: Date | undefined) => {
     setDate(selected);
@@ -160,13 +168,7 @@ const BookingDatePicker: React.FC<BookingDatePickerProps> = ({
         </div>
       </div>
 
-      {/* Selected Date */}
-      <p className="font-satoshi flex justify-between border-4 border-[#BAD2E5] rounded-lg p-4">
-        <span className="text-regular">Booking date:</span>
-        <span className="text-navy-dark font-bold text-lg">
-          {value ? value : "No date selected"}
-        </span>
-      </p>
+      
     </div>
   );
 };

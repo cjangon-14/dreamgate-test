@@ -1,14 +1,11 @@
 import * as React from "react";
-import BookingDatePicker from "./BookingDatePicker";
 import BookingPackageBreakdown from "./BookingPackageBreakdown";
 
 interface BookingStep3Props {
   onNext: () => void;
   onBack: () => void;
-  checkInDate: string;
-  onCheckInDateChange: (date: string) => void;
+  isSubmitting?: boolean;
   selectedPackages: any[];
-  addOnsByPackage: any;
   ticketAddOnsByPackage?: {
     [packageId: string]: { [ticketNumber: number]: any[] };
   };
@@ -20,24 +17,28 @@ interface BookingStep3Props {
 const BookingStep3: React.FC<BookingStep3Props> = ({
   onNext,
   onBack,
+  isSubmitting = false,
   selectedPackages,
-  addOnsByPackage,
   ticketAddOnsByPackage = {},
   ticketChoicesByPackage = {},
 }) => {
+  React.useEffect(() => {
+    console.log("[Step3] selectedPackages:", selectedPackages);
+    console.log("[Step3] ticketAddOnsByPackage:", ticketAddOnsByPackage);
+    console.log("[Step3] ticketChoicesByPackage:", ticketChoicesByPackage);
+  }, [selectedPackages, ticketAddOnsByPackage, ticketChoicesByPackage]);
+
   return (
     <div>
       {/* Info Banner */}
       <div className="rounded-xl bg-[#2BD8FF]/8 border-sky-main/20 px-6 py-4 text-center mb-6">
         <p className="text-regular font-satoshi text-sm">
-          Please review the details of your booking before proceeding to a
-          payment.
+          Please review the details of your booking before proceeding to payment.
         </p>
       </div>
 
-      {/* Booking Confirmation Section */}
+      {/* Package Breakdown */}
       <div className="mb-8">
-        {/* Package Breakdown */}
         <BookingPackageBreakdown
           selectedPackages={selectedPackages}
           ticketAddOnsByPackage={ticketAddOnsByPackage}
@@ -49,15 +50,22 @@ const BookingStep3: React.FC<BookingStep3Props> = ({
       <div className="flex justify-between gap-4">
         <button
           onClick={onBack}
-          className="border border-navy-dark/20 text-navy-dark font-satoshi font-bold px-8 py-2.5 rounded-lg hover:bg-gray-50 transition cursor-pointer"
+          disabled={isSubmitting}
+          className="border border-navy-dark/20 text-navy-dark font-satoshi font-bold px-8 py-2.5 rounded-lg hover:bg-gray-50 transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Back
         </button>
         <button
-          onClick={onNext}
-          className="bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-pointer disabled:bg-gray-light disabled:text-gray-main cursor-disabled"
+          onClick={() => {
+            console.log("[Step3] About to POST — selectedPackages:", selectedPackages);
+            console.log("[Step3] About to POST — ticketAddOnsByPackage:", ticketAddOnsByPackage);
+            console.log("[Step3] About to POST — ticketChoicesByPackage:", ticketChoicesByPackage);
+            onNext();
+          }}
+          disabled={isSubmitting}
+          className="bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition cursor-pointer disabled:bg-sky-main/50 disabled:cursor-not-allowed"
         >
-          Proceed Payment
+          {isSubmitting ? "Submitting..." : "Proceed Payment"}
         </button>
       </div>
     </div>
@@ -65,3 +73,4 @@ const BookingStep3: React.FC<BookingStep3Props> = ({
 };
 
 export default BookingStep3;
+

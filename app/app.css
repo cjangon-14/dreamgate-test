@@ -1,12 +1,12 @@
 @import "tailwindcss";
-
-@plugin "tailwindcss-animate";
-
 @import "./styles/satoshi.css";
 @import "./styles/bitcrusher.css";
 @import "./styles/goteam.css";
-
 @import url(https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800);
+
+@plugin "tailwindcss-animate";
+
+
 
 @custom-variant dark (&:is(.dark *));
 

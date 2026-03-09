@@ -17,6 +17,8 @@ interface FormData {
   age: string;
   gender: string;
   mobile: string;
+  address: string;
+  date: string;
 }
 
 interface BookingStep1Props {
@@ -25,24 +27,31 @@ interface BookingStep1Props {
   onFormDataChange: (data: FormData) => void;
 }
 
-const nameRegex = /^[a-zA-ZÀ-ÿ\s'\-]+$/;
+// Regex patterns from Form Input Validation Requirements
+const firstNameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+const middleNameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+const lastNameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+const suffixRegex = /^(Jr|Sr|II|III|IV|V)?$/;
+const ageRegex = /^(1[89]|[2-9][0-9]|1[0-1][0-9]|120)$/;
+const mobileRegex = /^[0-9]{11}$/;
+const addressRegex = /^[A-Za-z0-9\s,'-]+$/;
 
 function getErrors(formData: FormData) {
   const errors: Partial<Record<keyof FormData, string>> = {};
 
   if (!formData?.firstName?.trim()) {
     errors.firstName = "First name is required.";
-  } else if (!nameRegex.test(formData.firstName)) {
+  } else if (!firstNameRegex.test(formData.firstName)) {
     errors.firstName = "First name must not contain numbers or symbols.";
   }
 
-  if (formData?.middleName && !nameRegex.test(formData.middleName)) {
+  if (formData?.middleName && !middleNameRegex.test(formData.middleName)) {
     errors.middleName = "Middle name must not contain numbers or symbols.";
   }
 
   if (!formData?.lastName?.trim()) {
     errors.lastName = "Last name is required.";
-  } else if (!nameRegex.test(formData.lastName)) {
+  } else if (!lastNameRegex.test(formData.lastName)) {
     errors.lastName = "Last name must not contain numbers or symbols.";
   }
 
@@ -54,19 +63,28 @@ function getErrors(formData: FormData) {
 
   if (!formData?.age?.trim()) {
     errors.age = "Age is required.";
-  } else {
-    const ageNum = Number(formData.age);
-    if (!Number.isInteger(ageNum) || ageNum < 18 || ageNum > 120) {
-      errors.age = "Enter a valid age (18 - 120).";
-    }
+  } else if (!ageRegex.test(formData.age)) {
+    errors.age = "Enter a valid age (18 - 120).";
   }
 
   if (!formData?.gender) {
     errors.gender = "Please select a gender.";
   }
 
+  if (!formData?.address?.trim()) {
+    errors.address = "Home address is required.";
+  } else if (!addressRegex.test(formData.address)) {
+    errors.address = "Address must not contain special characters.";
+  }
+
   if (!formData?.mobile?.trim()) {
     errors.mobile = "Mobile number is required.";
+  } else if (!mobileRegex.test(formData.mobile)) {
+    errors.mobile = "Mobile number must be in format: 0##########";
+  }
+
+  if (!formData?.date?.trim()) {
+    errors.date = "Booking date is required.";
   }
 
   return errors;
@@ -105,13 +123,19 @@ export default function BookingStep1({
         email: true,
         age: true,
         gender: true,
+        mobile: true,
+        address: true,
+        date: true,
       });
     }
   };
 
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
-    undefined,
-  );
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      onFormDataChange({ ...formData, date: format(date, "yyyy-MM-dd") });
+      handleBlur("date");
+    }
+  };
 
   return (
     <>
@@ -202,8 +226,8 @@ export default function BookingStep1({
           </div>
         </div>
 
-        {/* Age / Gender */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-3 mb-8">
+        {/* Age / Gender / Email*/}
+        <div className="grid grid-cols-1 md:grid-cols-[0.3fr_0.7fr_1fr] gap-3 mb-8">
           <div>
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
               Age
@@ -266,10 +290,6 @@ export default function BookingStep1({
               <p className="text-xs text-red-500 mt-1">{errors.gender}</p>
             )}
           </div>
-        </div>
-
-        {/* Email / Number */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-3 mb-8">
           <div>
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
               Email Address
@@ -285,18 +305,35 @@ export default function BookingStep1({
               <p className="text-xs text-red-500 mt-1">{errors.email}</p>
             )}
           </div>
+        </div>
+
+        {/* Address / Number */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-3 mb-8">
+          <div>
+            <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
+              Home Address
+            </label>
+            <BookingInput
+              placeholder="Enter Home Address"
+              value={formData.address}
+              onChange={(e) => handleInputChange("address", e.target.value)}
+              onBlur={() => handleBlur("address")}
+            />
+            {touched.address && errors.address && (
+              <p className="text-xs text-red-500 mt-1">{errors.address}</p>
+            )}
+          </div>
           <div>
             <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-2">
               Mobile No.
             </label>
             <BookingInput
               type="tel"
-              placeholder="0###-###-####"
-              pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}"
+              placeholder="0##########"
+              pattern="[0-9]{11}"
               value={formData.mobile}
               onChange={(e) => handleInputChange("mobile", e.target.value)}
               onBlur={() => handleBlur("mobile")}
-              
             />
             {touched.mobile && errors.mobile && (
               <p className="text-xs text-red-500 mt-1">{errors.mobile}</p>
@@ -324,8 +361,8 @@ export default function BookingStep1({
 
               <Calendar
                 mode="single"
-                selected={selectedDate}
-                onSelect={setSelectedDate}
+                selected={formData.date ? new Date(formData.date) : undefined}
+                onSelect={handleDateSelect}
                 numberOfMonths={2}
                 disabled={[{ before: new Date() }, { dayOfWeek: [1, 2, 3, 4] }]}
                 className="bg-transparent w-full justify-center "
@@ -335,16 +372,19 @@ export default function BookingStep1({
         </div>
 
         {/* Selected Date */}
-        <div className="border-2 border-[#BAD2E5] rounded-xl p-4 mb-6">
+        <div className="border-2 border-[#BAD2E5] rounded-xl p-4">
           <p className="font-satoshi flex justify-between">
             <span className="text-gray-600">Booking date:</span>
             <span className="text-navy-dark font-bold text-lg">
-              {selectedDate
-                ? format(selectedDate, "EEE MMM d yyyy")
+              {formData.date
+                ? format(new Date(formData.date), "EEE MMM d yyyy")
                 : "No date selected"}
             </span>
           </p>
         </div>
+        {touched.date && errors.date && (
+          <p className="text-xs text-red-500 mt-2 mb-6">{errors.date}</p>
+        )}
 
         <hr className="border-gray-200 mb-6" />
 
@@ -363,6 +403,7 @@ export default function BookingStep1({
           </button>
         </div>
       </form>
+      
     </>
   );
 }

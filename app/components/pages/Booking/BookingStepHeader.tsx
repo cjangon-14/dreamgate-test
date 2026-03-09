@@ -6,7 +6,7 @@ interface BookingStepHeaderProps {
 }
 
 export default function BookingStepHeader({ step }: BookingStepHeaderProps) {
-  const totalSteps = 4;
+  const totalSteps = 3;
   const [prevStep, setPrevStep] = useState(step);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
 

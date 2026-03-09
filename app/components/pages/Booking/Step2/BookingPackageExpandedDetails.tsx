@@ -2,12 +2,20 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import BookingAddOnModalLocal from "./BookingAddOnModalLocal";
 import BookingAddOnModalAPI from "./BookingAddOnModalAPI";
+import { BookingDiscountPicker } from "./BookingDiscountPicker";
 
 interface AddOn {
   id: string;
   name: string;
   price: number;
   quantity: number;
+}
+
+interface Discount {
+  id: number;
+  name: string;
+  percentage?: number;
+  amount?: number;
 }
 
 interface BookingPackageExpandedDetailsProps {
@@ -25,6 +33,7 @@ interface BookingPackageExpandedDetailsProps {
   onRemovePackage?: () => void;
   onAddSamePackage?: (addOns: AddOn[], choices: string[]) => void;
   canAddMore?: boolean;
+  onDiscountChange?: (discount: Discount) => void;
 }
 
 export default function BookingPackageExpandedDetails({
@@ -42,8 +51,18 @@ export default function BookingPackageExpandedDetails({
   onRemovePackage,
   onAddSamePackage,
   canAddMore = true,
+  onDiscountChange,
 }: BookingPackageExpandedDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>({
+    id: 5,
+    name: "Regular",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
+  };
 
   const handleChoiceToggle = (choice: string) => {
     const isSelected = selectedChoices.includes(choice);
@@ -61,6 +80,25 @@ export default function BookingPackageExpandedDetails({
     onAddOnsChange(filteredAddOns);
     setIsModalOpen(false);
   };
+
+  // Calculate totals
+  const addOnsTotal = selectedAddOns.reduce(
+    (sum, addOn) => sum + addOn.price * addOn.quantity,
+    0
+  );
+  const subtotal = price + addOnsTotal;
+
+  // Calculate discount
+  let discountAmount = 0;
+  if (selectedDiscount) {
+    if (selectedDiscount.percentage) {
+      discountAmount = (subtotal * selectedDiscount.percentage) / 100;
+    } else if (selectedDiscount.amount) {
+      discountAmount = selectedDiscount.amount;
+    }
+  }
+
+  const total = subtotal - discountAmount;
 
   return (
     <motion.div
@@ -234,6 +272,17 @@ export default function BookingPackageExpandedDetails({
                 </div>
               ))}
             </div>
+            {/* Price Breakdown */}
+            <div className="mb-4 p-3">
+              <div className="space-y-1 text-xs font-satoshi">
+                {isChecked && selectedDiscount && discountAmount > 0 && (
+                  <div className="flex justify-between text-red-500">
+                    <span>% Discount ({selectedDiscount.name}):</span>
+                    <span>- PHP {discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
+              </div>
+            </div>
             <button
               onClick={() => setIsModalOpen(true)}
               className="w-full border border-gray-300 text-navy-dark font-satoshi font-semibold py-2 rounded-lg hover:bg-gray-50 transition text-sm"
@@ -249,6 +298,39 @@ export default function BookingPackageExpandedDetails({
             + Add-Ons
           </button>
         )}
+        <div className="flex flex-col gap-2 mb-4 ">
+          <label className="bg-red-100 p-4 rounded-lg border border-red-300 text-navy-dark text-sm font-satoshi flex items-center gap-3">
+            {/* Bind the 'checked' attribute to the state variable */}
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={(e) => {
+                setIsChecked(e.target.checked);
+                // Reset to default discount when unchecking
+                if (!e.target.checked) {
+                  const defaultDiscount = { id: 5, name: "Regular" };
+                  setSelectedDiscount(defaultDiscount);
+                  onDiscountChange?.(defaultDiscount);
+                }
+              }}
+            />
+            {/* Display the current state value */}
+            Check this box to see if you qualify for BYB Theme Park discounts.
+          </label>
+          {isChecked && (
+            <div>
+              <p className="text-sm font-satoshi font-bold text-navy-dark mb-3">
+                Choose the discount type to apply
+              </p>
+              <BookingDiscountPicker
+                onDiscountChange={(discount) => {
+                  setSelectedDiscount(discount);
+                  onDiscountChange?.(discount);
+                }}
+              />
+            </div>
+          )}
+        </div>
 
         {/* Bottom Actions */}
         <div className="flex gap-3 pt-4 border-t border-gray-200">

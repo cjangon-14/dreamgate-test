@@ -21,14 +21,23 @@ interface AddOn {
   quantity: number;
 }
 
+interface Discount {
+  id: number;
+  name: string;
+  percentage?: number;
+  amount?: number;
+}
+
 interface BookingSummaryProps {
   selectedPackages: Package[];
   addOnsByPackage?: { [packageId: string]: AddOn[] };
+  discountByPackage?: { [packageId: string]: Discount | null };
 }
 
 export default function BookingSummary({
   selectedPackages,
   addOnsByPackage = {},
+  discountByPackage = {},
 }: BookingSummaryProps) {
   const packageTotal = selectedPackages.reduce(
     (sum, pkg) => sum + pkg.price * pkg.quantity,
@@ -54,6 +63,27 @@ export default function BookingSummary({
   );
 
   const total = packageTotal + addOnsTotal;
+
+  // Calculate discount per package and sum them
+  const subtotal = packageTotal + addOnsTotal;
+  let discountAmount = 0;
+  for (const pkg of selectedPackages) {
+    const discount = discountByPackage[pkg.id];
+    if (discount && (discount.percentage || discount.amount)) {
+      const pkgAddOnsTotal = (addOnsByPackage[pkg.id] ?? []).reduce(
+        (sum, addOn) => sum + addOn.price * addOn.quantity,
+        0,
+      );
+      const pkgSubtotal = pkg.price * pkg.quantity + pkgAddOnsTotal;
+      if (discount.percentage) {
+        discountAmount += (pkgSubtotal * discount.percentage) / 100;
+      } else if (discount.amount) {
+        discountAmount += discount.amount;
+      }
+    }
+  }
+
+  const finalTotal = subtotal - discountAmount;
 
   return (
     <div className={`border border-gray-200 rounded-xl overflow-hidden w-110 ${
@@ -264,9 +294,11 @@ export default function BookingSummary({
             {/* Discount Row */}
             <div className="border-t border-gray-200 border-dashed py-4 flex items-center justify-between">
               <span className="font-satoshi font-medium text-pink-500">
-                Discount
+                {"Discount"}
               </span>
-              <span className="font-goteam text-navy-dark text-lg">0.00</span>
+              <span className="font-goteam text-navy-dark text-lg">
+                {discountAmount > 0 ? `- ${discountAmount.toFixed(2)}` : "0.00"}
+              </span>
             </div>
           </div>
         )}
@@ -278,7 +310,7 @@ export default function BookingSummary({
           Total
         </span>
         <span className="font-goteam text-[#047C88] text-2xl">
-          PHP {total.toFixed(2)}
+          PHP {finalTotal.toFixed(2)}
         </span>
       </div>
     </div>
