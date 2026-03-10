@@ -261,7 +261,7 @@ export default function BookingStep1({
                     handleInputChange("gender", "Male");
                     handleBlur("gender");
                   }}
-                  className={`w-full py-2 text-sm font-satoshi transition hover:cursor-pointer ${
+                  className={`w-full outline-sky-dark rounded-l-lg py-2 text-sm font-satoshi transition hover:cursor-pointer ${
                     formData.gender === "Male"
                       ? "bg-sky-main text-white"
                       : "text-black/40 hover:bg-sky-main/10"
@@ -277,7 +277,7 @@ export default function BookingStep1({
                   handleInputChange("gender", "Female");
                   handleBlur("gender");
                 }}
-                className={`flex-1 py-2 text-sm font-satoshi transition hover:cursor-pointer ${
+                className={`flex-1 outline-sky-main rounded-r-lg py-2 text-sm font-satoshi transition hover:cursor-pointer ${
                   formData.gender === "Female"
                     ? "bg-sky-main text-white"
                     : "text-black/40 hover:bg-sky-main/10"
@@ -403,7 +403,6 @@ export default function BookingStep1({
           </button>
         </div>
       </form>
-      
     </>
   );
 }

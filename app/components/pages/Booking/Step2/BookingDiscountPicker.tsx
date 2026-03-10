@@ -21,12 +21,16 @@ interface Discount {
 
 interface BookingDiscountPickerProps {
   onDiscountChange?: (discount: Discount) => void;
+  initialDiscountId?: number;
 }
 
 export function BookingDiscountPicker({
   onDiscountChange,
+  initialDiscountId,
 }: BookingDiscountPickerProps) {
-  const [selectedDiscountId, setSelectedDiscountId] = React.useState("");
+  const [selectedDiscountId, setSelectedDiscountId] = React.useState(
+    initialDiscountId ? String(initialDiscountId) : "",
+  );
   const [discounts, setDiscounts] = React.useState<Discount[]>([]);
   const [loading, setLoading] = React.useState(true);
   const triggerRef = React.useRef<HTMLButtonElement>(null);
@@ -44,6 +48,10 @@ export function BookingDiscountPicker({
           : data?.data || data?.discounts || Object.values(data || {});
         console.log("Processed discount array:", discountArray);
         setDiscounts(discountArray);
+        // Restore saved selection
+        if (initialDiscountId && !selectedDiscountId) {
+          setSelectedDiscountId(String(initialDiscountId));
+        }
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch discounts:", error);

@@ -4,6 +4,12 @@ import BookingAddOnModalLocal from "./BookingAddOnModalLocal";
 import BookingAddOnModalAPI from "./BookingAddOnModalAPI";
 import { BookingDiscountPicker } from "./BookingDiscountPicker";
 
+const formatMoney = (amount: number) =>
+  amount.toLocaleString("en-PH", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
 interface AddOn {
   id: string;
   name: string;
@@ -34,6 +40,7 @@ interface BookingPackageExpandedDetailsProps {
   onAddSamePackage?: (addOns: AddOn[], choices: string[]) => void;
   canAddMore?: boolean;
   onDiscountChange?: (discount: Discount) => void;
+  initialDiscount?: Discount | null;
 }
 
 export default function BookingPackageExpandedDetails({
@@ -52,13 +59,15 @@ export default function BookingPackageExpandedDetails({
   onAddSamePackage,
   canAddMore = true,
   onDiscountChange,
+  initialDiscount,
 }: BookingPackageExpandedDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>({
-    id: 5,
-    name: "Regular",
-  });
+  const [isChecked, setIsChecked] = useState(
+    !!initialDiscount && initialDiscount.id !== 5,
+  );
+  const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>(
+    initialDiscount ?? { id: 5, name: "Regular" },
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
@@ -88,11 +97,15 @@ export default function BookingPackageExpandedDetails({
   );
   const subtotal = price + addOnsTotal;
 
-  // Calculate discount
+  // Calculate discount (VAT-exempt for Senior/PWD — same logic as BookingSummary)
   let discountAmount = 0;
   if (selectedDiscount) {
     if (selectedDiscount.percentage) {
-      discountAmount = (subtotal * selectedDiscount.percentage) / 100;
+      const vatExclusive = subtotal / 1.10;
+      const vatAmount = subtotal - vatExclusive;
+      discountAmount = vatAmount + (vatExclusive * selectedDiscount.percentage) / 100;
+
+
     } else if (selectedDiscount.amount) {
       discountAmount = selectedDiscount.amount;
     }
@@ -225,7 +238,7 @@ export default function BookingPackageExpandedDetails({
                       {addOn.name}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                     <svg
                       width="24"
                       height="24"
@@ -262,11 +275,14 @@ export default function BookingPackageExpandedDetails({
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <span className="text-sm ml-2 font-satoshi text-navy-dark w-8">
-                      {`x ${addOn.quantity}`}
+                    <span className="text-sm font-satoshi font-bold text-navy-dark">
+                      x
                     </span>
-                    <span className="text-sm font-goteam text-navy-dark w-46 text-right">
-                      PHP {(addOn.price * addOn.quantity).toFixed(2)}
+                    <span className="text-sm font-satoshi font-bold text-navy-dark w-16">
+                      {`${addOn.quantity}`}
+                    </span>
+                    <span className="text-sm font-goteam text-navy-dark w-40 text-right">
+                      PHP {formatMoney(addOn.price * addOn.quantity)}
                     </span>
                   </div>
                 </div>
@@ -278,7 +294,7 @@ export default function BookingPackageExpandedDetails({
                 {isChecked && selectedDiscount && discountAmount > 0 && (
                   <div className="flex justify-between text-red-500">
                     <span>% Discount ({selectedDiscount.name}):</span>
-                    <span>- PHP {discountAmount.toFixed(2)}</span>
+                    <span>- PHP {formatMoney(discountAmount)}</span>
                   </div>
                 )}
               </div>
@@ -323,6 +339,7 @@ export default function BookingPackageExpandedDetails({
                 Choose the discount type to apply
               </p>
               <BookingDiscountPicker
+                initialDiscountId={initialDiscount?.id !== 5 ? initialDiscount?.id : undefined}
                 onDiscountChange={(discount) => {
                   setSelectedDiscount(discount);
                   onDiscountChange?.(discount);

@@ -34,15 +34,23 @@ interface TicketChoices {
   [ticketNumber: number]: string[];
 }
 
+interface Discount {
+  id: number;
+  name: string;
+  percentage?: number;
+  amount?: number;
+}
+
 interface BookingPackageCardProps {
   pkg: Package;
   onQuantityChange: (id: string, delta: number) => void;
   onAddOnsChange?: (packageId: string, addOns: AddOn[], ticketAddOns: TicketAddOns) => void;
   onChoicesChange?: (packageId: string, ticketChoices: TicketChoices) => void;
-  onDiscountChange?: (packageId: string, discount: { id: number; name: string }) => void;
+  onDiscountChange?: (packageId: string, ticketNumber: number, discount: Discount) => void;
   canAddMore?: boolean;
   initialTicketAddOns?: TicketAddOns;
   initialTicketChoices?: TicketChoices;
+  initialDiscountByTicket?: { [ticketNumber: number]: Discount | null };
 }
 
 export default function BookingPackageCard({
@@ -54,6 +62,7 @@ export default function BookingPackageCard({
   canAddMore = true,
   initialTicketAddOns = {},
   initialTicketChoices = {},
+  initialDiscountByTicket = {},
 }: BookingPackageCardProps) {
   const [ticketAddOns, setTicketAddOns] = useState<TicketAddOns>(initialTicketAddOns);
 
@@ -276,8 +285,9 @@ const handleRemovePackage = (ticketNumber: number) => {
               }
               onRemovePackage={() => handleRemovePackage(ticketNumber)}
               onAddSamePackage={handleAddSamePackage}
-              onDiscountChange={(discount) => onDiscountChange?.(pkg.id, discount)}
+              onDiscountChange={(discount) => onDiscountChange?.(pkg.id, ticketNumber, discount)}
               canAddMore={canAddMore}
+              initialDiscount={initialDiscountByTicket[ticketNumber] ?? null}
             />
           );
         })}

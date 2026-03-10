@@ -59,7 +59,7 @@ export default function BookingGrid() {
   const [ticketChoicesByPackage, setTicketChoicesByPackage] = useState<{
     [packageId: string]: { [ticketNumber: number]: string[] };
   }>({});
-  const [discountByPackage, setDiscountByPackage] = useState<{ [packageId: string]: Discount | null }>({});
+  const [discountByPackage, setDiscountByPackage] = useState<{ [packageId: string]: { [ticketNumber: number]: Discount | null } }>({});
   const [step1FormData, setStep1FormData] = useState({
     firstName: "",
     middleName: "",
@@ -140,7 +140,7 @@ export default function BookingGrid() {
               id: parseInt(addOn.id),
               quantity: addOn.quantity,
             })),
-            discount_id: discountByPackage[pkg.id]?.id ?? 5,
+            discount_id: discountByPackage[pkg.id]?.[ticketNumber]?.id ?? 5,
           };
         });
       });
@@ -221,9 +221,10 @@ export default function BookingGrid() {
                   onTicketAddOnsChange={setTicketAddOnsByPackage}
                   ticketChoicesByPackage={ticketChoicesByPackage}
                   onTicketChoicesChange={setTicketChoicesByPackage}
-                  onDiscountChange={(packageId, discount) =>
-                    setDiscountByPackage((prev) => ({ ...prev, [packageId]: discount }))
+                  onDiscountChange={(packageId, ticketNumber, discount) =>
+                    setDiscountByPackage((prev) => ({ ...prev, [packageId]: { ...(prev[packageId] ?? {}), [ticketNumber]: discount } }))
                   }
+                  initialDiscountByPackage={discountByPackage}
                 />
               ) : (
                 <BookingStep3
@@ -233,6 +234,7 @@ export default function BookingGrid() {
                   selectedPackages={selectedPackages}
                   ticketAddOnsByPackage={ticketAddOnsByPackage}
                   ticketChoicesByPackage={ticketChoicesByPackage}
+                  discountByPackage={discountByPackage}
                 />
               )}
             </motion.div>
@@ -245,6 +247,7 @@ export default function BookingGrid() {
         <BookingSummary
           selectedPackages={selectedPackages}
           addOnsByPackage={addOnsByPackage}
+          ticketAddOnsByPackage={ticketAddOnsByPackage}
           discountByPackage={discountByPackage}
         />
       </div>

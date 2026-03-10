@@ -55,7 +55,8 @@ interface BookingStep2Props {
   onTicketChoicesChange?: (ticketChoicesByPackage: {
     [packageId: string]: TicketChoices;
   }) => void;
-  onDiscountChange?: (packageId: string, discount: { id: number; name: string }) => void;
+  onDiscountChange?: (packageId: string, ticketNumber: number, discount: { id: number; name: string; percentage?: number; amount?: number }) => void;
+  initialDiscountByPackage?: { [packageId: string]: { [ticketNumber: number]: { id: number; name: string; percentage?: number; amount?: number } | null } };
 }
 
 export default function BookingStep2API({
@@ -70,6 +71,7 @@ export default function BookingStep2API({
   ticketChoicesByPackage: initialTicketChoices = {},
   onTicketChoicesChange,
   onDiscountChange,
+  initialDiscountByPackage = {},
 }: BookingStep2Props) {
   const [packages, setPackages] = useState<Package[]>([]);
   const [loading, setLoading] = useState(true);
@@ -255,6 +257,7 @@ export default function BookingStep2API({
             canAddMore={canAddMore}
             initialTicketAddOns={ticketAddOnsByPackage[pkg.id] ?? {}}
             initialTicketChoices={ticketChoicesByPackage[pkg.id] ?? {}}
+            initialDiscountByTicket={initialDiscountByPackage[pkg.id] ?? {}}
           />
         ))}
       </div>

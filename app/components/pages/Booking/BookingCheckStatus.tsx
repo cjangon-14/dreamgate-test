@@ -1,46 +1,135 @@
-﻿import React from 'react';
-import type { BookingResponse } from '~/api/bookings';
+﻿import React from "react";
+import type { BookingResponse } from "~/api/bookings";
+
+const formatMoney = (amount: number | string) =>
+  parseFloat(String(amount)).toLocaleString("en-PH", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
 interface BookingCheckStatusProps {
   bookingResponse: BookingResponse | null;
 }
 
-const BookingCheckStatus: React.FC<BookingCheckStatusProps> = ({ bookingResponse }) => {
+const BookingCheckStatus: React.FC<BookingCheckStatusProps> = ({
+  bookingResponse,
+}) => {
   if (!bookingResponse) return null;
 
+  const formattedDate = new Date(bookingResponse.slot_date)
+    .toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+    .toUpperCase();
+
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(bookingResponse.booking_code)}&bgcolor=ffffff&color=003052&margin=10`;
+
+  const isPending = bookingResponse.status !== 1;
+
   return (
-    <div className="rounded-xl bg-green-50 border border-green-200 px-6 py-4">
-      <p className="text-sm font-satoshi font-semibold text-green-700 mb-4">Booking Found</p>
-      <div className="space-y-2">
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-satoshi text-gray-600">Booking Code</span>
-          <span className="text-navy-dark font-satoshi font-bold text-lg">{bookingResponse.booking_code}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-satoshi text-gray-600">Name</span>
-          <span className="text-navy-dark font-satoshi font-semibold">{bookingResponse.name}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-satoshi text-gray-600">Date</span>
-          <span className="text-navy-dark font-satoshi font-semibold">{bookingResponse.slot_date}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-satoshi text-gray-600">Amount Due</span>
-          <span className="text-navy-dark font-satoshi font-semibold">₱{bookingResponse.payment_details.amount_due}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-sm font-satoshi text-gray-600">Status</span>
-          <span className={`text-sm font-satoshi font-bold px-3 py-0.5 rounded-full ${bookingResponse.status === 1 ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-            {bookingResponse.status === 1 ? 'Active' : 'Pending'}
-          </span>
+    <div className="w-full max-w-2xl flex flex-col items-center gap-6">
+      {/* Heading */}
+      <div className="text-center items-center  flex flex-col gap-3">
+        <h1 className="text-white font-satoshi font-black text-3xl mb-2 uppercase">
+          Your booking is confirmed!
+        </h1>
+        <p className="text-white/60 font-satoshi text-sm max-w-sm">
+          Your adventure awaits! Check out your confirmed booking details below.
+        </p>
+      </div>
+
+      {/* Status badge */}
+      <span
+        className={`font-satoshi font-bold px-4 py-1.5 rounded-full text-xs uppercase tracking-wide ${
+          isPending
+            ? "bg-yellow-400/20 text-yellow-300 border border-yellow-400/30"
+            : "bg-green-400/20 text-green-300 border border-green-400/30"
+        }`}
+      >
+        ● {isPending ? "Pending Payment" : "Active"}
+      </span>
+
+      {/* Ticket card */}
+      <div className="w-full bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div className="flex">
+          {/* Left: main info */}
+          <div className="flex-1 p-8">
+            <p className="text-sky-main font-satoshi font-bold text-xs uppercase tracking-widest mb-3">
+              Blue Sky Theme Park
+            </p>
+            <h2 className="font-bitcrusher text-navy-dark text-4xl uppercase leading-tight mb-6">
+              {bookingResponse.name}
+            </h2>
+            <div className="border-t-2 border-dashed border-gray-200 mb-6" />
+            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+              <div>
+                <p className="text-xs font-satoshi text-gray-400 uppercase tracking-wide mb-1">
+                  Booking Date
+                </p>
+                <p className="font-satoshi font-bold text-navy-dark text-sm">
+                  {formattedDate}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-satoshi text-gray-400 uppercase tracking-wide mb-1">
+                  Booking Number
+                </p>
+                <p className="font-satoshi font-bold text-navy-dark text-sm">
+                  {bookingResponse.booking_code}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-satoshi text-gray-400 uppercase tracking-wide mb-1">
+                  Amount Due
+                </p>
+                <p className="font-goteam text-navy-dark text-base">
+                  ₱{formatMoney(bookingResponse.payment_details.amount_due)}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-satoshi text-gray-400 uppercase tracking-wide mb-1">
+                  Email
+                </p>
+                <p className="font-satoshi text-navy-dark text-sm truncate">
+                  {bookingResponse.email}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Tear separator */}
+          <div className="relative flex items-stretch w-8">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#003052] z-10" />
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#003052] z-10" />
+            <div className="mx-auto w-px border-l-2 border-dashed border-gray-200" />
+          </div>
+
+          {/* Right: QR code */}
+          <div className="w-44 flex flex-col items-center justify-center gap-4 p-6 bg-gray-50">
+            <img
+              src={qrUrl}
+              alt="Booking QR Code"
+              className="w-28 h-28 rounded-lg"
+            />
+            <p className="text-xs font-satoshi font-bold text-gray-400 uppercase tracking-widest">
+              My Ticket
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* Payment CTA */}
       {bookingResponse.payment_details.payment_link && (
-        <div className="mt-4">
-          <a href={bookingResponse.payment_details.payment_link} target="_blank" rel="noopener noreferrer" className="inline-block bg-accent-yellow text-navy-dark font-satoshi font-bold px-6 py-2.5 rounded-lg cursor-pointer">
-            Proceed to Checkout
-          </a>
-        </div>
+        <a
+          href={bookingResponse.payment_details.payment_link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-accent-yellow text-navy-dark font-satoshi font-bold px-10 py-3 rounded-xl hover:bg-accent-yellow/90 transition text-sm"
+        >
+          Proceed to Checkout →
+        </a>
       )}
     </div>
   );

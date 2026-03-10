@@ -12,6 +12,7 @@ interface BookingStep3Props {
   ticketChoicesByPackage?: {
     [packageId: string]: { [ticketNumber: number]: string[] };
   };
+  discountByPackage?: { [packageId: string]: { [ticketNumber: number]: { id: number; name: string; percentage?: number; amount?: number } | null } };
 }
 
 const BookingStep3: React.FC<BookingStep3Props> = ({
@@ -21,6 +22,7 @@ const BookingStep3: React.FC<BookingStep3Props> = ({
   selectedPackages,
   ticketAddOnsByPackage = {},
   ticketChoicesByPackage = {},
+  discountByPackage = {},
 }) => {
   React.useEffect(() => {
     console.log("[Step3] selectedPackages:", selectedPackages);
@@ -43,6 +45,7 @@ const BookingStep3: React.FC<BookingStep3Props> = ({
           selectedPackages={selectedPackages}
           ticketAddOnsByPackage={ticketAddOnsByPackage}
           ticketChoicesByPackage={ticketChoicesByPackage}
+          discountByPackage={discountByPackage}
         />
       </div>
 
