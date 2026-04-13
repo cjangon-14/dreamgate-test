@@ -332,7 +332,7 @@ export default function BookingPackageExpandedDetails({
             />
             {/* Display the current state value */}
             Check this box to see if you qualify for BYB Theme Park discounts.
-          </label>
+          </label>f
           {isChecked && (
             <div>
               <p className="text-sm font-satoshi font-bold text-navy-dark mb-3">
