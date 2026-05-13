@@ -1,0 +1,96 @@
+{
+  "$schema": "./node_modules/json-server/schema.json",
+  "bookings": [
+    {
+      "id": 1640995200000,
+      "booking_code": "DG-1K8Z8Z-ABC123",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "mobile_no": "+1234567890",
+      "gender": "Male",
+      "address": "123 Main St, Anytown, USA",
+      "slot_date": "2024-01-15",
+      "base_amount": 250.00,
+      "status": 1,
+      "payment_details": {
+        "payment_link": "https://mockpay.dream-gate.example.com/checkout/DG-1K8Z8Z-ABC123",
+        "amount_due": "250.00",
+        "expires_at": "2024-01-16T00:00:00.000Z",
+        "reference_no": "REF-123456",
+        "status": 1
+      },
+      "packages": [
+        {
+          "id": "family-fun-package",
+          "attractions": ["roller-coaster", "ferris-wheel"],
+          "add_ons": [
+            { "id": "fast-pass", "quantity": 2, "price": 25.00 }
+          ],
+          "discount_id": null,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": 1641081600000,
+      "booking_code": "DG-1K9A9A-DEF456",
+      "name": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "mobile_no": "+1987654321",
+      "gender": "Female",
+      "address": "456 Oak Ave, Somewhere, USA",
+      "slot_date": "2024-01-16",
+      "base_amount": 180.00,
+      "status": 0,
+      "payment_details": {
+        "payment_link": "https://mockpay.dream-gate.example.com/checkout/DG-1K9A9A-DEF456",
+        "amount_due": "180.00",
+        "expires_at": "2024-01-17T00:00:00.000Z",
+        "reference_no": "REF-789012",
+        "status": 0
+      },
+      "packages": [
+        {
+          "id": "adventure-package",
+          "attractions": ["water-ride", "go-karts"],
+          "add_ons": [
+            { "id": "photo-package", "quantity": 1, "price": 15.00 }
+          ],
+          "discount_id": 1,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "id": 1641168000000,
+      "booking_code": "DG-1KA0B0-GHI789",
+      "name": "Mike Johnson",
+      "email": "mike.johnson@example.com",
+      "mobile_no": "+1555123456",
+      "gender": "Male",
+      "address": "789 Pine Rd, Elsewhere, USA",
+      "slot_date": "2024-01-17",
+      "base_amount": 320.00,
+      "status": 2,
+      "payment_details": {
+        "payment_link": "https://mockpay.dream-gate.example.com/checkout/DG-1KA0B0-GHI789",
+        "amount_due": "320.00",
+        "expires_at": "2024-01-18T00:00:00.000Z",
+        "reference_no": "REF-345678",
+        "status": 0
+      },
+      "packages": [
+        {
+          "id": "vip-experience",
+          "attractions": ["vip-lounge", "private-shows", "backstage-tours"],
+          "add_ons": [
+            { "id": "meal-package", "quantity": 3, "price": 45.00 },
+            { "id": "merchandise", "quantity": 1, "price": 30.00 }
+          ],
+          "discount_id": null,
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}

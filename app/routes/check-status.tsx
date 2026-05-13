@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, Link } from "react-router";
 import BookingCheckStatus from "~/components/pages/Booking/BookingCheckStatus";
 import { getBookingByCode, type BookingResponse } from "~/api/bookings";
-import { blueSkyLogoCropped, cloudHero, sectionDivider } from "~/assets";
-import axios from "axios";
+import { dreamGateLogoCropped, cloudHero, sectionDivider } from "~/assets";
 
 export function meta() {
   return [
-    { title: "Check Booking Status - Blue Sky Themed Park" },
-    { name: "description", content: "Check the status of your booking at Blue Sky Themed Park" },
+    { title: "Check Booking Status - Dream Gate Realm" },
+    {
+      name: "description",
+      content:
+        "Check the status of your coordinate access pass at the Dream Gate Realm",
+    },
   ];
 }
 
@@ -16,7 +19,8 @@ export default function CheckStatus() {
   const [searchParams] = useSearchParams();
   const bookingParam = searchParams.get("booking") ?? "";
 
-  const [bookingResponse, setBookingResponse] = useState<BookingResponse | null>(null);
+  const [bookingResponse, setBookingResponse] =
+    useState<BookingResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +34,7 @@ export default function CheckStatus() {
         const response = await getBookingByCode(bookingParam);
         setBookingResponse(response);
       } catch (err) {
-        if (axios.isAxiosError(err) && err.response?.status === 404) {
+        if (err instanceof Error && err.message.includes("not found")) {
           setError("No booking found with that code.");
         } else {
           setError("Something went wrong. Please try again.");
@@ -44,12 +48,13 @@ export default function CheckStatus() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
-      {/* Background gradient */}
+      {/* Background gradient: Swapped old corporate tones for your exact primary/dark nebula theme combo */}
       <div
         className="absolute inset-0 w-full"
         style={{
           height: "150%",
-          background: "linear-gradient(to bottom, #003052 0%, #00374B 100%)",
+          background:
+            "radial-gradient(circle at 50% 20%, #2a2a8c 0%, #1e1e60 100%)",
         }}
       />
 
@@ -64,7 +69,7 @@ export default function CheckStatus() {
       <img
         src={sectionDivider}
         alt=""
-        className="absolute top-1/3 w-full opacity-80 pointer-events-none select-none"
+        className="absolute -top-30  w-full opacity-80 pointer-events-none select-none"
       />
 
       {/* Content */}
@@ -74,13 +79,29 @@ export default function CheckStatus() {
           to="/"
           className="absolute top-8 left-8 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center transition"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="white"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </Link>
 
         {/* Logo */}
-        <img src={blueSkyLogoCropped} alt="Blue Sky" className="h-16 mb-10" />
+        <img
+          src={dreamGateLogoCropped}
+          alt="Dream Gate"
+          className="h-16 mb-10"
+        />
 
         {/* Loading */}
         {isLoading && (
@@ -102,7 +123,8 @@ export default function CheckStatus() {
             <p className="text-white/60 font-satoshi text-sm mb-6">{error}</p>
             <Link
               to="/"
-              className="text-sky-main font-satoshi font-semibold text-sm hover:underline"
+              /* Changed from text-sky-main to your luxury theme gold token (#FFD700) */
+              className="text-[#FFD700] font-satoshi font-semibold text-sm hover:underline"
             >
               ← Back to Home
             </Link>
@@ -113,7 +135,7 @@ export default function CheckStatus() {
         {!bookingParam && !isLoading && (
           <p className="text-white/60 font-satoshi text-sm">
             No booking code provided.{" "}
-            <Link to="/booking" className="text-sky-main hover:underline">
+            <Link to="/booking" className="text-[#FFD700] hover:underline">
               Make a booking →
             </Link>
           </p>

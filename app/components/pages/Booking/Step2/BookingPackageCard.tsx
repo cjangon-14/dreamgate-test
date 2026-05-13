@@ -138,7 +138,7 @@ const handleRemovePackage = (ticketNumber: number) => {
           )}
           {pkg.badge && (
             <span
-              className={`absolute top-3 left-3 text-white text-xs font-bold px-3 py-1 rounded-md ${pkg.badgeColor ?? "bg-gate-main"}`}
+              className={`absolute top-3 left-3 text-white text-xs font-bold px-3 py-1 rounded-md ${pkg.badgeColor ?? "bg-navy-main"}`}
             >
               {pkg.badge}
             </span>
@@ -192,7 +192,7 @@ const handleRemovePackage = (ticketNumber: number) => {
 
           {/* Quantity & Package Details */}
           <div className="flex justify-between items-center flex-row px-5 py-4">
-            <button className="border border-gate-main text-gate-main font-satoshi font-semibold px-4 py-2 rounded-lg hover:bg-gate-main/5 transition text-sm hover:cursor-pointer">
+            <button className="border border-sky-main text-sky-main font-satoshi font-semibold px-4 py-2 rounded-lg hover:bg-sky-main/10 transition text-sm hover:cursor-pointer">
               Package Details
             </button>
             <div className="flex items-center gap-2 ">

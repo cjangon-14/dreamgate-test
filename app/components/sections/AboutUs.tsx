@@ -8,7 +8,7 @@ const AboutUs = () => (
 
     {/* Mascot — desktop only, sits at the top/bottom divider */}
     <div className="absolute -right-1 -bottom-9.5 hidden lg:flex shrink-0 w-125 items-end justify-center z-20">
-      <img src={mascotImage} alt="Blue Sky mascot" className="h-full object-contain" />
+      <img src={mascotImage} alt="Dream Gate mascot" className="h-full object-contain" />
     </div>
 
     <AboutUsBottom />

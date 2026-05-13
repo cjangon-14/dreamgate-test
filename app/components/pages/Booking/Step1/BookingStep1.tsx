@@ -4,9 +4,7 @@ import * as React from "react";
 import { useState } from "react";
 import BookingInput from "./BookingInput";
 import { Calendar } from "~/components/ui/calendar";
-import { Card, CardContent } from "~/components/ui/card";
-import { addDays, format } from "date-fns";
-import { type DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 interface FormData {
   firstName: string;
@@ -23,12 +21,14 @@ interface BookingStep1Props {
   onNext: () => void;
   formData: FormData;
   onFormDataChange: (data: FormData) => void;
+  selectedDate?: Date;
+  onDateChange: (date: Date | undefined) => void;
 }
 
 const nameRegex = /^[a-zA-ZÀ-ÿ\s'\-]+$/;
 
-function getErrors(formData: FormData) {
-  const errors: Partial<Record<keyof FormData, string>> = {};
+function getErrors(formData: FormData, selectedDate?: Date) {
+  const errors: Partial<Record<keyof FormData | 'date', string>> = {};
 
   if (!formData?.firstName?.trim()) {
     errors.firstName = "First name is required.";
@@ -69,6 +69,10 @@ function getErrors(formData: FormData) {
     errors.mobile = "Mobile number is required.";
   }
 
+  if (!selectedDate) {
+    errors.date = "Please select a booking date.";
+  }
+
   return errors;
 }
 
@@ -76,19 +80,21 @@ export default function BookingStep1({
   onNext,
   formData,
   onFormDataChange,
+  selectedDate,
+  onDateChange,
 }: BookingStep1Props) {
   const [touched, setTouched] = useState<
-    Partial<Record<keyof FormData, boolean>>
+    Partial<Record<keyof FormData | 'date', boolean>>
   >({});
 
-  const errors = getErrors(formData);
+  const errors = getErrors(formData, selectedDate);
   const isFormValid = Object.keys(errors).length === 0;
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     onFormDataChange({ ...formData, [field]: value });
   };
 
-  const handleBlur = (field: keyof FormData) => {
+  const handleBlur = (field: keyof FormData | 'date') => {
     setTouched((prev) => ({ ...prev, [field]: true }));
   };
 
@@ -96,7 +102,6 @@ export default function BookingStep1({
     if (isFormValid) {
       onNext();
     } else {
-      // Mark all fields as touched to show all errors at once
       setTouched({
         firstName: true,
         middleName: true,
@@ -105,13 +110,11 @@ export default function BookingStep1({
         email: true,
         age: true,
         gender: true,
+        mobile: true,
+        date: true,
       });
     }
   };
-
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>(
-    undefined,
-  );
 
   return (
     <>
@@ -239,8 +242,8 @@ export default function BookingStep1({
                   }}
                   className={`w-full py-2 text-sm font-satoshi transition hover:cursor-pointer ${
                     formData.gender === "Male"
-                      ? "bg-gate-main text-white"
-                      : "text-black/40 hover:bg-gate-main/10"
+                      ? "bg-navy-main text-white"
+                      : "text-black/40 hover:bg-navy-main/10"
                   }`}
                 >
                   Male
@@ -255,8 +258,8 @@ export default function BookingStep1({
                 }}
                 className={`flex-1 py-2 text-sm font-satoshi transition hover:cursor-pointer ${
                   formData.gender === "Female"
-                    ? "bg-gate-main text-white"
-                    : "text-black/40 hover:bg-gate-main/10"
+                    ? "bg-navy-main text-white"
+                    : "text-black/40 hover:bg-navy-main/10"
                 }`}
               >
                 Female
@@ -325,7 +328,10 @@ export default function BookingStep1({
               <Calendar
                 mode="single"
                 selected={selectedDate}
-                onSelect={setSelectedDate}
+                onSelect={(date) => {
+                  onDateChange(date);
+                  if (touched.date) handleBlur('date');
+                }}
                 numberOfMonths={2}
                 disabled={[{ before: new Date() }, { dayOfWeek: [1, 2, 3, 4] }]}
                 className="bg-transparent w-full justify-center "
@@ -344,6 +350,9 @@ export default function BookingStep1({
                 : "No date selected"}
             </span>
           </p>
+          {touched.date && errors.date && (
+            <p className="text-xs text-red-500 mt-1">{errors.date}</p>
+          )}
         </div>
 
         <hr className="border-gray-200 mb-6" />
@@ -355,8 +364,8 @@ export default function BookingStep1({
             disabled={!isFormValid && Object.keys(touched).length > 0 && false}
             className={`text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition hover:cursor-not-allowed ${
               isFormValid
-                ? "bg-gate-main hover:bg-gate-dark hover:cursor-pointer"
-                : "bg-gate-main/50 text-white/50"
+                ? "bg-navy-main hover:bg-navy-dark hover:cursor-pointer"
+                : "bg-navy-main/50 text-white/50"
             }`}
           >
             Next

@@ -12,8 +12,16 @@ import ContactUs from "~/components/sections/ContactUs";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Blue Sky Themed Park" },
-    { name: "description", content: "Blue Sky Themed Park & Adventure Hub" },
+    /* 
+       Updated the tab title and metadata description from 'Themed Park' 
+       to 'Realm' to complete the unified brand architecture across all pages.
+    */
+    { title: "Dream Gate Realm" },
+    {
+      name: "description",
+      content:
+        "Dream Gate Realm - An Immersive Creative Space Portfolio Project.",
+    },
   ];
 }
 

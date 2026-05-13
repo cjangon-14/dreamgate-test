@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import BookingAddOnModalLocal from "./BookingAddOnModalLocal";
-import BookingAddOnModalAPI from "./BookingAddOnModalAPI";
 
 interface AddOn {
   id: string;
@@ -64,18 +63,18 @@ export default function BookingPackageExpandedDetails({
 
   return (
     <motion.div
-      className="border-t border-gray-100 p-5  bg-[#F0F9FA] relative"
+      className="border-t border-sky-main/20 p-5 bg-sky-main/10 relative"
       initial={{ opacity: 0, height: 0 }}
       animate={{ opacity: 1, height: "auto" }}
       exit={{ opacity: 0, height: 0 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       {/* Ticket Number Badge */}
-      <div className="absolute top-2 right-2 w-8 h-8 bg-gate-main text-white rounded-full flex items-center justify-center font-satoshi font-bold text-sm">
+      <div className="absolute top-2 right-2 w-8 h-8 bg-navy-main text-white rounded-full flex items-center justify-center font-satoshi font-bold text-sm">
         {ticketNumber}
       </div>
 
-      <div className="bg-gray-50 border border-gray-300 px-8 py-6 rounded-2xl">
+      <div className="bg-white border border-sky-main/10 px-8 py-6 rounded-2xl shadow-sm">
         {/* Name + Price */}
         <div className="flex items-center justify-between mb-3">
           <h4 className="text-base font-satoshi font-bold text-navy-dark">
@@ -97,7 +96,7 @@ export default function BookingPackageExpandedDetails({
               {inclusions.map((inclusion, idx) => (
                 <span
                   key={idx}
-                  className="text-regular text-md rounded flex items-center "
+                  className="text-sky-main text-md rounded flex items-center "
                 >
                   {inclusion}
                 </span>
@@ -113,8 +112,8 @@ export default function BookingPackageExpandedDetails({
                     onClick={() => handleChoiceToggle(choice)}
                     className={`text-xs font-medium px-3 py-1.5 rounded flex items-center gap-1 transition cursor-pointer uppercase ${
                       isSelected
-                        ? `text-white bg-${color || "#06AEBD"}`
-                        : "border border-[#6EEBF5] bg-white text-[#047C88] hover:bg-gray-200"
+                        ? "text-white"
+                        : "border border-sky-main/30 bg-white text-sky-main hover:bg-sky-main/5"
                     }`}
                     style={
                       isSelected ? { backgroundColor: color || "#06AEBD" } : {}
@@ -164,15 +163,15 @@ export default function BookingPackageExpandedDetails({
                       viewBox="0 0 16 16"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="text-gate-main"
+                      className="text-sky-main"
                     >
                       <circle
                         cx="8"
                         cy="8"
                         r="7"
-                        fill="#06AEBD"
+                        fill="#81D4FA"
                         fillOpacity="0.2"
-                        stroke="#06AEBD"
+                        stroke="#81D4FA"
                         strokeWidth="1.5"
                       />
                       <path
@@ -236,7 +235,7 @@ export default function BookingPackageExpandedDetails({
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-full border border-gray-300 text-navy-dark font-satoshi font-semibold py-2 rounded-lg hover:bg-gray-50 transition text-sm"
+              className="w-full border border-sky-main/20 text-sky-main font-satoshi font-semibold py-2 rounded-lg hover:bg-sky-main/10 transition text-sm"
             >
               Edit Add-Ons
             </button>
@@ -244,7 +243,7 @@ export default function BookingPackageExpandedDetails({
         ) : (
           <button
             onClick={() => setIsModalOpen(true)}
-            className="w-full border-2 border-dashed border-gray-300 text-navy-dark/60 font-satoshi font-semibold py-3 rounded-xl hover:bg-white transition text-sm mb-4 hover:cursor-pointer"
+            className="w-full border-2 border-dashed border-sky-main/30 text-sky-main/80 font-satoshi font-semibold py-3 rounded-xl hover:bg-sky-main/10 transition text-sm mb-4 hover:cursor-pointer"
           >
             + Add-Ons
           </button>
@@ -254,7 +253,7 @@ export default function BookingPackageExpandedDetails({
         <div className="flex gap-3 pt-4 border-t border-gray-200">
           <button
             onClick={() => onRemovePackage?.()}
-            className="flex-1 bg-navy-dark text-white font-satoshi font-bold py-3 rounded-xl hover:bg-navy-dark/90 transition text-sm hover:cursor-pointer"
+            className="flex-1 bg-sky-main text-white font-satoshi font-bold py-3 rounded-xl hover:bg-sky-dark transition text-sm hover:cursor-pointer"
           >
             Remove this package
           </button>
@@ -262,9 +261,9 @@ export default function BookingPackageExpandedDetails({
           <button
             onClick={() => onAddSamePackage?.(selectedAddOns, selectedChoices)}
             disabled={!canAddMore}
-            className={`flex-1 bg-accent-yellow text-white font-satoshi font-bold py-3 rounded-xl hover:bg-accent-yellow/90 transition text-sm ${
+            className={`flex-1 text-navy-dark font-satoshi font-bold py-3 rounded-xl transition text-sm ${
               canAddMore
-                ? "bg-accent-yellow text-white hover:bg-accent-yellow/90 hover:cursor-pointer"
+                ? "bg-accent-yellow text-navy-dark hover:bg-accent-yellow/90 hover:cursor-pointer"
                 : "bg-gray-300 text-gray-500 hover:bg-gray-300 cursor-not-allowed"
             }`}
           >
@@ -272,7 +271,7 @@ export default function BookingPackageExpandedDetails({
           </button>
         </div>
       </div>
-      <BookingAddOnModalAPI
+      <BookingAddOnModalLocal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={handleAddOnsConfirm}

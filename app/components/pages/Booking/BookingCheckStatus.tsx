@@ -24,14 +24,18 @@ const BookingCheckStatus: React.FC<BookingCheckStatusProps> = ({
     })
     .toUpperCase();
 
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(bookingResponse.booking_code)}&bgcolor=ffffff&color=003052&margin=10`;
+  /* 
+     UPDATED QR COLOR: Converted from '003052' to your solid Nebula Blue color parameter '3d3dbd' 
+     to ensure the generated badge matches your updated design tokens.
+  */
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(bookingResponse.booking_code)}&bgcolor=ffffff&color=3d3dbd&margin=10`;
 
   const isPending = bookingResponse.status !== 1;
 
   return (
     <div className="w-full max-w-2xl flex flex-col items-center gap-6">
       {/* Heading */}
-      <div className="text-center items-center  flex flex-col gap-3">
+      <div className="text-center items-center flex flex-col gap-3">
         <h1 className="text-white font-satoshi font-black text-3xl mb-2 uppercase">
           Your booking is confirmed!
         </h1>
@@ -56,8 +60,9 @@ const BookingCheckStatus: React.FC<BookingCheckStatusProps> = ({
         <div className="flex">
           {/* Left: main info */}
           <div className="flex-1 p-8">
+            {/* UPDATED: Changed from 'Theme Park' to 'Realm' layout semantics */}
             <p className="text-sky-main font-satoshi font-bold text-xs uppercase tracking-widest mb-3">
-              Blue Sky Theme Park
+              Dream Gate Realm
             </p>
             <h2 className="font-bitcrusher text-navy-dark text-4xl uppercase leading-tight mb-6">
               {bookingResponse.name}
@@ -101,8 +106,9 @@ const BookingCheckStatus: React.FC<BookingCheckStatusProps> = ({
 
           {/* Tear separator */}
           <div className="relative flex items-stretch w-8">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#003052] z-10" />
-            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-[#003052] z-10" />
+            {/* UPDATED: Changed static hex color class background indicators to use your dark theme variable directly */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-navy-dark z-10" />
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-navy-dark z-10" />
             <div className="mx-auto w-px border-l-2 border-dashed border-gray-200" />
           </div>
 

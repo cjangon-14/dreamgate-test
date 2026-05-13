@@ -125,7 +125,7 @@ export default function BookingAddOnModalAPI({
                 </span>
                 <button
                   onClick={() => handleQuantityChange(addOn.id, 1)}
-                  className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gate-main font-bold hover:cursor-pointer"
+                  className="w-8 h-8 flex items-center justify-center border border-sky-main/20 rounded-lg hover:bg-sky-main/10 transition text-sky-main font-bold hover:cursor-pointer"
                 >
                   +
                 </button>
@@ -167,9 +167,9 @@ export default function BookingAddOnModalAPI({
 
           {/* Table Header */}
           <div className="grid grid-cols-[2fr_1fr_1.5fr] gap-8 pb-4 border-b border-gray-200">
-            <div className="text-sm font-satoshi font-medium text-[#047C88]">Rides</div>
-            <div className="text-sm font-satoshi font-medium text-[#047C88]">Price</div>
-            <div className="text-sm font-satoshi font-medium text-[#047C88]">Quantity</div>
+            <div className="text-sm font-satoshi font-medium text-sky-main">Rides</div>
+            <div className="text-sm font-satoshi font-medium text-sky-main">Price</div>
+            <div className="text-sm font-satoshi font-medium text-sky-main">Quantity</div>
           </div>
         </div>
 
@@ -179,17 +179,17 @@ export default function BookingAddOnModalAPI({
         </div>
 
         {/* Sticky Footer */}
-        <div className="px-8 pb-8 pt-4 border-t border-gray-200 shrink-0">
+        <div className="px-8 pb-8 pt-4 border-t border-sky-main/20 shrink-0">
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              className="flex-1 border border-gray-300 text-navy-dark font-satoshi font-bold py-3 rounded-xl hover:bg-gray-50 transition hover:cursor-pointer"
+              className="flex-1 border border-sky-main/20 text-sky-main font-satoshi font-bold py-3 rounded-xl hover:bg-sky-main/10 transition hover:cursor-pointer"
             >
               Back
             </button>
             <button
               onClick={() => onConfirm(addOns)}
-              className="flex-1 bg-gate-main hover:bg-gate-dark text-white font-satoshi font-bold py-3 rounded-xl transition hover:cursor-pointer"
+              className="flex-1 bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold py-3 rounded-xl transition hover:cursor-pointer"
             >
               Done
             </button>

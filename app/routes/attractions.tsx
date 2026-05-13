@@ -4,8 +4,16 @@ import AttractionsGrid from "~/components/pages/Attractions/AttractionsGrid";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Attractions - Blue Sky Themed Park" },
-    { name: "description", content: "Explore all the amazing attractions at Blue Sky Themed Park" },
+    /* 
+       Updated the tab title and metadata description to use "Realm" 
+       instead of "Themed Park" to keep your project SEO-consistent.
+    */
+    { title: "Attractions - Dream Gate Realm" },
+    {
+      name: "description",
+      content:
+        "Explore all the amazing and immersive attractions waiting for you inside the Dream Gate Realm.",
+    },
   ];
 }
 

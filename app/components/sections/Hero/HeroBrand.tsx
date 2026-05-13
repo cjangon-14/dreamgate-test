@@ -1,12 +1,12 @@
-import { blueSkyLogoCropped, textStar } from "../../../assets";
+import { dreamGateLogoCropped, textStar } from "../../../assets";
 
 const HeroBrand = () => (
   <div className="relative mb-6 flex flex-col items-center leading-none select-none">
     <div className="logo-glow flex flex-col items-center">
       <div className=" z-10 relative">
         <img
-          src={blueSkyLogoCropped}
-          alt="BLUE SKY logo"
+          src={dreamGateLogoCropped}
+          alt="DREAM GATE logo"
           className="w-56 sm:w-72 md:w-80 lg:w-96"
           draggable="false"
           decoding="async"

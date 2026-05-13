@@ -32,7 +32,7 @@ export default function BookingStepHeader({ step }: BookingStepHeaderProps) {
       {/* Step Indicator */}
       <div className="flex items-center justify-between mb-4">
         <motion.span 
-          className="bg-gate-main/20 text-navy-main font-satoshi font-bold text-xs px-3 py-1 rounded-full"
+          className="bg-navy-main/20 text-navy-main font-satoshi font-bold text-xs px-3 py-1 rounded-full"
           key={step}
           initial={{ opacity: 0, y: direction === 'forward' ? -10 : 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,19 +47,25 @@ export default function BookingStepHeader({ step }: BookingStepHeaderProps) {
             const isEmptying = wasFilledBefore && !isFilled;
             
             return (
-              <div key={index} className="overflow-hidden relative h-2 w-12 rounded-full bg-gray-200">
+              <div
+                key={index}
+                className="overflow-hidden relative h-2 w-12 rounded-full bg-gray-200"
+              >
                 <motion.div
-                  className="h-full w-full bg-gate-main rounded-full"
-                  animate={{ 
-                    scaleX: isFilled ? 1 : 0
+                  className="h-full w-full bg-navy-main rounded-full"
+                  animate={{
+                    scaleX: isFilled ? 1 : 0,
                   }}
-                  transition={{ 
+                  transition={{
                     type: "spring",
                     damping: 20,
                     stiffness: 80,
-                    delay: direction === 'forward' 
-                      ? (isFilled ? index * 0.1 : 0)
-                      : (totalSteps - index - 1) * 0.08
+                    delay:
+                      direction === "forward"
+                        ? isFilled
+                          ? index * 0.1
+                          : 0
+                        : (totalSteps - index - 1) * 0.08,
                   }}
                   style={{ originX: isEmptying ? 1 : 0 }}
                 />

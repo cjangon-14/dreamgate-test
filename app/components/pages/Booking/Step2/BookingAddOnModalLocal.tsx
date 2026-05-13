@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface AddOn {
   id: string;
@@ -15,13 +15,13 @@ interface BookingAddOnModalProps {
 }
 
 const defaultAddOns: AddOn[] = [
-  { id: '1', name: 'Wonder Flight', price: 50, quantity: 0 },
-  { id: '2', name: 'Mini Spinner', price: 50, quantity: 0 },
-  { id: '3', name: 'Mini Pendulum', price: 50, quantity: 0 },
-  { id: '4', name: 'Grand Carousel', price: 50, quantity: 0 },
-  { id: '5', name: 'Wacky Adventure', price: 50, quantity: 0 },
-  { id: '6', name: 'Loop', price: 50, quantity: 0 },
-  { id: '7', name: 'BYB Express', price: 50, quantity: 0 },
+  { id: '1', name: 'Celestial Glide', price: 50, quantity: 0 },
+  { id: '2', name: 'Lunar Spinner', price: 50, quantity: 0 },
+  { id: '3', name: 'Eclipse Pendulum', price: 50, quantity: 0 },
+  { id: '4', name: 'Aurora Carousel', price: 50, quantity: 0 },
+  { id: '5', name: 'Whimsy Whirl', price: 50, quantity: 0 },
+  { id: '6', name: 'Gravity Loop', price: 50, quantity: 0 },
+  { id: '7', name: 'Gate Express', price: 50, quantity: 0 },
 ];
 
 export default function BookingAddOnModalLocal({ 
@@ -42,6 +42,10 @@ export default function BookingAddOnModalLocal({
   };
 
   const [addOns, setAddOns] = useState<AddOn[]>(getInitialState());
+
+  useEffect(() => {
+    setAddOns(getInitialState());
+  }, [initialAddOns, isOpen]);
 
   const handleQuantityChange = (id: string, delta: number) => {
     setAddOns(
@@ -77,14 +81,14 @@ export default function BookingAddOnModalLocal({
         </div>
 
         {/* Table Header */}
-        <div className="grid grid-cols-[2fr_1fr_1.5fr] gap-8 mb-4 pb-4 border-b border-gray-200">
-          <div className="text-sm font-satoshi font-medium text-[#047C88]">
+<div className="grid grid-cols-[2fr_1fr_1.5fr] gap-8 mb-4 pb-4 border-b border-sky-main/20">
+          <div className="text-sm font-satoshi font-medium text-sky-main">
             Rides
           </div>
-          <div className="text-sm font-satoshi font-medium text-[#047C88]">
+          <div className="text-sm font-satoshi font-medium text-sky-main">
             Price
           </div>
-          <div className="text-sm font-satoshi font-medium text-[#047C88]">
+          <div className="text-sm font-satoshi font-medium text-sky-main">
             Quantity
           </div>
         </div>
@@ -124,7 +128,7 @@ export default function BookingAddOnModalLocal({
                   </span>
                   <button
                     onClick={() => handleQuantityChange(addOn.id, 1)}
-                    className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gate-main font-bold hover:cursor-pointer"
+                    className="w-8 h-8 flex items-center justify-center border border-sky-main/20 rounded-lg hover:bg-sky-main/10 transition text-sky-main font-bold hover:cursor-pointer"
                   >
                     +
                   </button>
@@ -135,16 +139,16 @@ export default function BookingAddOnModalLocal({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 pt-6 border-t border-gray-200">
+        <div className="flex gap-3 pt-6 border-t border-sky-main/20">
           <button
             onClick={onClose}
-            className="flex-1 border border-gray-300 text-navy-dark font-satoshi font-bold py-3 rounded-xl hover:bg-gray-50 transition hover:cursor-pointer"
+            className="flex-1 border border-sky-main/20 text-sky-main font-satoshi font-bold py-3 rounded-xl hover:bg-sky-main/10 transition hover:cursor-pointer"
           >
             Back
           </button>
           <button
             onClick={() => onConfirm(addOns)}
-            className="flex-1 bg-gate-main hover:bg-gate-dark text-white font-satoshi font-bold py-3 rounded-xl transition hover:cursor-pointer"
+            className="flex-1 bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold py-3 rounded-xl transition hover:cursor-pointer"
           >
             Done
           </button>

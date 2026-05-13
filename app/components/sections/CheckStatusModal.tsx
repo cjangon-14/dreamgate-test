@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { getBookingByCode } from '~/api/bookings';
-import axios from 'axios';
 
 interface CheckStatusModalProps {
   isOpen: boolean;
@@ -28,7 +27,7 @@ const CheckStatusModal: React.FC<CheckStatusModalProps> = ({ isOpen, onClose }) 
       onClose();
       navigate('/check-status?booking=' + encodeURIComponent(trimmed));
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.status === 404) {
+      if (err instanceof Error && err.message.includes('not found')) {
         setError('No booking found for the provided reference number.');
       } else {
         setError('Something went wrong. Please try again.');
@@ -59,7 +58,7 @@ const CheckStatusModal: React.FC<CheckStatusModalProps> = ({ isOpen, onClose }) 
 
         <h2 className="text-xl font-satoshi font-bold text-navy-dark mb-1">Check Booking Status</h2>
         <p className="text-sm font-satoshi text-gray-500 mb-6">
-          To check your Blue Sky Booking Status, kindly enter your Booking/Reference Number.
+          To check your Dream Gate Booking Status, kindly enter your Booking/Reference Number.
         </p>
 
         <label className="block text-sm font-satoshi font-semibold text-navy-dark mb-1.5">

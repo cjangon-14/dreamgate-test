@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Primary blue sky colors
+        // Primary dream gate colors
         'sky-light': '#B3E5FC',
         'sky-main': '#81D4FA',
         'sky-dark': '#4FC3F7',

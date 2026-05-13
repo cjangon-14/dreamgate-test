@@ -5,7 +5,8 @@ export default function AttractionsHeader() {
         All Attractions
       </h1>
       <p className="text-lg text-navy-main">
-        Discover all the exciting attractions and experiences available at Blue Sky.
+        Discover all the exciting attractions and experiences available inside
+        the Dream Gate Realm.
       </p>
     </div>
   );

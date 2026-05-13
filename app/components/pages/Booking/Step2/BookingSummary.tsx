@@ -56,14 +56,14 @@ export default function BookingSummary({
   const total = packageTotal + addOnsTotal;
 
   return (
-    <div className={`border border-gray-200 rounded-xl overflow-hidden w-110 ${
+    <div className={`border border-sky-main/20 rounded-xl overflow-hidden w-110 ${
       scrolled 
       ? "fixed top-18 w-110 " 
       : "relative"
       
       }`}>
 
-      <div className="p-6">
+      <div className="p-6 bg-white">
         <div className="flex items-start justify-between mb-1">
           <h3 className="text-lg font-satoshi font-bold text-navy-dark">
             Booking Summary
@@ -109,7 +109,7 @@ export default function BookingSummary({
             />
           </svg>
         </div>
-        <p className="text-sm font-satoshi text-gray-400 mb-4">
+        <p className="text-sm font-satoshi text-sky-main mb-4">
           Double-check your selected packages and total amount here.
         </p>
         <hr className="border-gray-200 mb-6" />
@@ -262,8 +262,8 @@ export default function BookingSummary({
             })}
 
             {/* Discount Row */}
-            <div className="border-t border-gray-200 border-dashed py-4 flex items-center justify-between">
-              <span className="font-satoshi font-medium text-pink-500">
+            <div className="border-t border-sky-main/20 border-dashed py-4 flex items-center justify-between">
+              <span className="font-satoshi font-medium text-sky-main">
                 Discount
               </span>
               <span className="font-goteam text-navy-dark text-lg">0.00</span>
@@ -273,11 +273,11 @@ export default function BookingSummary({
       </div>
 
       {/* Total */}
-      <div className="bg-[#F5F8FB] border-t border-gray-200 px-6 py-4 flex items-center justify-between">
+      <div className="bg-sky-main/10 border-t border-sky-main/20 px-6 py-4 flex items-center justify-between">
         <span className="font-satoshi font-bold text-navy-dark text-lg">
           Total
         </span>
-        <span className="font-goteam text-[#047C88] text-2xl">
+        <span className="font-goteam text-sky-main text-2xl">
           PHP {total.toFixed(2)}
         </span>
       </div>

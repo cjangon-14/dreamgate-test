@@ -1,6 +1,6 @@
-export { default as blueSkyLogo } from "./Hero/BSlogo-3d.png";
-// export { default as blueSkyLogoCropped } from "./Hero/BSlogo-3d-cropped.png";
-export { default as blueSkyLogoCropped } from "./Hero/DGlogo-3d-cropped.png";
+export { default as dreamGateLogo } from "./Hero/BSlogo-3d.png";
+// export { default as dreamGateLogoCropped } from "./Hero/BSlogo-3d-cropped.png";
+export { default as dreamGateLogoCropped } from "./Hero/DGlogo-3d-cropped.png";
 export { default as cloud1 } from "./Hero/cld-2.png";
 export { default as cloud2 } from "./Hero/cld-3.png";
 export { default as textStar } from "./Hero/text-star.png";

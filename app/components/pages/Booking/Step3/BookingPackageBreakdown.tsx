@@ -14,7 +14,7 @@ const BookingPackageBreakdown: React.FC<BookingPackageBreakdownProps> = ({
 }) => {
   return (
     <div className="mb-6">
-      <h4 className="text-base font-semibold text-dark-main mb-4">
+      <h4 className="text-base font-semibold text-navy-dark mb-4">
         Package Breakdown
       </h4>
       <div className="space-y-4">
@@ -33,7 +33,7 @@ const BookingPackageBreakdown: React.FC<BookingPackageBreakdownProps> = ({
             <div key={pkg.id} className="rounded-xl overflow-hidden shadow-sm">
               {/* Header */}
               <div
-                className={`px-6 py-4 flex items-center justify-between ${pkg.badgeColor ?? "bg-gate-main"}`}
+                className={`px-6 py-4 flex items-center justify-between ${pkg.badgeColor ?? "bg-sky-main"}`}
               >
                 <h5 className="text-white font-bold text-base">{pkg.label}</h5>
                 <span className="bg-white text-navy-dark text-xs font-bold px-4 py-1.5 rounded-full">
@@ -62,11 +62,11 @@ const BookingPackageBreakdown: React.FC<BookingPackageBreakdownProps> = ({
               })}
 
               {/* Footer total */}
-              <div className="bg-[#E9F2F9] px-10 py-6 flex justify-between items-center border-2 border-gray-300 border-t-gray-200 rounded-b-xl">
+              <div className="bg-sky-main/10 px-10 py-6 flex justify-between items-center border-2 border-sky-main/20 rounded-b-xl">
                 <span className="text-sm font-bold text-navy-dark">
                   Total Package Amount
                 </span>
-                <span className="font-goteam text-navy-dark text-base">
+                <span className="font-goteam text-sky-main text-base">
                   PHP {pkgTotal.toFixed(2)}
                 </span>
               </div>

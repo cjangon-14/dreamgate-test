@@ -13,7 +13,7 @@ const WhyDreamGate = () => (
 
     {/* Mascot — desktop only */}
     <div className="hidden lg:block absolute -bottom-80  w-[40%] pointer-events-none">
-      <img src={mascotWbs} alt="Blue Sky mascot" className="object-contain" />
+      <img src={mascotWbs} alt="Dream Gate mascot" className="object-contain" />
     </div>
 
     {/* Gold bottom border */}

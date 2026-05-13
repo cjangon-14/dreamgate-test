@@ -5,8 +5,16 @@ import AboutFeatures from "~/components/pages/About/AboutFeatures";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "About Us - Blue Sky Themed Park" },
-    { name: "description", content: "Learn more about Blue Sky Themed Park and our mission" },
+    /* 
+       Updated the tab title and metadata description from 'Themed Park' 
+       to 'Realm' to keep your core brand architecture cohesive across every route.
+    */
+    { title: "About Us - Dream Gate Realm" },
+    {
+      name: "description",
+      content:
+        "Learn more about the creative vision, standalone narrative, and immersive mission behind the Dream Gate Realm.",
+    },
   ];
 }
 

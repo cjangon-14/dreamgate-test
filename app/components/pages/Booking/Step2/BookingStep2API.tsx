@@ -232,7 +232,7 @@ export default function BookingStep2API({
       <h2 className="text-2xl font-satoshi font-bold text-navy-dark mb-1">
         Package Selection
       </h2>
-      <p className="text-sm font-satoshi text-gray-500 mb-6">
+      <p className="text-sm font-satoshi text-sky-main mb-6">
         Choose your preferred package and add-ons, and tailor it to match your
         booking needs.
       </p>
@@ -259,7 +259,7 @@ export default function BookingStep2API({
       <div className="flex justify-between items-center">
         <button
           onClick={onBack}
-          className="border border-navy-dark/20 text-navy-dark font-satoshi font-bold px-8 py-2.5 rounded-lg hover:bg-gray-50 transition cursor-pointer"
+          className="border border-sky-main/20 text-sky-main font-satoshi font-bold px-8 py-2.5 rounded-lg hover:bg-sky-main/10 transition cursor-pointer"
         >
           Back
         </button>
@@ -274,7 +274,11 @@ export default function BookingStep2API({
               if (totalTickets > 0) onNext();
             }}
             disabled={totalTickets === 0}
-            className="bg-gate-main hover:bg-gate-dark hover:cursor-pointer text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition disabled:bg-gate-main/50 disabled:text-white/50 disabled:cursor-not-allowed"
+            className={`bg-accent-yellow text-navy-dark font-satoshi font-bold px-8 py-2.5 rounded-lg transition ${
+              totalTickets === 0
+                ? "cursor-not-allowed bg-gray-light text-gray-main"
+                : "hover:bg-accent-yellow/90"
+            }`}
           >
             Next
           </button>

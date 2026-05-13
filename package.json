@@ -6,7 +6,8 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "server": "json-server --watch db.json --port 3005"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -47,6 +48,8 @@
     "@types/node": "^22",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "concurrently": "^9.2.1",
+    "json-server": "^1.0.0-beta.15",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",
     "typescript-plugin-css-modules": "^5.2.0",
