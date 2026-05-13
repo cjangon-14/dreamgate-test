@@ -6,7 +6,7 @@ interface BookingStepHeaderProps {
 }
 
 export default function BookingStepHeader({ step }: BookingStepHeaderProps) {
-  const totalSteps = 3;
+  const totalSteps = 4;
   const [prevStep, setPrevStep] = useState(step);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
 
@@ -22,7 +22,7 @@ export default function BookingStepHeader({ step }: BookingStepHeaderProps) {
   return (
     <>
       {/* Info Banner */}
-      <div className="rounded-xl bg-[#2BD8FF]/8 border-sky-main/20 px-6 py-4 text-center mb-6">
+      <div className="rounded-xl bg-[#2BD8FF]/8 border-gate-main/20 px-6 py-4 text-center mb-6">
         <p className="text-regular font-satoshi text-sm">
           Please be informed that each booking is{" "}
           <strong>limited to a maximum of 6 persons</strong> to ensure a
@@ -32,7 +32,7 @@ export default function BookingStepHeader({ step }: BookingStepHeaderProps) {
       {/* Step Indicator */}
       <div className="flex items-center justify-between mb-4">
         <motion.span 
-          className="bg-sky-main/20 text-navy-main font-satoshi font-bold text-xs px-3 py-1 rounded-full"
+          className="bg-gate-main/20 text-navy-main font-satoshi font-bold text-xs px-3 py-1 rounded-full"
           key={step}
           initial={{ opacity: 0, y: direction === 'forward' ? -10 : 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ export default function BookingStepHeader({ step }: BookingStepHeaderProps) {
             return (
               <div key={index} className="overflow-hidden relative h-2 w-12 rounded-full bg-gray-200">
                 <motion.div
-                  className="h-full w-full bg-sky-main rounded-full"
+                  className="h-full w-full bg-gate-main rounded-full"
                   animate={{ 
                     scaleX: isFilled ? 1 : 0
                   }}

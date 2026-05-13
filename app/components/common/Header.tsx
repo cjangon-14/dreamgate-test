@@ -4,8 +4,8 @@ import headerLogo from "../../assets/Header/header-logo.svg";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Placeholder", href: "#" },
-  { label: "Placeholder", href: "#" },
+  { label: "Attractions", href: "/attractions" },
+  { label: "Booking", href: "/booking" },
   { label: "About", href: "/about" },
 ];
 
@@ -14,7 +14,6 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Using document.documentElement.scrollTop for better compatibility with Lenis
       setScrolled(document.documentElement.scrollTop > 50);
     };
     window.addEventListener("scroll", handleScroll);
@@ -32,7 +31,12 @@ const Header = () => {
       <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10">
         {/* Logo */}
         <Link to="/" className="flex shrink-0 items-center">
-          <img src={headerLogo} alt="Blue Sky logo" className="h-7 w-auto" />
+          {/* Added brightness filter when backdrop is transparent to make dark svgs visible */}
+          <img
+            src={headerLogo}
+            alt="Dream Gate logo"
+            className={`h-7 w-auto transition-all duration-300 ${!scrolled ? "brightness-0 invert" : ""}`}
+          />
         </Link>
 
         {/* Nav Sections */}
@@ -41,7 +45,10 @@ const Header = () => {
             <a
               key={link.href}
               href={link.href}
-              className="pointer-events-auto text-sm font-semibold text-navy-dark transition-colors duration-150 hover:text-accent-orange"
+              /* DYNAMIC COLOR: text-white/90 on transparent backdrop, text-navy-dark when scrolled */
+              className={`pointer-events-auto text-sm font-semibold transition-colors duration-300 hover:text-accent-orange ${
+                scrolled ? "text-navy-dark" : "text-white/90"
+              }`}
             >
               {link.label}
             </a>
@@ -50,7 +57,14 @@ const Header = () => {
 
         {/* Action buttons — desktop */}
         <div className="hidden md:flex shrink-0 items-center gap-2">
-          <button className="flex items-center gap-1.5 rounded-md border border-navy-dark/30 bg-transparent px-4 py-1.5 text-xs font-semibold text-navy-dark backdrop-blur-sm transition-all duration-200 hover:bg-accent-orange hover:border-accent-orange hover:text-white hover:cursor-pointer">
+          <button
+            /* DYNAMIC BORDER/TEXT STYLE */
+            className={`flex items-center gap-1.5 rounded-md border bg-transparent px-4 py-1.5 text-xs font-semibold backdrop-blur-sm transition-all duration-300 hover:bg-accent-orange hover:border-accent-orange hover:text-white hover:cursor-pointer ${
+              scrolled
+                ? "border-navy-dark/30 text-navy-dark"
+                : "border-white/30 text-white/90"
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4"
@@ -67,7 +81,14 @@ const Header = () => {
             </svg>
             Customer Support
           </button>
-          <button className="flex items-center gap-1.5 rounded-md border border-navy-dark/30 bg-transparent px-4 py-1.5 text-xs font-semibold text-navy-dark backdrop-blur-sm transition-all duration-200 hover:bg-accent-orange hover:border-accent-orange hover:text-white hover:cursor-pointer">
+          <button
+            /* DYNAMIC BORDER/TEXT STYLE */
+            className={`flex items-center gap-1.5 rounded-md border bg-transparent px-4 py-1.5 text-xs font-semibold backdrop-blur-sm transition-all duration-300 hover:bg-accent-orange hover:border-accent-orange hover:text-white hover:cursor-pointer ${
+              scrolled
+                ? "border-navy-dark/30 text-navy-dark"
+                : "border-white/30 text-white/90"
+            }`}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4"
@@ -87,12 +108,19 @@ const Header = () => {
 
         {/* Hamburger — mobile */}
         <button
-          className="md:hidden flex flex-col justify-center items-center gap-1.5 p-2 text-navy-dark hover:cursor-pointer"
+          className="md:hidden flex flex-col justify-center items-center gap-1.5 p-2 hover:cursor-pointer"
           aria-label="Open menu"
         >
-          <span className="block w-6 h-0.5 bg-navy-dark rounded-full" />
-          <span className="block w-6 h-0.5 bg-navy-dark rounded-full" />
-          <span className="block w-6 h-0.5 bg-navy-dark rounded-full" />
+          {/* DYNAMIC HAMBURGER COLORS */}
+          <span
+            className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${scrolled ? "bg-navy-dark" : "bg-white"}`}
+          />
+          <span
+            className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${scrolled ? "bg-navy-dark" : "bg-white"}`}
+          />
+          <span
+            className={`block w-6 h-0.5 rounded-full transition-colors duration-300 ${scrolled ? "bg-navy-dark" : "bg-white"}`}
+          />
         </button>
       </div>
     </header>

@@ -124,7 +124,7 @@ export default function BookingAddOnModalLocal({
                   </span>
                   <button
                     onClick={() => handleQuantityChange(addOn.id, 1)}
-                    className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-50 transition text-sky-main font-bold hover:cursor-pointer"
+                    className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gate-main font-bold hover:cursor-pointer"
                   >
                     +
                   </button>
@@ -144,7 +144,7 @@ export default function BookingAddOnModalLocal({
           </button>
           <button
             onClick={() => onConfirm(addOns)}
-            className="flex-1 bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold py-3 rounded-xl transition hover:cursor-pointer"
+            className="flex-1 bg-gate-main hover:bg-gate-dark text-white font-satoshi font-bold py-3 rounded-xl transition hover:cursor-pointer"
           >
             Done
           </button>

@@ -2,26 +2,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import BookingAddOnModalLocal from "./BookingAddOnModalLocal";
 import BookingAddOnModalAPI from "./BookingAddOnModalAPI";
-import { BookingDiscountPicker } from "./BookingDiscountPicker";
-
-const formatMoney = (amount: number) =>
-  amount.toLocaleString("en-PH", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
 
 interface AddOn {
   id: string;
   name: string;
   price: number;
   quantity: number;
-}
-
-interface Discount {
-  id: number;
-  name: string;
-  percentage?: number;
-  amount?: number;
 }
 
 interface BookingPackageExpandedDetailsProps {
@@ -39,8 +25,6 @@ interface BookingPackageExpandedDetailsProps {
   onRemovePackage?: () => void;
   onAddSamePackage?: (addOns: AddOn[], choices: string[]) => void;
   canAddMore?: boolean;
-  onDiscountChange?: (discount: Discount) => void;
-  initialDiscount?: Discount | null;
 }
 
 export default function BookingPackageExpandedDetails({
@@ -58,20 +42,8 @@ export default function BookingPackageExpandedDetails({
   onRemovePackage,
   onAddSamePackage,
   canAddMore = true,
-  onDiscountChange,
-  initialDiscount,
 }: BookingPackageExpandedDetailsProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(
-    !!initialDiscount && initialDiscount.id !== 5,
-  );
-  const [selectedDiscount, setSelectedDiscount] = useState<Discount | null>(
-    initialDiscount ?? { id: 5, name: "Regular" },
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(e.target.checked);
-  };
 
   const handleChoiceToggle = (choice: string) => {
     const isSelected = selectedChoices.includes(choice);
@@ -90,29 +62,6 @@ export default function BookingPackageExpandedDetails({
     setIsModalOpen(false);
   };
 
-  // Calculate totals
-  const addOnsTotal = selectedAddOns.reduce(
-    (sum, addOn) => sum + addOn.price * addOn.quantity,
-    0
-  );
-  const subtotal = price + addOnsTotal;
-
-  // Calculate discount (VAT-exempt for Senior/PWD — same logic as BookingSummary)
-  let discountAmount = 0;
-  if (selectedDiscount) {
-    if (selectedDiscount.percentage) {
-      const vatExclusive = subtotal / 1.10;
-      const vatAmount = subtotal - vatExclusive;
-      discountAmount = vatAmount + (vatExclusive * selectedDiscount.percentage) / 100;
-
-
-    } else if (selectedDiscount.amount) {
-      discountAmount = selectedDiscount.amount;
-    }
-  }
-
-  const total = subtotal - discountAmount;
-
   return (
     <motion.div
       className="border-t border-gray-100 p-5  bg-[#F0F9FA] relative"
@@ -122,7 +71,7 @@ export default function BookingPackageExpandedDetails({
       transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       {/* Ticket Number Badge */}
-      <div className="absolute top-2 right-2 w-8 h-8 bg-sky-main text-white rounded-full flex items-center justify-center font-satoshi font-bold text-sm">
+      <div className="absolute top-2 right-2 w-8 h-8 bg-gate-main text-white rounded-full flex items-center justify-center font-satoshi font-bold text-sm">
         {ticketNumber}
       </div>
 
@@ -215,7 +164,7 @@ export default function BookingPackageExpandedDetails({
                       viewBox="0 0 16 16"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="text-sky-main"
+                      className="text-gate-main"
                     >
                       <circle
                         cx="8"
@@ -238,7 +187,7 @@ export default function BookingPackageExpandedDetails({
                       {addOn.name}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <svg
                       width="24"
                       height="24"
@@ -275,29 +224,15 @@ export default function BookingPackageExpandedDetails({
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <span className="text-sm font-satoshi font-bold text-navy-dark">
-                      x
+                    <span className="text-sm ml-2 font-satoshi text-navy-dark w-8">
+                      {`x ${addOn.quantity}`}
                     </span>
-                    <span className="text-sm font-satoshi font-bold text-navy-dark w-16">
-                      {`${addOn.quantity}`}
-                    </span>
-                    <span className="text-sm font-goteam text-navy-dark w-40 text-right">
-                      PHP {formatMoney(addOn.price * addOn.quantity)}
+                    <span className="text-sm font-goteam text-navy-dark w-46 text-right">
+                      PHP {(addOn.price * addOn.quantity).toFixed(2)}
                     </span>
                   </div>
                 </div>
               ))}
-            </div>
-            {/* Price Breakdown */}
-            <div className="mb-4 p-3">
-              <div className="space-y-1 text-xs font-satoshi">
-                {isChecked && selectedDiscount && discountAmount > 0 && (
-                  <div className="flex justify-between text-red-500">
-                    <span>% Discount ({selectedDiscount.name}):</span>
-                    <span>- PHP {formatMoney(discountAmount)}</span>
-                  </div>
-                )}
-              </div>
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
@@ -314,40 +249,6 @@ export default function BookingPackageExpandedDetails({
             + Add-Ons
           </button>
         )}
-        <div className="flex flex-col gap-2 mb-4 ">
-          <label className="bg-red-100 p-4 rounded-lg border border-red-300 text-navy-dark text-sm font-satoshi flex items-center gap-3">
-            {/* Bind the 'checked' attribute to the state variable */}
-            <input
-              type="checkbox"
-              checked={isChecked}
-              onChange={(e) => {
-                setIsChecked(e.target.checked);
-                // Reset to default discount when unchecking
-                if (!e.target.checked) {
-                  const defaultDiscount = { id: 5, name: "Regular" };
-                  setSelectedDiscount(defaultDiscount);
-                  onDiscountChange?.(defaultDiscount);
-                }
-              }}
-            />
-            {/* Display the current state value */}
-            Check this box to see if you qualify for BYB Theme Park discounts.
-          </label>f
-          {isChecked && (
-            <div>
-              <p className="text-sm font-satoshi font-bold text-navy-dark mb-3">
-                Choose the discount type to apply
-              </p>
-              <BookingDiscountPicker
-                initialDiscountId={initialDiscount?.id !== 5 ? initialDiscount?.id : undefined}
-                onDiscountChange={(discount) => {
-                  setSelectedDiscount(discount);
-                  onDiscountChange?.(discount);
-                }}
-              />
-            </div>
-          )}
-        </div>
 
         {/* Bottom Actions */}
         <div className="flex gap-3 pt-4 border-t border-gray-200">

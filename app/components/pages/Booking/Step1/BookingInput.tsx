@@ -15,7 +15,7 @@ function RequiredInput({ placeholder, required = true, className = "", ...props 
       )}
       <input
         className={`w-full border border-gray-200 rounded-lg px-3 py-2 text-sm font-satoshi 
-        placeholder:text-gray-400 focus:outline-none focus:border-sky-main ${className}`}
+        placeholder:text-gray-400 focus:outline-none focus:border-gate-main ${className}`}
         placeholder={placeholder}
         {...props}
       />

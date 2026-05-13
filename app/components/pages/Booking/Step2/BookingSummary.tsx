@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 
-const formatMoney = (amount: number) =>
-  amount.toLocaleString("en-PH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
 interface Package {
   id: string;
   name: string;
@@ -24,25 +21,14 @@ interface AddOn {
   quantity: number;
 }
 
-interface Discount {
-  id: number;
-  name: string;
-  percentage?: number;
-  amount?: number;
-}
-
 interface BookingSummaryProps {
   selectedPackages: Package[];
   addOnsByPackage?: { [packageId: string]: AddOn[] };
-  ticketAddOnsByPackage?: { [packageId: string]: { [ticketNumber: number]: AddOn[] } };
-  discountByPackage?: { [packageId: string]: { [ticketNumber: number]: Discount | null } };
 }
 
 export default function BookingSummary({
   selectedPackages,
   addOnsByPackage = {},
-  ticketAddOnsByPackage = {},
-  discountByPackage = {},
 }: BookingSummaryProps) {
   const packageTotal = selectedPackages.reduce(
     (sum, pkg) => sum + pkg.price * pkg.quantity,
@@ -59,50 +45,24 @@ export default function BookingSummary({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+
   const addOnsTotal = Object.values(addOnsByPackage).reduce(
     (sum, addOns) =>
       sum +
-      addOns.reduce(
-        (addOnSum, addOn) => addOnSum + addOn.price * addOn.quantity,
-        0,
-      ),
+      addOns.reduce((addOnSum, addOn) => addOnSum + addOn.price * addOn.quantity, 0),
     0,
   );
 
   const total = packageTotal + addOnsTotal;
 
-  // Calculate discount per ticket
-  const subtotal = packageTotal + addOnsTotal;
-  let discountAmount = 0;
-  for (const pkg of selectedPackages) {
-    const ticketDiscounts = discountByPackage[pkg.id] ?? {};
-    const pkgTicketAddOns = ticketAddOnsByPackage[pkg.id] ?? {};
-    for (let t = 1; t <= pkg.quantity; t++) {
-      const discount = ticketDiscounts[t];
-      if (!discount || (!discount.percentage && !discount.amount)) continue;
-      if (discount.id === 5) continue; // Regular — no discount
-      const ticketAddOnsTotal = (pkgTicketAddOns[t] ?? []).reduce(
-        (sum, addOn) => sum + addOn.price * addOn.quantity, 0,
-      );
-      const ticketSubtotal = pkg.price + ticketAddOnsTotal;
-      if (discount.percentage) {
-        const vatExclusive = ticketSubtotal / 1.10;
-        discountAmount += (ticketSubtotal - vatExclusive) + (vatExclusive * discount.percentage) / 100;
-      } else if (discount.amount) {
-        discountAmount += discount.amount;
-      }
-    }
-  }
-
-
-  const finalTotal = subtotal - discountAmount;
-
   return (
-    <div
-      className={`border border-gray-200 rounded-xl overflow-hidden w-110 ${
-        scrolled ? "fixed top-18 w-110 " : "relative"
-      }`}
-    >
+    <div className={`border border-gray-200 rounded-xl overflow-hidden w-110 ${
+      scrolled 
+      ? "fixed top-18 w-110 " 
+      : "relative"
+      
+      }`}>
+
       <div className="p-6">
         <div className="flex items-start justify-between mb-1">
           <h3 className="text-lg font-satoshi font-bold text-navy-dark">
@@ -216,99 +176,97 @@ export default function BookingSummary({
               );
               const pkgRowTotal = pkg.price * pkg.quantity + pkgAddOnsTotal;
               return (
-                <div key={pkg.id}>
-                  <div className="grid grid-cols-[1fr_auto_0.5fr] items-center gap-4 ">
-                    {/* LEFT: Package Info */}
-                    <div>
-                      <div className="font-satoshi font-medium text-navy-dark text-sm">
-                        {pkg.label}
-                      </div>
-                    </div>
-
-                    {/* MIDDLE: Quantity */}
-                    <div className="flex items-center gap-3">
-                      <svg
-                        width="29"
-                        height="23"
-                        viewBox="0 0 29 23"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M8.25 8.16667L17.0667 3.95C17.1666 3.90216 17.2751 3.87474 17.3858 3.86933C17.4964 3.86393 17.6071 3.88064 17.7112 3.91851C17.8154 3.95638 17.9109 4.01463 17.9922 4.08987C18.0736 4.1651 18.1391 4.2558 18.185 4.35667L19.9167 8.16667"
-                          stroke="#455873"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M9.5 9.83333V8.16667"
-                          stroke="#455873"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M9.5 13.1667V14"
-                          stroke="#455873"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M9.5 17.3333V19"
-                          stroke="#455873"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M21.1665 8.16667H7.83317C6.9127 8.16667 6.1665 8.91286 6.1665 9.83333V17.3333C6.1665 18.2538 6.9127 19 7.83317 19H21.1665C22.087 19 22.8332 18.2538 22.8332 17.3333V9.83333C22.8332 8.91286 22.087 8.16667 21.1665 8.16667Z"
-                          stroke="#455873"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-
-                      <span className="text-sm font-satoshi font-bold text-gray-600">
-                        x {pkg.quantity}
-                      </span>
-                    </div>
-
-                    {/* RIGHT: Price */}
-                    <div className="text-right min-w-max">
-                      <span className="font-goteam text-navy-dark text-lg">
-                        {formatMoney(pkgRowTotal)}
-                      </span>
+              <div key={pkg.id}>
+                <div className="grid grid-cols-[1fr_auto_0.5fr] items-center gap-4 ">
+                  {/* LEFT: Package Info */}
+                  <div>
+                    <div className="font-satoshi font-medium text-navy-dark text-sm">
+                      {pkg.label}
                     </div>
                   </div>
 
-                  {/* Add-Ons for this Package */}
-                  {addOnsByPackage[pkg.id] &&
-                    addOnsByPackage[pkg.id].length > 0 && (
-                      <div className=" pb-3">
-                        <div className="text-sm font-satoshi font-medium text-[#047C88] ">
-                          (WITH ADD-ONS)
-                        </div>
-                      </div>
-                    )}
+                  {/* MIDDLE: Quantity */}
+                  <div className="flex items-center gap-3">
+                    <svg
+                      width="29"
+                      height="23"
+                      viewBox="0 0 29 23"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.25 8.16667L17.0667 3.95C17.1666 3.90216 17.2751 3.87474 17.3858 3.86933C17.4964 3.86393 17.6071 3.88064 17.7112 3.91851C17.8154 3.95638 17.9109 4.01463 17.9922 4.08987C18.0736 4.1651 18.1391 4.2558 18.185 4.35667L19.9167 8.16667"
+                        stroke="#455873"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M9.5 9.83333V8.16667"
+                        stroke="#455873"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M9.5 13.1667V14"
+                        stroke="#455873"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M9.5 17.3333V19"
+                        stroke="#455873"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M21.1665 8.16667H7.83317C6.9127 8.16667 6.1665 8.91286 6.1665 9.83333V17.3333C6.1665 18.2538 6.9127 19 7.83317 19H21.1665C22.087 19 22.8332 18.2538 22.8332 17.3333V9.83333C22.8332 8.91286 22.087 8.16667 21.1665 8.16667Z"
+                        stroke="#455873"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
 
-                  {index < selectedPackages.length - 1 && (
-                    <div className="border-b border-gray-200" />
-                  )}
+                    <span className="text-sm font-satoshi font-bold text-gray-600">
+                      x {pkg.quantity}
+                    </span>
+                  </div>
+
+                  {/* RIGHT: Price */}
+                  <div className="text-right min-w-max">
+                    <span className="font-goteam text-navy-dark text-lg">
+                      {pkgRowTotal.toFixed(2)}
+                    </span>
+                  </div>
                 </div>
+
+                {/* Add-Ons for this Package */}
+                {addOnsByPackage[pkg.id] &&
+                  addOnsByPackage[pkg.id].length > 0 && (
+                    <div className=" pb-3">
+                      <div className="text-sm font-satoshi font-medium text-[#047C88] ">
+                        (WITH ADD-ONS)
+                      </div>
+                    </div>
+                  )}
+
+                {index < selectedPackages.length - 1 && (
+                  <div className="border-b border-gray-200" />
+                )}
+              </div>
               );
             })}
 
             {/* Discount Row */}
             <div className="border-t border-gray-200 border-dashed py-4 flex items-center justify-between">
               <span className="font-satoshi font-medium text-pink-500">
-                {"Discount"}
+                Discount
               </span>
-              <span className="font-goteam text-navy-dark text-lg">
-                {discountAmount > 0 ? `- ${formatMoney(discountAmount)}` : "0.00"}
-              </span>
+              <span className="font-goteam text-navy-dark text-lg">0.00</span>
             </div>
           </div>
         )}
@@ -320,7 +278,7 @@ export default function BookingSummary({
           Total
         </span>
         <span className="font-goteam text-[#047C88] text-2xl">
-          PHP {formatMoney(finalTotal)}
+          PHP {total.toFixed(2)}
         </span>
       </div>
     </div>

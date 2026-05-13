@@ -1,3 +1,4 @@
+// HeroCTAButtons.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import CheckStatusModal from "~/components/sections/CheckStatusModal";
@@ -7,13 +8,17 @@ const HeroCTAButtons = () => {
   const [statusModalOpen, setStatusModalOpen] = useState(false);
 
   const handleBookNow = () => {
-    navigate('/booking');
-  }
+    navigate("/booking");
+  };
 
   return (
     <>
       <div className="flex flex-col sm:flex-row items-center gap-3 z-10 w-56 sm:w-auto">
-        <button className="cursor-pointer btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto" onClick={handleBookNow}>
+        {/* btn-secondary dynamically routes background tokens to your gold variables */}
+        <button
+          className="cursor-pointer btn-secondary flex items-center justify-center gap-2 w-full sm:w-auto font-bold transition-all duration-300 transform hover:scale-[1.02]"
+          onClick={handleBookNow}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4"
@@ -32,7 +37,12 @@ const HeroCTAButtons = () => {
           </svg>
           BOOK NOW
         </button>
-        <button className="cursor-pointer btn-primary flex items-center justify-center gap-2 w-full sm:w-auto" onClick={() => setStatusModalOpen(true)}>
+
+        {/* btn-primary dynamically routes background tokens to your nebula blue variables */}
+        <button
+          className="cursor-pointer btn-primary flex items-center justify-center gap-2 w-full sm:w-auto font-bold transition-all duration-300 transform hover:scale-[1.02]"
+          onClick={() => setStatusModalOpen(true)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4"
@@ -50,8 +60,12 @@ const HeroCTAButtons = () => {
           CHECK STATUS
         </button>
       </div>
-      <CheckStatusModal isOpen={statusModalOpen} onClose={() => setStatusModalOpen(false)} />
+      <CheckStatusModal
+        isOpen={statusModalOpen}
+        onClose={() => setStatusModalOpen(false)}
+      />
     </>
   );
-}
+};
+
 export default HeroCTAButtons;

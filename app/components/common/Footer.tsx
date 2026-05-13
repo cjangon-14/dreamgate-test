@@ -1,4 +1,4 @@
-import { footerBSLogo, footerBYBLogo, footerGovLogo } from "~/assets";
+import { footerDGLogo } from "~/assets";
 
 const socialLinks = [
   {
@@ -50,55 +50,54 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t-4 border-sky-main">
+    /* Changed bg-white to solid bg-cloud-white to stay inside flat system rules */
+    <footer className="bg-cloud-white border-t-4 border-sky-main">
       {/* Main footer content */}
-      <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Left: Logo + Info */}
-        <div className="flex items-center gap-4">
-          <img src={footerBSLogo} alt="Blue Sky Logo" className="h-24 w-auto" />
+        <div className="flex items-center gap-6">
+          <img
+            src={footerDGLogo}
+            alt="Dream Gate Logo"
+            className="h-20 w-auto"
+          />
           <div>
-            <h2 className="font-bitcrusher text-primary text-xl tracking-wide">
-              SKY IS THE LIMIT!
+            {/* Rebranded heading narrative from sky-limit reference */}
+            <h2 className="font-bitcrusher text-primary text-2xl tracking-wide">
+              BEYOND IMAGINATION
             </h2>
-            <p className="font-satoshi font-bold text-regular text-sm">
-              OPEN FROM 11:00AM TO 3:00PM
+            <p className="font-satoshi font-bold text-regular text-sm mt-1">
+              PORTAL TIMELINE: 11:00AM TO 3:00PM
             </p>
-            <p className="font-satoshi text-gray-500 text-sm">
-              123 St. Sample Adress of Blue Sky Themed Park, Bayambang,
-              Pangasinan
+            {/* Swapped out explicit township addresses for generalized location markers */}
+            <p className="font-satoshi text-gray-500 text-sm mt-0.5">
+              Dream Gate Citadel Layout, Virtual Hub Exploration Area
             </p>
           </div>
         </div>
 
-        {/* Right: Partner logos */}
-        <div className="flex items-center gap-4">
-          <img src={footerBYBLogo} alt="BYB Metro" className="h-12 w-auto" />
-          <img
-            src={footerGovLogo}
-            alt="Government Logo"
-            className="h-12 w-auto"
-          />
-        </div>
+        {/* Removed corporate partner logo node containers entirely */}
       </div>
 
       {/* Bottom bar */}
-        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-3 border-t border-gray-200">
-          <p className="font-satoshi text-gray-500 text-sm">
-            © 2025 Byb Metro. All Rights Reserved
-          </p>
-          <div className="flex items-center gap-4">
-            {socialLinks.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                aria-label={s.label}
-                className="text-gray-500 hover:text-sky-main transition-colors duration-200"
-              >
-                {s.icon}
-              </a>
-            ))}
-          </div>
+      <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3 border-t border-gray-200/60">
+        {/* Overhauled copyright anchor name */}
+        <p className="font-satoshi text-gray-500 text-sm">
+          © 2026 Dream Gate Venture. All Rights Reserved.
+        </p>
+        <div className="flex items-center gap-4">
+          {socialLinks.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              aria-label={s.label}
+              className="text-gray-500 hover:text-sky-main transition-colors duration-200"
+            >
+              {s.icon}
+            </a>
+          ))}
         </div>
+      </div>
     </footer>
   );
 };

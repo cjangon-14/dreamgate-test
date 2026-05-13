@@ -178,7 +178,7 @@ export default function BookingStep2Local({
           <button
             onClick={() => { if (totalTickets > 0) onNext(); }}
             disabled={totalTickets === 0}
-            className="bg-sky-main hover:bg-sky-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition disabled:bg-gray-light disabled:text-gray-main disabled:cursor-not-allowed"
+            className="bg-gate-main hover:bg-gate-dark text-white font-satoshi font-bold px-8 py-2.5 rounded-lg transition disabled:bg-gray-light disabled:text-gray-main disabled:cursor-not-allowed"
           >
             Next
           </button>

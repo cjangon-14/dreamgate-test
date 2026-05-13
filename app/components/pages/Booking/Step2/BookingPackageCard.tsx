@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import BookingPackageExpandedDetails from "./BookingPackageExpandedDetails";
 
 interface Package {
@@ -34,23 +34,14 @@ interface TicketChoices {
   [ticketNumber: number]: string[];
 }
 
-interface Discount {
-  id: number;
-  name: string;
-  percentage?: number;
-  amount?: number;
-}
-
 interface BookingPackageCardProps {
   pkg: Package;
   onQuantityChange: (id: string, delta: number) => void;
   onAddOnsChange?: (packageId: string, addOns: AddOn[], ticketAddOns: TicketAddOns) => void;
   onChoicesChange?: (packageId: string, ticketChoices: TicketChoices) => void;
-  onDiscountChange?: (packageId: string, ticketNumber: number, discount: Discount) => void;
   canAddMore?: boolean;
   initialTicketAddOns?: TicketAddOns;
   initialTicketChoices?: TicketChoices;
-  initialDiscountByTicket?: { [ticketNumber: number]: Discount | null };
 }
 
 export default function BookingPackageCard({
@@ -58,39 +49,12 @@ export default function BookingPackageCard({
   onQuantityChange,
   onAddOnsChange,
   onChoicesChange,
-  onDiscountChange,
   canAddMore = true,
   initialTicketAddOns = {},
   initialTicketChoices = {},
-  initialDiscountByTicket = {},
 }: BookingPackageCardProps) {
   const [ticketAddOns, setTicketAddOns] = useState<TicketAddOns>(initialTicketAddOns);
-
-  // Initialize choices: if no saved choices for a ticket, pre-populate with the first N choices
-  const getDefaultChoices = (ticketNumber: number): string[] => {
-    if (initialTicketChoices[ticketNumber]) return initialTicketChoices[ticketNumber];
-    if (pkg.comboSelectCount && pkg.choices.length > 0) {
-      return pkg.choices.slice(0, pkg.comboSelectCount);
-    }
-    return [];
-  };
-
-  const buildInitialChoices = (): TicketChoices => {
-    const result: TicketChoices = { ...initialTicketChoices };
-    for (let i = 1; i <= pkg.quantity; i++) {
-      if (!result[i]) result[i] = getDefaultChoices(i);
-    }
-    return result;
-  };
-
-  const [ticketChoices, setTicketChoices] = useState<TicketChoices>(buildInitialChoices);
-
-  // Notify parent of pre-populated choices on mount
-  React.useEffect(() => {
-    if (onChoicesChange) {
-      onChoicesChange(pkg.id, ticketChoices);
-    }
-  }, []);
+  const [ticketChoices, setTicketChoices] = useState<TicketChoices>(initialTicketChoices);
 
   const handleAddOnsChange = (ticketNumber: number, addOns: AddOn[]) => {
     const updated = { ...ticketAddOns, [ticketNumber]: addOns };
@@ -174,7 +138,7 @@ const handleRemovePackage = (ticketNumber: number) => {
           )}
           {pkg.badge && (
             <span
-              className={`absolute top-3 left-3 text-white text-xs font-bold px-3 py-1 rounded-md ${pkg.badgeColor ?? "bg-sky-main"}`}
+              className={`absolute top-3 left-3 text-white text-xs font-bold px-3 py-1 rounded-md ${pkg.badgeColor ?? "bg-gate-main"}`}
             >
               {pkg.badge}
             </span>
@@ -228,7 +192,7 @@ const handleRemovePackage = (ticketNumber: number) => {
 
           {/* Quantity & Package Details */}
           <div className="flex justify-between items-center flex-row px-5 py-4">
-            <button className="border border-sky-main text-sky-main font-satoshi font-semibold px-4 py-2 rounded-lg hover:bg-sky-main/5 transition text-sm hover:cursor-pointer">
+            <button className="border border-gate-main text-gate-main font-satoshi font-semibold px-4 py-2 rounded-lg hover:bg-gate-main/5 transition text-sm hover:cursor-pointer">
               Package Details
             </button>
             <div className="flex items-center gap-2 ">
@@ -285,9 +249,7 @@ const handleRemovePackage = (ticketNumber: number) => {
               }
               onRemovePackage={() => handleRemovePackage(ticketNumber)}
               onAddSamePackage={handleAddSamePackage}
-              onDiscountChange={(discount) => onDiscountChange?.(pkg.id, ticketNumber, discount)}
               canAddMore={canAddMore}
-              initialDiscount={initialDiscountByTicket[ticketNumber] ?? null}
             />
           );
         })}

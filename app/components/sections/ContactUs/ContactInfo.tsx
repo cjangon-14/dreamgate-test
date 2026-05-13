@@ -6,8 +6,12 @@ interface ContactItemProps {
 
 const ContactItem = ({ icon, label, children }: ContactItemProps) => (
   <div className="flex flex-col items-center gap-3">
-    <div className="w-8 h-8 text-[#047C88]">{icon}</div>
-    <h3 className="font-satoshi font-bold text-[#047C88] text-lg">{label}</h3>
+    {/* 
+        Updated from text-[#047C88] to text-primary.
+        This maps directly to your solid Nebula Blue variable.
+    */}
+    <div className="w-8 h-8 text-primary">{icon}</div>
+    <h3 className="font-satoshi font-bold text-primary text-lg">{label}</h3>
     <p className="font-satoshi text-navy-dark/70 text-sm leading-relaxed text-center">
       {children}
     </p>
@@ -20,41 +24,70 @@ const ContactInfo = () => (
       <ContactItem
         label="Location"
         icon={
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 2C8.686 2 6 4.686 6 8c0 5.25 6 13 6 13s6-7.75 6-13c0-3.314-2.686-6-6-6zm0 8.5A2.5 2.5 0 1 1 12 5.5a2.5 2.5 0 0 1 0 5z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 2C8.686 2 6 4.686 6 8c0 5.25 6 13 6 13s6-7.75 6-13c0-3.314-2.686-6-6-6zm0 8.5A2.5 2.5 0 1 1 12 5.5a2.5 2.5 0 0 1 0 5z"
+            />
           </svg>
         }
       >
-        123 St. Sample Address of Blue Sky
+        Dream Gate Citadel Landmark,
         <br />
-        Themed Park, Bayambang, Pangasinan
+        Virtual Innovation Hub Layout Area
       </ContactItem>
 
       <ContactItem
         label="Email"
         icon={
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"
+            />
           </svg>
         }
       >
-        bybmetro@email.com
+        hello@dreamgateventure.com
         <br />
-        bluesky@email.com
+        support@dreamgateventure.com
       </ContactItem>
 
       <ContactItem
         label="Phone"
         icon={
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
             <rect x="7" y="2" width="10" height="20" rx="2" ry="2" />
             <line x1="12" y1="18" x2="12.01" y2="18" />
           </svg>
         }
       >
-        Globe: 09123456789
+        Primary Line: 0900-DREAM-GATE
         <br />
-        Smart: 09123456789
+        Backup Line: +1 (555) 019-9000
       </ContactItem>
     </div>
   </div>

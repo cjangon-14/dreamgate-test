@@ -13,8 +13,10 @@ const HeroBrand = () => (
         />
       </div>
 
-      <div className="flex items-center justify-center gap-3 -mt-4 z-10">
-        <span className="text-xl text-end text-navy-dark font-black uppercase font-satoshi leading-4.5 tracking-none">
+      {/* Sub-Header text section */}
+      <div className="flex items-center justify-center gap-4 mt-2 sm:mt-4 z-10 w-full">
+        {/* Changed text-navy-dark to text-white for visibility against the deep space sky */}
+        <span className="text-base sm:text-lg md:text-xl text-end text-white font-black uppercase font-satoshi leading-none tracking-widest opacity-95 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
           Themed
           <br />
           Park
@@ -23,14 +25,15 @@ const HeroBrand = () => (
           src={textStar}
           alt=""
           aria-hidden="true"
-          className="w-3 h-14 z-20"
+          className="w-3 h-10 sm:h-12 md:h-14 z-20 opacity-80"
           draggable="false"
           decoding="async"
         />
-        <span className="text-xl text-start text-navy-dark font-black uppercase font-satoshi leading-4.5 tracking-none">
-          Events
+        {/* Changed text-navy-dark to text-white for visibility against the deep space sky */}
+        <span className="text-base sm:text-lg md:text-xl text-start text-white font-black uppercase font-satoshi leading-none tracking-widest opacity-95 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
+          Action
           <br />
-          Center
+          Plaza
         </span>
       </div>
     </div>

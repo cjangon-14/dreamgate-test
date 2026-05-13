@@ -1,81 +1,88 @@
-import type { FunActivity } from '../types';
+import type { FunActivity } from "../types";
 
 export const funActivities: FunActivity[] = [
   {
-    id: 'blue-sky-ride-1',
-    title: 'Blue Sky Ride 1',
-    description: 'Experience the thrill of our most iconic roller coaster with loops and drops.',
-    image: '/activities/blue-sky-ride-1.jpg',
+    id: "nebula-vortex",
+    title: "Nebula Vortex",
+    description:
+      "Experience the thrill of our most iconic gravity-defying coaster with deep-space loops and drops.",
+    image: "/activities/nebula-vortex.jpg",
     highlights: [
-      'Multiple inversions',
-      'Scenic aerial views',
-      'Photo opportunity at the peak',
+      "Zero-G inversions",
+      "Cosmic aerial views",
+      "Starlight photo at the peak",
     ],
   },
   {
-    id: 'blue-sky-ride-2',
-    title: 'Blue Sky Ride 2',
-    description: 'A family-friendly adventure that everyone can enjoy together.',
-    image: '/activities/blue-sky-ride-2.jpg',
+    id: "cloud-drift",
+    title: "Cloud Drift Adventure",
+    description:
+      "A gentle, family-friendly journey through the floating islands of the Dream Gate.",
+    image: "/activities/cloud-drift.jpg",
     highlights: [
-      'Suitable for all ages',
-      'Beautiful landscape views',
-      'Interactive elements',
+      "Safe for all dreamers",
+      "Immersive misty landscapes",
+      "Interactive magic elements",
     ],
   },
   {
-    id: 'blue-sky-ride-3',
-    title: 'Blue Sky Ride 3',
-    description: 'The ultimate adrenaline-pumping experience for thrill-seekers.',
-    image: '/activities/blue-sky-ride-3.jpg',
+    id: "quantum-leap",
+    title: "The Quantum Leap",
+    description:
+      "The ultimate high-velocity drop for thrill-seekers looking to breach the speed of light.",
+    image: "/activities/quantum-leap.jpg",
     highlights: [
-      'Height requirement applies',
-      'High-speed action',
-      'Extreme adventure guaranteed',
+      "Elite height requirement",
+      "Supersonic acceleration",
+      "Extreme G-force adventure",
     ],
   },
   {
-    id: 'blue-sky-ride-4',
-    title: 'Blue Sky Ride 4',
-    description: 'A unique water-based attraction perfect for hot days.',
-    image: '/activities/blue-sky-ride-4.jpg',
+    id: "tide-portal",
+    title: "Tide Portal Splash",
+    description:
+      "A unique bioluminescent water journey perfect for cooling off in the realm.",
+    image: "/activities/tide-portal.jpg",
     highlights: [
-      'Splash zone for cooling off',
-      'Perfect for families',
-      'Stunning water effects',
+      "Neon splash zone",
+      "Synchronized water effects",
+      "Ethereal glowing currents",
     ],
   },
   {
-    id: 'wonder-flight',
-    title: 'Wonder Flight',
-    description: 'Soar above the park on a gentle sky-gliding experience perfect for all ages.',
-    image: '/activities/wonder-flight.jpg',
+    id: "horizon-glide",
+    title: "Horizon Glide",
+    description:
+      "Soar above the nebula on a gentle gliding experience that captures the scale of the park.",
+    image: "/activities/horizon-glide.jpg",
     highlights: [
-      'Aerial park views',
-      'Smooth and gentle ride',
-      'Great for first-timers',
+      "360-degree realm views",
+      "Smooth, weightless motion",
+      "Calming ambient soundtrack",
     ],
   },
   {
-    id: 'spin-racer',
-    title: 'Spin Racer',
-    description: 'Hold on tight as this spinning coaster sends you through twists at top speed.',
-    image: '/activities/spin-racer.jpg',
+    id: "comet-cyclone",
+    title: "Comet Cyclone",
+    description:
+      "Hold on tight as this spinning coaster mimics the chaotic beauty of a deep-space comet.",
+    image: "/activities/comet-cyclone.jpg",
     highlights: [
-      'High-speed spinning',
-      'Unexpected turns',
-      'Adrenaline rush guaranteed',
+      "Rapid centrifugal spinning",
+      "Glowing orbit trails",
+      "Dynamic speed shifts",
     ],
   },
   {
-    id: 'star-trails',
-    title: 'Star Trails',
-    description: 'A dazzling night-themed dark ride through an immersive galaxy of light and sound.',
-    image: '/activities/star-trails.jpg',
+    id: "star-trails-prime",
+    title: "Star Trails: Legacy",
+    description:
+      "A dazzling dark ride through an immersive galaxy of synchronized light and spatial sound.",
+    image: "/activities/star-trails-prime.jpg",
     highlights: [
-      'Immersive light effects',
-      'Surround sound journey',
-      'Suitable for all ages',
+      "Interactive laser effects",
+      "Surround sound odyssey",
+      "Multi-sensory storytelling",
     ],
   },
 ];

@@ -11,27 +11,40 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-sky-light: #c3eff2;
-  --color-sky-main: #04afbd;
-  --color-sky-dark: #038c99;
-  --color-sky-darker: #026a75;
-  --color-accent-yellow: #FFB52B;
-  --color-accent-orange: #ffb42a;
-  --color-accent-gold: #e09a0a;
-  --color-navy-dark: #003154;
-  --color-navy-main: #06AEBD;
-  --color-navy-light: #0a8a98;
-  --color-cloud-white: #f0fcfd;
-  --color-cloud-light: #ccf0f3;
-  --color-primary: #047c88;
-  --color-secondary: #065a64;
-  --color-regular: #455873;
+  /* Sky variables: Realigned to support the Nebula Blue theme */
+  --color-sky-light: #d6d6fb;   /* Very light lavender/blue */
+  --color-sky-main: #3d3dbd;    /* Nebula Blue (now your brand main) */
+  --color-sky-dark: #2a2a8c;    /* Deep Galaxy Blue */
+  --color-sky-darker: #1e1e60;  /* Twilight Navy */
+
+  /* Accent variables: Classic Gold palette (complements Nebula Blue perfectly) */
+  --color-accent-yellow: #D4AF37; 
+  --color-accent-orange: #FFD700; 
+  --color-accent-gold: #B8860B;   
+
+  /* Navy variables: Now focused on the deep "Nebula" range */
+  --color-navy-dark: #1e1e60;   /* Deepest Navy */
+  --color-navy-main: #3d3dbd;   /* Main Nebula Blue */
+  --color-navy-light: #5c5ce0;  /* Bright Electric Blue */
+
+  /* Cloud variables: Moonlit/Nebula highlights */
+  --color-cloud-white: #F8F9FF;  
+  --color-cloud-light: #e0e0ff;  
+
+  /* Brand Primary/Secondary */
+  --color-primary: #3d3dbd;     /* Main Brand: Nebula Blue */
+  --color-secondary: #D4AF37;   /* Secondary: Gold */
+  --color-regular: #555577;     /* Soft Blue-Grey for secondary text */
+
+  /* Fonts and Animations */
   --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
   --font-bitcrusher: "Bitcrusher", ui-sans-serif, system-ui, sans-serif;
   --font-goteam: "Goteam", ui-sans-serif, system-ui, sans-serif;
   --font-manrope: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --animate-cloud-rise: cloud-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
 }
+
+
 /* yellow- FFB52B blue-06AEBD, 003154  455873*/
 
 @keyframes cloud-rise {
@@ -94,10 +107,11 @@ body {
 
 .hero-bg {
   @apply relative overflow-hidden min-h-screen bg-gradient-to-b
-  from-[#caf7ff] from-0%
-  via-[#6ED8F5] via-40%
-  to-[#0086d7] to-88%;
+  from-[#F8F9FF] from-0%    /* Moonlight White (Clean start) */
+  via-[#A5A5FF] via-40%    /* Soft Nebula Blue (Airy middle) */
+  to-[#3d3dbd] to-88%;     /* Main Nebula Blue (Strong brand finish) */
 }
+
 
 .hero-bg::before {
   content: "";
@@ -143,8 +157,10 @@ body {
 }
 
 .bobs-bg {
-  @apply py-16 md:py-24 px-4 md:px-8 bg-linear-to-b from-white from-0% to-[#D2E5FF] to-100%;
+  /* Fading from white to a soft Nebula Lavender/Blue */
+  @apply py-16 md:py-24 px-4 md:px-8 bg-linear-to-b from-white from-0% to-[#d6d6fb] to-100%;
 }
+
 
 .container-max {
   @apply max-w-3/4 mx-auto px-4 mt-50 sm:px-6 lg:px-8;
@@ -211,7 +227,7 @@ body {
   pointer-events: none;
 }
 
-@theme inline {
+/* @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -319,5 +335,5 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
+} */
 

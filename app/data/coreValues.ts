@@ -2,43 +2,45 @@ import type { CoreValue } from "../types";
 
 export const coreValues: CoreValue[] = [
   {
-    id: "brilliance",
-    title: "Brilliance",
+    id: "wonder",
+    title: "Wonder",
     description:
-      "We strive for excellence, pushing the boundaries of entertainment and service with every attraction.",
+      "We strive for excellence, pushing the boundaries of imagination and service with every immersive attraction.",
   },
   {
-    id: "liveliness",
-    title: "Liveliness",
+    id: "vibrancy",
+    title: "Vibrancy",
     description:
-      "We bring energy, excitement, and a vibrant atmosphere to every visitor experience.",
+      "We bring electric energy and a glowing atmosphere to every corner of the dreamscape.",
   },
   {
-    id: "unforgettable",
-    title: "Unforgettable",
+    id: "everlasting",
+    title: "Everlasting",
     description:
-      "We design experiences that stay with you long after you've left the park.",
+      "We design moments that transcend time, staying with you long after you've passed through our gates.",
   },
   {
-    id: "evolving",
-    title: "Evolving",
+    id: "innovation",
+    title: "Innovation",
     description:
-      "We are always innovating, adapting, and growing to meet the changing needs of our guests and community",
+      "We are constantly evolving, integrating new technologies to create deeper, more responsive experiences.",
   },
   {
-    id: "safety",
-    title: "Safety",
+    id: "integrity",
+    title: "Integrity",
     description:
-      "We prioritize the well-being of our visitors with strict safety measures and attention to detail in every aspect of the park.", },
-  {
-    id: "kindness",
-    title: "Kindness",
-    description: "We create a welcoming and positive environment for all, where hospitality and care are at the forefront of every interaction.",
+      "We prioritize the well-being of our visitors with world-class standards and meticulous attention to every detail.",
   },
   {
-    id: "youthful",
-    title: "Youthful",
+    id: "hospitality",
+    title: "Hospitality",
     description:
-      "We embrace the spirit of fun and adventure, ensuring every guest, regardless of age, can experience joy at Blue Sky.",
+      "We foster a welcoming environment where care and kindness are at the heart of every guest interaction.",
+  },
+  {
+    id: "ageless",
+    title: "Ageless",
+    description:
+      "We embrace a spirit of adventure, ensuring every dreamer—regardless of age—can find joy within the Dream Gate.",
   },
 ];

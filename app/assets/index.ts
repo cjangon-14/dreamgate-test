@@ -1,5 +1,6 @@
 export { default as blueSkyLogo } from "./Hero/BSlogo-3d.png";
-export { default as blueSkyLogoCropped } from "./Hero/BSlogo-3d-cropped.png";
+// export { default as blueSkyLogoCropped } from "./Hero/BSlogo-3d-cropped.png";
+export { default as blueSkyLogoCropped } from "./Hero/DGlogo-3d-cropped.png";
 export { default as cloud1 } from "./Hero/cld-2.png";
 export { default as cloud2 } from "./Hero/cld-3.png";
 export { default as textStar } from "./Hero/text-star.png";
@@ -10,8 +11,8 @@ export { default as ferrisWheel } from "./Hero/ferris-wheel.svg";
 export { default as swingRide } from "./Hero/swing-ride.svg";
 export { default as leftRollercoaster } from "./Hero/left-rollercoaster.svg";
 export { default as rightBuilding } from "./Hero/right-building.svg";
-export { default as cardImagePlaceholder } from "./BestOfBlueSky/card-image.png?format=webp&quality=80";
-export { default as bobsBg } from "./BestOfBlueSky/BOBS-bg.png?format=webp&quality=80";
+export { default as cardImagePlaceholder } from "./BestOfDreamGate/card-image.png?format=webp&quality=80";
+export { default as bogtBg } from "./BestOfDreamGate/BOGT-bg.png?format=webp&quality=80";
 export { default as ftlBg } from "./FunThatLasts/ftl-bg.png?format=webp&quality=80";
 export { default as sectionDivider } from "./decorations/stars-moons-suns.png"
 export { default as aboutUsBg } from "./AboutUs/AU-bg.png?format=webp&quality=80";
@@ -20,8 +21,8 @@ export { default as mascotImage } from "./AboutUs/mascot_1.png?format=webp&quali
 export { default as missionIcon } from "./AboutUs/Capa_1.png?format=webp&quality=80";
 export { default as visionIcon } from "./AboutUs/Rocket.png?format=webp&quality=80";
 export { default as coreValuesBg } from "./CoreValues/core-bg_2.png?format=webp&quality=80";
-export { default as mascotWbs } from "./WhyBlueSky/mascot-wbs.png?format=webp&quality=80";
+export { default as mascotWbs } from "./WhyDreamGate/mascot-wbs.png?format=webp&quality=80";
 export { default as mobileBg } from "./mobile/mobile-bg.png?format=webp&quality=80";
-export { default as footerBSLogo } from "./Footer/BSlogo-3d_1.png";
+export { default as footerDGLogo } from "./Footer/DGlogo-3d-cropped.png";
 export { default as footerBYBLogo } from "./Footer/BYB-logo.png";
 export { default as footerGovLogo } from "./Footer/gov-logo.png";
