@@ -69,7 +69,7 @@ const CheckStatusModal: React.FC<CheckStatusModalProps> = ({ isOpen, onClose }) 
           value={code}
           onChange={(e) => { setCode(e.target.value); setError(null); }}
           onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
-          placeholder="e.g. BYB20260309OTIMG5"
+          placeholder="e.g. DG-TEST-001"
           className="w-full border border-navy-dark/20 rounded-lg px-4 py-2.5 font-satoshi text-sm text-navy-dark placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-main mb-4"
         />
 

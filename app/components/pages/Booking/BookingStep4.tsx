@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 import type { BookingResponse } from "~/api/bookings";
 
 interface BookingStep4Props {
@@ -16,6 +17,14 @@ const BookingStep4: React.FC<BookingStep4Props> = ({
   isSubmitting = false,
   errorMessage = null,
 }) => {
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    if (bookingResponse) {
+      navigate(`/checkout?booking=${encodeURIComponent(bookingResponse.booking_code)}`);
+    }
+  };
+
   const paymentOptions = [
     {
       id: "credit-card",
@@ -122,7 +131,7 @@ const BookingStep4: React.FC<BookingStep4Props> = ({
       <div className="flex flex-col gap-3">
         <button
           type="button"
-          onClick={onMockPay}
+          onClick={handleCheckout}
           disabled={isPaid || isSubmitting}
           className={`w-full rounded-xl px-6 py-3 text-sm font-bold transition ${
             isPaid
@@ -133,8 +142,8 @@ const BookingStep4: React.FC<BookingStep4Props> = ({
           {isPaid
             ? "Payment Already Completed"
             : isSubmitting
-              ? "Processing payment..."
-              : "Complete Mock Payment"}
+              ? "Redirecting to checkout..."
+              : "Proceed to Checkout"}
         </button>
 
         {bookingResponse.payment_details.payment_link && (
@@ -144,7 +153,7 @@ const BookingStep4: React.FC<BookingStep4Props> = ({
             rel="noopener noreferrer"
             className="text-center text-sm text-sky-main hover:underline"
           >
-            Open mock payment checkout
+            View booking details
           </a>
         )}
       </div>

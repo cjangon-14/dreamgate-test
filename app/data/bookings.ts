@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export type BookingStatus = 0 | 1 | 2 | 3 | 4;
 
 import { attractions } from "~/data/attractions";
@@ -47,8 +45,10 @@ export interface BookingResponse {
   packages: BookingPackageItem[];
 }
 
-const API_BASE = "http://localhost:3005";
 const LOCAL_STORAGE_KEY = "dreamGateBookings";
+
+// NOTE: json-server infrastructure kept intact at http://localhost:3005 for others to use
+// Current implementation uses mock data via localStorage for easier GitHub deployment
 
 const generateCode = (): string => {
   const timestamp = Date.now().toString(36).toUpperCase();
@@ -58,13 +58,85 @@ const generateCode = (): string => {
 
 const normalizeCode = (code: string) => code.trim().toUpperCase();
 
+const createMockBookings = (): BookingResponse[] => {
+  return [
+    {
+      id: 1,
+      booking_code: "DG-TEST-001",
+      name: "John Doe",
+      email: "john@example.com",
+      mobile_no: "09123456789",
+      gender: "Male",
+      address: "123 Dream Street, Manila",
+      slot_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      base_amount: 2500,
+      status: 0,
+      payment_details: {
+        payment_link: `https://mockpay.dream-gate.example.com/checkout/DG-TEST-001`,
+        amount_due: "2500.00",
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        reference_no: "REF-123456",
+        status: 0,
+      },
+      packages: [
+        {
+          id: "premium",
+          attractions: ["Cosmic Castle", "Nebula Tunnel"],
+          add_ons: [],
+          discount_id: null,
+          quantity: 2,
+        },
+      ],
+    },
+    {
+      id: 2,
+      booking_code: "DG-TEST-002",
+      name: "Jane Smith",
+      email: "jane@example.com",
+      mobile_no: "09987654321",
+      gender: "Female",
+      address: "456 Fantasy Avenue, Quezon City",
+      slot_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+      base_amount: 5000,
+      status: 1,
+      payment_details: {
+        payment_link: `https://mockpay.dream-gate.example.com/checkout/DG-TEST-002`,
+        amount_due: "5000.00",
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        reference_no: "REF-789012",
+        status: 1,
+      },
+      packages: [
+        {
+          id: "vip",
+          attractions: ["Cosmic Castle", "Nebula Tunnel", "Star Garden"],
+          add_ons: [{ id: "photography", quantity: 2, price: 500 }],
+          discount_id: null,
+          quantity: 1,
+        },
+      ],
+    },
+  ];
+};
+
 const loadLocalBookings = (): BookingResponse[] => {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return createMockBookings();
   try {
     const stored = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    return stored ? (JSON.parse(stored) as BookingResponse[]) : [];
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed as BookingResponse[];
+      }
+    }
+
+    const bookings = createMockBookings();
+    saveLocalBookings(bookings);
+    return bookings;
   } catch {
-    return [];
+    const bookings = createMockBookings();
+    saveLocalBookings(bookings);
+    return bookings;
   }
 };
 
@@ -79,7 +151,8 @@ const saveLocalBookings = (bookings: BookingResponse[]) => {
 
 const findLocalBookingByCode = (code: string) => {
   const normalizedCode = normalizeCode(code);
-  return loadLocalBookings().find(
+  const bookings = [...createMockBookings(), ...loadLocalBookings()];
+  return bookings.find(
     (booking) => normalizeCode(booking.booking_code) === normalizedCode,
   );
 };
@@ -98,40 +171,20 @@ const getExpiryDate = (): string =>
   new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString();
 
 export const getMyBookings = async (): Promise<BookingResponse[]> => {
-  try {
-    const response = await axios.get(`${API_BASE}/bookings`);
-    return response.data;
-  } catch (error) {
-    console.error("Server unavailable, loading local bookings:", error);
-    return loadLocalBookings();
-  }
+  // Always use local/mock bookings
+  return loadLocalBookings();
 };
 
 export const getBookingById = async (id: number): Promise<BookingResponse> => {
-  try {
-    const response = await axios.get(`${API_BASE}/bookings/${id}`);
-    return response.data;
-  } catch {
-    const local = loadLocalBookings().find((booking) => booking.id === id);
-    if (local) return local;
-    throw new Error("Booking not found");
-  }
+  const local = loadLocalBookings().find((booking) => booking.id === id);
+  if (local) return local;
+  throw new Error("Booking not found");
 };
 
 export const getBookingByCode = async (code: string): Promise<BookingResponse> => {
-  const normalizedCode = normalizeCode(code);
-  try {
-    const response = await axios.get(
-      `${API_BASE}/bookings?booking_code=${encodeURIComponent(normalizedCode)}`,
-    );
-    if (response.data.length > 0) return response.data[0];
-  } catch (error) {
-    console.warn("Server lookup failed, checking local bookings:", error);
-  }
-
-  const local = findLocalBookingByCode(normalizedCode);
+  // Always use local/mock bookings - no server calls
+  const local = findLocalBookingByCode(code);
   if (local) return local;
-
   throw new Error("Booking not found");
 };
 
@@ -151,19 +204,14 @@ export const cancelBooking = async (code: string): Promise<BookingResponse> => {
     },
   };
 
-  try {
-    const response = await axios.put(`${API_BASE}/bookings/${booking.id}`, updated);
-    return response.data;
-  } catch (error) {
-    const localBookings = loadLocalBookings();
-    const index = localBookings.findIndex((item) => item.id === booking.id);
-    if (index !== -1) {
-      localBookings[index] = updated;
-      saveLocalBookings(localBookings);
-      return updated;
-    }
-    throw new Error("Booking not found");
+  const localBookings = loadLocalBookings();
+  const index = localBookings.findIndex((item) => item.id === booking.id);
+  if (index !== -1) {
+    localBookings[index] = updated;
+    saveLocalBookings(localBookings);
+    return updated;
   }
+  throw new Error("Booking not found");
 };
 
 export const createBooking = async (
@@ -204,15 +252,11 @@ export const createBooking = async (
     packages: payload.packages,
   };
 
-  try {
-    const response = await axios.post(`${API_BASE}/bookings`, booking);
-    return response.data;
-  } catch (error) {
-    const localBookings = loadLocalBookings();
-    localBookings.push(booking);
-    saveLocalBookings(localBookings);
-    return booking;
-  }
+  // Always save to localStorage - no server calls
+  const localBookings = loadLocalBookings();
+  localBookings.push(booking);
+  saveLocalBookings(localBookings);
+  return booking;
 };
 
 export const completeBookingPayment = async (code: string): Promise<BookingResponse> => {
@@ -226,17 +270,13 @@ export const completeBookingPayment = async (code: string): Promise<BookingRespo
     },
   };
 
-  try {
-    const response = await axios.put(`${API_BASE}/bookings/${booking.id}`, updated);
-    return response.data;
-  } catch (error) {
-    const localBookings = loadLocalBookings();
-    const index = localBookings.findIndex((item) => item.id === booking.id);
-    if (index !== -1) {
-      localBookings[index] = updated;
-      saveLocalBookings(localBookings);
-      return updated;
-    }
-    throw new Error("Booking not found");
+  // Always update localStorage - no server calls
+  const localBookings = loadLocalBookings();
+  const index = localBookings.findIndex((item) => item.id === booking.id);
+  if (index !== -1) {
+    localBookings[index] = updated;
+    saveLocalBookings(localBookings);
+    return updated;
   }
+  throw new Error("Booking not found");
 };
