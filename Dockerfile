@@ -21,4 +21,5 @@ COPY --from=build-env /app/build /app/build
 COPY db.json /app/db.json
 WORKDIR /app
 EXPOSE 3000 3005
+ENV NODE_ENV=production
 CMD ["npm", "run", "start"]
