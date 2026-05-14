@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "concurrently \"react-router dev\" \"json-server --watch db.json --port 3005\"",
     "build": "react-router build",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
+    "start": "concurrently \"react-router-serve ./build/server/index.js\" \"json-server --watch db.json --port 3005\"",
     "typecheck": "react-router typegen && tsc",
     "server": "json-server --watch db.json --port 3005"
   },

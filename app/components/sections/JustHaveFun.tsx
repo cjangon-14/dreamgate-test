@@ -10,9 +10,10 @@ const JustHaveFun = () => (
       <span className="text-white">With Us!</span>
     </h2>
     <p className="font-satoshi text-cloud-light text-base md:text-lg max-w-sm sm:max-w-md md:max-w-xl lg:max-w-[45%] mx-auto leading-relaxed">
-      Feel the rush as you dive into cosmic thrills and pulse-pumping 
-      attractions built to ignite your imagination. Every corner of the realm bursts 
-      with reality-bending adventure and moments that keep your energy soaring.
+      Feel the rush as you dive into cosmic thrills and pulse-pumping
+      attractions built to ignite your imagination. Every corner of the realm
+      bursts with reality-bending adventure and moments that keep your energy
+      soaring.
     </p>
   </section>
 );
